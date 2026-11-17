@@ -1,0 +1,51 @@
+{
+  "name": "social-eyes-mobile",
+  "version": "0.3.0",
+  "private": true,
+  "main": "expo-router/entry",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "typecheck": "tsc --noEmit",
+    "doctor": "npx expo-doctor",
+    "audit:static": "node scripts/phase1-static-audit.mjs",
+    "test:foundation": "node --test tests/*.test.mjs",
+    "diagnose:install": "node scripts/diagnose-install.mjs",
+    "diagnose:build": "node scripts/build-readiness.mjs",
+    "audit:syntax": "node scripts/check-typescript-syntax.mjs",
+    "audit:package": "node scripts/security-and-package-audit.mjs",
+    "package:source": "python3 scripts/package-project.py",
+    "verify:package": "python3 scripts/verify-package.py",
+    "verify:live-profiles": "node scripts/verify-two-user-profiles.mjs",
+    "verify:phase1": "node scripts/phase1-verify.mjs",
+    "verify:phase1:full": "node scripts/phase1-verify.mjs --full",
+    "diagnose:toolchain": "node scripts/local-toolchain.mjs",
+    "bootstrap:dependencies": "node scripts/bootstrap-dependencies.mjs --generate-lockfile --verify",
+    "install:locked": "node scripts/bootstrap-dependencies.mjs --verify",
+    "check:backend-config": "node scripts/check-live-backend-config.mjs",
+    "verify:anonymous-boundary": "node scripts/verify-anonymous-boundary.mjs",
+    "preflight:github": "node scripts/github-handoff.mjs"
+  },
+  "dependencies": {
+    "@expo/vector-icons": "^15.0.3",
+    "@supabase/supabase-js": "^2.57.0",
+    "react-native-url-polyfill": "^2.0.0",
+    "expo": "~58.0.25",
+    "expo-constants": "~58.0.16",
+    "expo-linking": "~58.0.17",
+    "expo-router": "~58.0.30",
+    "expo-status-bar": "~58.0.5",
+    "react": "19.3.0",
+    "react-native": "0.88.1",
+    "react-native-safe-area-context": "~5.11.1",
+    "react-native-screens": "~4.30.0",
+    "@react-native-async-storage/async-storage": "2.2.0",
+    "expo-dev-client": "~58.0.20"
+  },
+  "devDependencies": {
+    "@types/react": "~19.3.0",
+    "typescript": "~5.9.0"
+  }
+}
