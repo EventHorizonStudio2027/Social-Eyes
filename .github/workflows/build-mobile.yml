@@ -1,0 +1,75 @@
+name: Build Social Eyes mobile preview
+on:
+  workflow_dispatch:
+    inputs:
+      platform:
+        description: 'Build target'
+        required: true
+        default: android
+        type: choice
+        options:
+          - android
+          - ios
+          - all
+permissions:
+  contents: read
+concurrency:
+  group: mobile-preview-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout full application source
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Fail closed if application is incomplete
+        shell: bash
+        run: |
+          set -euo pipefail
+          for file in package.json package-lock.json app.json eas.json tsconfig.json src/lib/supabase.ts src/providers/AuthProvider.tsx app/_layout.tsx assets/images/social-eyes-icon.png scripts/phase1-verify.mjs; do
+            if [[ ! -f "$file" ]]; then
+              echo "::error::Missing required application file: $file"
+              exit 1
+            fi
+          done
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Install and verify
+        run: |
+          npm ci --no-audit --no-fund
+          npm run verify:phase1
+          npm run typecheck
+      - name: Check Expo token
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+        run: |
+          if [[ -z "$EXPO_TOKEN" ]]; then
+            echo "::error::Set EXPO_TOKEN as a GitHub Actions repository secret."
+            exit 1
+          fi
+      - name: Configure Expo / EAS
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+      - name: Check EAS project association
+        shell: bash
+        run: |
+          node - <<'NODE'
+          const fs = require('fs');
+          const app = JSON.parse(fs.readFileSync('app.json', 'utf8')).expo;
+          if (!app?.extra?.eas?.projectId) {
+            console.error('::error::Missing expo.extra.eas.projectId in app.json. Link the app to an Expo project before building.');
+            process.exit(1);
+          }
+          NODE
+      - name: Build installable preview
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+          PLATFORM: ${{ inputs.platform }}
+        run: eas build --platform "$PLATFORM" --profile preview --non-interactive --no-wait
