@@ -7,11 +7,28 @@
     "orientation": "portrait",
     "userInterfaceStyle": "dark",
     "newArchEnabled": true,
-    "plugins": ["expo-router"],
-    "experiments": {"typedRoutes": true},
-    "ios": {"supportsTablet": false, "bundleIdentifier": "com.socialeyes.app", "icon": "./assets/images/social-eyes-icon.png"},
-    "android": {"package": "com.socialeyes.app", "edgeToEdgeEnabled": true, "adaptiveIcon": {"foregroundImage": "./assets/images/social-eyes-adaptive-foreground.png", "backgroundColor": "#0A1026"}},
-    "web": {"bundler": "metro"},
+    "plugins": [
+      "expo-router"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.socialeyes.app",
+      "icon": "./assets/images/social-eyes-icon.png"
+    },
+    "android": {
+      "package": "com.socialeyes.app",
+      "edgeToEdgeEnabled": true,
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/social-eyes-adaptive-foreground.png",
+        "backgroundColor": "#0A1026"
+      }
+    },
+    "web": {
+      "bundler": "metro"
+    },
     "icon": "./assets/images/social-eyes-icon.png"
   }
 }
