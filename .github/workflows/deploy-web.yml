@@ -1,0 +1,70 @@
+name: Deploy Social Eyes web app
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'app/**'
+      - 'src/**'
+      - 'assets/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'app.json'
+      - 'tsconfig.json'
+      - '.github/workflows/deploy-web.yml'
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: social-eyes-pages
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Validate complete application
+        shell: bash
+        run: |
+          set -euo pipefail
+          for file in package.json app.json tsconfig.json app/_layout.tsx app/index.tsx src/lib/supabase.ts src/lib/profiles.ts src/providers/AuthProvider.tsx assets/images/social-eyes-icon.png; do
+            if [[ ! -f "$file" ]]; then
+              echo "::error::Missing $file. Upload the complete source before deploying."
+              exit 1
+            fi
+          done
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: ${{ hashFiles('package-lock.json') != '' && 'npm' || '' }}
+      - name: Install dependencies
+        run: |
+          if [[ -f package-lock.json ]]; then npm ci --no-audit --no-fund; else npm install --no-audit --no-fund; fi
+      - name: Verify source
+        run: |
+          npm run verify:phase1
+          npm run typecheck
+      - name: Export Expo web build
+        env:
+          EXPO_PUBLIC_SUPABASE_URL: ${{ vars.EXPO_PUBLIC_SUPABASE_URL }}
+          EXPO_PUBLIC_SUPABASE_ANON_KEY: ${{ vars.EXPO_PUBLIC_SUPABASE_ANON_KEY }}
+        run: npx expo export --platform web --output-dir dist
+      - name: Confirm web artifact
+        run: test -s dist/index.html
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
