@@ -1,0 +1,38 @@
+name: Generate dependency lockfile
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  lockfile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Require full application source
+        shell: bash
+        run: |
+          set -euo pipefail
+          for file in package.json app.json tsconfig.json app/_layout.tsx src/providers/AuthProvider.tsx src/lib/supabase.ts; do
+            test -f "$file" || { echo "::error::Missing $file; publish the complete source first."; exit 1; }
+          done
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Generate package-lock.json
+        run: npm install --package-lock-only --ignore-scripts --no-audit --no-fund
+      - name: Validate clean install
+        run: npm ci --no-audit --no-fund
+      - name: Verify source and types
+        run: |
+          npm run verify:phase1
+          npm run typecheck
+      - name: Upload lockfile artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: social-eyes-package-lock
+          path: package-lock.json
+          if-no-files-found: warn
