@@ -1,0 +1,26 @@
+name: Phase 1 source readiness
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source-readiness:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Require complete application source before claiming build readiness
+        shell: bash
+        run: |
+          set -euo pipefail
+          for file in package.json app.json tsconfig.json src/providers/AuthProvider.tsx src/lib/profiles.ts scripts/phase1-verify.mjs .github/workflows/phase1.yml; do
+            if [[ ! -s "$file" ]]; then
+              echo "::error file=$file::Missing application source. Phase 1 is not ready for build verification."
+              exit 1
+            fi
+          done
+          echo 'Application source present; run full Phase 1 CI checks next.'
