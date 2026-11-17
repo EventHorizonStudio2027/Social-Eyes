@@ -21,6 +21,10 @@ const checks=[
   ['Hair geometry covers ten styles',()=>{for(let i=0;i<10;i++)assert.match(js,new RegExp('case '+i+':'))}],
   ['Reduced motion supported',()=>assert.match(css,/prefers-reduced-motion/)],
   ['Color swatches styled',()=>assert.match(css,/\.creator-swatch/)],
+  ['Facial geometry variants',()=>{for(const key of ['browTypes','noseTypes','mouthTypes','headContours','eyeOutline'])assert.ok(js.includes(key),key)}],
+  ['Lookbook restore validates data',()=>assert.match(js,/function normalizeLook\\(/)],
+  ['Avatar data clearing control',()=>{assert.match(html,/id="creator-clear-data"/);assert.match(js,/localStorage\\.removeItem\\(lookbookKey\\)/)}],
+  ['Backup file size limited',()=>assert.match(js,/file\\.size>100000/)],
   ['No inline application script',()=>assert.doesNotMatch(html,/<script>([\s\S]*?)<\/script>/)],
 ];
 let failed=0;
