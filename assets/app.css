@@ -27,3 +27,17 @@
 .creator-privacy strong{display:block;color:#dffaff;font-size:13px}
 .creator-privacy p{margin:7px 0 12px;color:#a8b9d2;font-size:12px;line-height:1.6}
 .creator-privacy button{font-size:12px;min-height:38px}
+
+/* Venue detail sheet — accessible desktop dialog and mobile bottom sheet */
+.venue-dialog{color:var(--text);background:linear-gradient(145deg,#131d35,#0a1123);border:1px solid #3a567c;border-radius:22px;padding:0;width:min(480px,calc(100% - 24px));max-height:min(88vh,760px);box-shadow:0 24px 90px #000b;overflow:auto}
+.venue-dialog::backdrop{background:#020711bd;backdrop-filter:blur(7px)}
+.venue-dialog-inner{padding:22px}.venue-dialog-top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:16px}
+#venue-dialog-close{border:1px solid #45617d;border-radius:50%;width:36px;height:36px;background:#182744;color:#effaff}
+.venue-dialog-art{height:180px;border-radius:15px;background:linear-gradient(125deg,#18445d,#57306f);position:relative;overflow:hidden}
+.venue-dialog-art.one{background:radial-gradient(circle at 65% 20%,#e995b588,transparent 40%),linear-gradient(140deg,#283b75,#57356a)}
+.venue-dialog-art.two{background:radial-gradient(circle at 30% 30%,#6fe9e899,transparent 43%),linear-gradient(140deg,#114858,#2b326e)}
+.venue-dialog-art.three{background:radial-gradient(circle at 70% 30%,#ffc87899,transparent 43%),linear-gradient(140deg,#6d3e6b,#253e65)}
+.venue-dialog h2{margin:18px 0 3px;font-size:25px}.venue-dialog p{line-height:1.6}
+.venue-dialog-meta{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0}.venue-dialog-meta span{border:1px solid #42607f;border-radius:99px;padding:6px 11px;font-size:12px;color:#c8def4}
+.venue-dialog-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}.venue-dialog-actions button{flex:1;min-width:135px}
+@media(max-width:600px){.venue-dialog{margin:auto auto 0;width:100%;max-width:100%;max-height:90dvh;border-radius:22px 22px 0 0}.venue-dialog-inner{padding:18px}.venue-dialog-art{height:145px}}
