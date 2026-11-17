@@ -22,3 +22,8 @@
 .creator-swatch{display:block;width:25px;height:25px;flex:0 0 auto;margin:3px auto 6px;border-radius:50%;border:2px solid #ffffff70;box-shadow:0 2px 10px #0005,inset 0 0 0 1px #0003}
 .creator-options button.active .creator-swatch{outline:2px solid #72e8f6;outline-offset:2px}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+.creator-privacy{margin:20px 0 12px;padding:16px;border:1px solid #36526e;border-radius:14px;background:#102039}
+.creator-privacy strong{display:block;color:#dffaff;font-size:13px}
+.creator-privacy p{margin:7px 0 12px;color:#a8b9d2;font-size:12px;line-height:1.6}
+.creator-privacy button{font-size:12px;min-height:38px}
