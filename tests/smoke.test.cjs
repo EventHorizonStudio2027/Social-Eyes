@@ -25,6 +25,10 @@ const checks=[
   ['Lookbook restore validates data',()=>assert.match(js,/function normalizeLook\(/)],
   ['Avatar data clearing control',()=>{assert.match(html,/id="creator-clear-data"/);assert.match(js,/localStorage\.removeItem\(lookbookKey\)/)}],
   ['Backup file size limited',()=>assert.match(js,/file\.size>100000/)],
+  ['Venue dialog has accessible heading',()=>{assert.match(html,/id="venue-dialog"[^>]*aria-labelledby="venue-dialog-title"/);assert.match(html,/id="venue-dialog-close"/)}],
+  ['Venue save and wave persistence',()=>{assert.match(js,/sceneStoreKey/);assert.match(js,/waveStoreKey/);assert.match(js,/function saveDemoIds/)}],
+  ['Venue details have no live-data claims',()=>assert.match(html,/fictional preview venue/)],
+  ['Venue dialog is responsive',()=>assert.match(css,/\.venue-dialog::backdrop/)],
   ['No inline application script',()=>assert.doesNotMatch(html,/<script>([\s\S]*?)<\/script>/)],
 ];
 let failed=0;
