@@ -44,6 +44,15 @@ const checks=[
     assert.match(js,/querySelectorAll\("#creator-categories \.creator-group"\)/);
     assert.match(js,/small\.textContent=selected\.getAttribute\("title"\)/);
   }],
+  ['Freckles track head width rather than using fixed off-face coordinates',()=>{
+    assert.match(js,/cheekX=150\+side\*\(headW\*\.53\)/);
+    assert.doesNotMatch(js,/119\+\(i%6\)\*5\+\(i>5\?58:0\)/);
+  }],
+  ['Eyeglass bridge connects both lenses symmetrically',()=>{
+    assert.match(js,/150-eyeGap\+15/);
+    assert.match(js,/150\+eyeGap-15/);
+    assert.doesNotMatch(js,/eyeY\+'h'\+\(eyeGap-14\)/);
+  }],
   ['Eye colors stay within natural human shades',()=>{
     assert.doesNotMatch(js,/"Eye color":\[[^\]]*(?:Violet|Purple|Red|Teal)/);
     assert.doesNotMatch(js,/eyeColors=\[[^;]*#9563d3/);
