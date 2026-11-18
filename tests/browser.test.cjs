@@ -40,6 +40,21 @@ async function main(){
    await page.locator('#creator-categories details').filter({has:page.locator('summary', {hasText:'Eye shape'})}).locator('summary').click();
    await page.locator('[data-creator-category="Eye shape"][data-creator-option="2"]').click();
    assert.equal(await page.locator('#character-render [data-eye-style="2"]').count(),2,'Eye selection updates both eyes');
+   // Exercise every modular face and hairstyle choice in the real browser.
+   for(const category of ['Head shape','Eye shape','Eyebrows','Nose','Mouth','Hairstyle']){
+    const detail=page.locator('#creator-categories details').filter({has:page.locator('summary',{hasText:category})});
+    if(!(await detail.evaluate(node=>node.open)))await detail.locator('summary').click();
+    const seen=new Set();
+    for(let option=0;option<10;option++){
+     await detail.locator('[data-creator-category="'+category+'"][data-creator-option="'+option+'"]').click();
+     const svg=await page.locator('#character-render svg').evaluate(el=>el.outerHTML);
+     assert.match(svg,/<svg[\\s>]/,'Valid avatar SVG');
+     seen.add(svg);
+    }
+    assert.equal(seen.size,10,category+' must have ten visibly distinct SVG states');
+   }
+   // Restore eye style 2 before verifying saved persistence.
+   await page.locator('[data-creator-category="Eye shape"][data-creator-option="2"]').click();
    await page.locator('#creator-save').click();
    await page.reload();
    await page.waitForSelector('#character-render svg');
