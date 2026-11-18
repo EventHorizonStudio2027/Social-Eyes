@@ -33,6 +33,17 @@ const checks=[
       assert.ok(js.includes(literal),category+' labels must match art module');
     }
   }],
+  ['Complexion is layered under brows, eyes, nose, and mouth',()=>{
+    const start=js.indexOf("function avatarSvg()");
+    const end=js.indexOf("function creatorKeyboard",start);
+    const renderer=js.slice(start,end);
+    assert.ok(renderer.includes("+complexion+topHair+''+browMarkup"),'Complexion must render before facial features');
+    assert.ok(!renderer.includes("+complexion+facialHair+accessories"),'Complexion must not cover face details');
+  }],
+  ['Creator category headers expose current selection',()=>{
+    assert.match(js,/querySelectorAll\("#creator-categories \.creator-group"\)/);
+    assert.match(js,/small\.textContent=selected\.getAttribute\("title"\)/);
+  }],
   ['Eye colors stay within natural human shades',()=>{
     assert.doesNotMatch(js,/"Eye color":\[[^\]]*(?:Violet|Purple|Red|Teal)/);
     assert.doesNotMatch(js,/eyeColors=\[[^;]*#9563d3/);
