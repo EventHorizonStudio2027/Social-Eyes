@@ -97,3 +97,25 @@
   font-weight:650;
   letter-spacing:0;
 }
+
+/* Studio hierarchy: refined collapsible groups with generous tap targets. */
+.creator-group{
+  border-radius:14px;
+  transition:border-color .18s ease,background-color .18s ease;
+}
+.creator-group[open]{
+  border-color:#4c718b;
+  background:linear-gradient(180deg,#17294155,transparent 72%);
+}
+.creator-group summary{
+  min-height:44px;
+  gap:12px;
+  border-radius:10px;
+}
+.creator-group summary:focus-visible{
+  outline:2px solid #9cf3ff;
+  outline-offset:3px;
+}
+@media(hover:hover){
+  .creator-group summary:hover{color:#f1fcff}
+}
