@@ -26,7 +26,8 @@
     "install:locked": "node scripts/bootstrap-dependencies.mjs --verify",
     "check:backend-config": "node scripts/check-live-backend-config.mjs",
     "verify:anonymous-boundary": "node scripts/verify-anonymous-boundary.mjs",
-    "preflight:github": "node scripts/github-handoff.mjs"
+    "preflight:github": "node scripts/github-handoff.mjs",
+    "preflight:release": "node scripts/release-preflight.mjs"
   },
   "dependencies": {
     "@expo/vector-icons": "^15.0.3",
