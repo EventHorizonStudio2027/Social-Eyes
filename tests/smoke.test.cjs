@@ -20,6 +20,24 @@ const hairModule=fs.readFileSync(path.join(root,'assets/avatar-hair.js'),'utf8')
 new Function('window',hairModule)(avatarModuleScope);
 const hairstyles=avatarModuleScope.SocialEyesHair;
 const checks=[
+  ['Displayed facial labels match actual artwork',()=>{
+    for(const [category,names] of [
+      ['Head shape',headShapes.names],
+      ['Eye shape',eyeShapes.names],
+      ['Eyebrows',faceParts.browNames],
+      ['Nose',faceParts.noseNames],
+      ['Mouth',faceParts.mouthNames],
+      ['Hairstyle',hairstyles.names]
+    ]){
+      const literal=JSON.stringify(category)+':'+JSON.stringify([...names]);
+      assert.ok(js.includes(literal),category+' labels must match art module');
+    }
+  }],
+  ['Eye colors stay within natural human shades',()=>{
+    assert.doesNotMatch(js,/"Eye color":\[[^\]]*(?:Violet|Purple|Red|Teal)/);
+    assert.doesNotMatch(js,/eyeColors=\[[^;]*#9563d3/);
+  }],
+
   ['Hairstyle module parses',()=>new Function(hairModule)],
   ['Hair loads before main renderer',()=>assert.ok(html.indexOf('avatar-hair.js')<html.indexOf('app.js'))],
   ['Ten distinct modular hairstyles',()=>{assert.equal(hairstyles.names.length,10);const styles=hairstyles.names.map((_,i)=>hairstyles.render(i,48,'#442c2c'));assert.equal(new Set(styles.map(x=>x.front+'|'+x.back)).size,10);assert.ok(styles.every(x=>typeof x.front==='string'&&typeof x.back==='string'))}],
