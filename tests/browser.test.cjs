@@ -37,6 +37,7 @@ async function main(){
    assert.notEqual(after,before,'Changing head shape changes avatar');
    await page.locator('#creator-undo').click();
    assert.equal(await page.locator('#character-render svg').evaluate(el=>el.outerHTML),before,'Undo restores prior SVG');
+   await page.locator('#creator-categories details').filter({has:page.locator('summary', {hasText:'Eye shape'})}).locator('summary').click();
    await page.locator('[data-creator-category="Eye shape"][data-creator-option="2"]').click();
    assert.equal(await page.locator('#character-render [data-eye-style="2"]').count(),2,'Eye selection updates both eyes');
    await page.locator('#creator-save').click();
