@@ -44,3 +44,37 @@
 
 .discover-summary,.connection-summary{font-size:12px;color:#b8d1e8;letter-spacing:.01em;margin:10px 0 14px;min-height:19px}
 .chip[aria-pressed="true"]{border-color:#66eaf4;box-shadow:inset 0 0 0 1px #66eaf44d}
+
+/* Avatar studio polish: tactile choices with legible selected and keyboard states. */
+.creator-options button{
+  position:relative;
+  transition:background-color .18s ease,border-color .18s ease,box-shadow .18s ease,transform .18s ease;
+}
+@media(hover:hover){
+  .creator-options button:not(.active):hover{
+    background:#243957;
+    border-color:#6a94b1;
+    transform:translateY(-2px);
+  }
+}
+.creator-options button.active{
+  border-color:#8ef5ff;
+  background:linear-gradient(155deg,#234d65,#26365d);
+  box-shadow:inset 0 1px 0 #ffffff1a,0 0 0 1px #8ef5ff33,0 7px 18px #0004;
+}
+.creator-options button.active::after{
+  content:"✓";
+  position:absolute;
+  top:3px;
+  right:5px;
+  font-size:10px;
+  font-weight:900;
+  color:#a6fff0;
+}
+.creator-options button:focus-visible,.creator-genders button:focus-visible{
+  outline:3px solid #a6f7ff;
+  outline-offset:3px;
+}
+@media(max-width:400px){
+  .creator-options button{min-height:48px}
+}
