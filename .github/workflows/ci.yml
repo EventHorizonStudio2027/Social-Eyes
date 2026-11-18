@@ -21,6 +21,8 @@ jobs:
         run: node tests/smoke.test.cjs
       - name: Foundation tests (Node built-in runner)
         run: node --test tests/*.test.mjs
+      - name: Avatar module and integration audit
+        run: npm run audit:avatar
       - name: Phase 1 static source audit
         run: node scripts/phase1-static-audit.mjs
       - name: Release preflight report
