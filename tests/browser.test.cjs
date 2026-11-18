@@ -53,6 +53,29 @@ async function main(){
     }
     assert.equal(seen.size,10,category+' must have ten visibly distinct SVG states');
    }
+   // Cross-category composition checks: verify all face parts remain mounted
+   // while head, hair, complexion, and accessories change together.
+   const combinations=[
+    {'Head shape':0,'Hairstyle':9,'Eye shape':4,'Eyebrows':7,'Nose':3,'Mouth':8,'Complexion':5,'Accessories':1},
+    {'Head shape':8,'Hairstyle':2,'Eye shape':9,'Eyebrows':2,'Nose':9,'Mouth':1,'Complexion':2,'Accessories':6},
+    {'Head shape':4,'Hairstyle':6,'Eye shape':0,'Eyebrows':9,'Nose':5,'Mouth':6,'Complexion':8,'Accessories':3}
+   ];
+   for(const combo of combinations){
+    for(const [category,option] of Object.entries(combo)){
+     const detail=page.locator('#creator-categories details').filter({has:page.locator('summary',{hasText:category})});
+     if(!(await detail.evaluate(node=>node.open)))await detail.locator('summary').click();
+     await detail.locator('[data-creator-category="'+category+'"][data-creator-option="'+option+'"]').click();
+    }
+    assert.equal(await page.locator('#character-render .avatar-eye').count(),2,'Both eyes survive mixed customization');
+    assert.equal(await page.locator('#character-render [data-nose]').count(),1,'Nose survives mixed customization');
+    assert.equal(await page.locator('#character-render [data-mouth]').count(),1,'Mouth survives mixed customization');
+    const geometry=await page.locator('#character-render svg').evaluate(el=>el.outerHTML);
+    assert.doesNotMatch(geometry,/NaN|undefined|Infinity/,'Combined avatar contains valid numeric geometry');
+    for(const [category,option] of Object.entries(combo)){
+     const button=page.locator('[data-creator-category="'+category+'"][data-creator-option="'+option+'"]');
+     assert.equal(await button.getAttribute('aria-pressed'),'true','Selection state remains accurate for '+category);
+    }
+   }
    // Restore eye style 2 before verifying saved persistence.
    await page.locator('[data-creator-category="Eye shape"][data-creator-option="2"]').click();
    await page.locator('#creator-save').click();
