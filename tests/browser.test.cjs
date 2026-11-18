@@ -53,6 +53,14 @@ async function main(){
     }
     assert.equal(seen.size,10,category+' must have ten visibly distinct SVG states');
    }
+   // Hair should follow crown dimensions when changing head geometry.
+   const headDetail=page.locator('#creator-categories details').filter({has:page.locator('summary',{hasText:'Head shape'})});
+   if(!(await headDetail.evaluate(node=>node.open)))await headDetail.locator('summary').click();
+   await headDetail.locator('[data-creator-category="Head shape"][data-creator-option="4"]').click();
+   const narrowHair=await page.locator('#character-render svg g[transform]').first().getAttribute('transform');
+   await headDetail.locator('[data-creator-category="Head shape"][data-creator-option="8"]').click();
+   const broadHair=await page.locator('#character-render svg g[transform]').first().getAttribute('transform');
+   assert.notEqual(narrowHair,broadHair,'Hairstyle placement follows selected head geometry');
    // Cross-category composition checks: verify all face parts remain mounted
    // while head, hair, complexion, and accessories change together.
    const combinations=[
