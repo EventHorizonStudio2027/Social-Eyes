@@ -1,0 +1,20 @@
+name: Social Eyes Phase 1 checks
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  static-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: JavaScript syntax
+        run: |
+          for file in assets/*.js tests/*.cjs; do node --check "$file"; done
+      - name: Static integration smoke tests
+        run: node tests/smoke.test.cjs
