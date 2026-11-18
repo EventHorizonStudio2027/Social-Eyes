@@ -10,7 +10,14 @@ const js=fs.readFileSync(path.join(root,'assets/app.js'),'utf8');
 const headModule=fs.readFileSync(path.join(root,'assets/avatar-heads.js'),'utf8');
 const avatarModuleScope={};new Function('window',headModule)(avatarModuleScope);
 const headShapes=avatarModuleScope.SocialEyesHeadShapes;
+const eyeModule=fs.readFileSync(path.join(root,'assets/avatar-eyes.js'),'utf8');
+new Function('window',eyeModule)(avatarModuleScope);
+const eyeShapes=avatarModuleScope.SocialEyesEyes;
 const checks=[
+  ['Eye module parses',()=>new Function(eyeModule)],
+  ['Eye layer loads before main renderer',()=>assert.ok(html.indexOf('avatar-eyes.js')<html.indexOf('app.js'))],
+  ['Ten distinct human eye pairs',()=>{assert.equal(eyeShapes.names.length,10);const shapes=eyeShapes.names.map((_,i)=>eyeShapes.pair(i,150,117,17,'#548ac1',0));assert.equal(new Set(shapes).size,10);assert.ok(shapes.every(svg=>!svg.includes('eyebrow')))}],
+  ['Eye component is used by avatar renderer',()=>assert.match(js,/SocialEyesEyes\.pair\(/)],
   ['Head module parses',()=>new Function(headModule)],
   ['Head module loads before app',()=>assert.ok(html.indexOf('avatar-heads.js')<html.indexOf('app.js'))],
   ['Ten original head paths are distinct',()=>{assert.equal(headShapes.names.length,10);const paths=headShapes.names.map((_,i)=>headShapes.path(i,150,82,52,62));assert.equal(new Set(paths).size,10);assert.ok(paths.every(p=>p.endsWith('Z')))}],
@@ -29,7 +36,7 @@ const checks=[
   ['Hair geometry covers ten styles',()=>{for(let i=0;i<10;i++)assert.match(js,new RegExp('case '+i+':'))}],
   ['Reduced motion supported',()=>assert.match(css,/prefers-reduced-motion/)],
   ['Color swatches styled',()=>assert.match(css,/\.creator-swatch/)],
-  ['Facial geometry variants',()=>{for(const key of ['browTypes','noseTypes','mouthTypes','headContours','eyeOutline'])assert.ok(js.includes(key),key)}],
+  ['Facial geometry variants',()=>{for(const key of ['browTypes','noseTypes','mouthTypes','headContours'])assert.ok(js.includes(key),key)}],
   ['Lookbook restore validates data',()=>assert.match(js,/function normalizeLook\(/)],
   ['Avatar data clearing control',()=>{assert.match(html,/id="creator-clear-data"/);assert.match(js,/localStorage\.removeItem\(lookbookKey\)/)}],
   ['Backup file size limited',()=>assert.match(js,/file\.size>100000/)],
