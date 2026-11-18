@@ -78,3 +78,22 @@
 @media(max-width:400px){
   .creator-options button{min-height:48px}
 }
+
+/* Compact mobile avatar studio: keep the portrait visible without wasting vertical space. */
+@media(max-width:950px){
+  .character-stage{min-height:350px}
+  .character-stage svg{height:min(270px,38vh);max-width:100%}
+}
+@media(max-width:400px){
+  .character-stage{min-height:320px}
+  .character-stage svg{height:min(240px,35vh)}
+}
+.creator-group summary small{
+  max-width:56%;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  color:#a6e8f1;
+  font-weight:650;
+  letter-spacing:0;
+}
