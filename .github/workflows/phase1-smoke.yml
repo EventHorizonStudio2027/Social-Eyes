@@ -18,3 +18,17 @@ jobs:
           for file in assets/*.js tests/*.cjs; do node --check "$file"; done
       - name: Static integration smoke tests
         run: node tests/smoke.test.cjs
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install browser testing dependency
+        run: npm install --no-save --no-package-lock playwright
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Test mobile and desktop avatar behavior
+        run: node tests/browser.test.cjs
