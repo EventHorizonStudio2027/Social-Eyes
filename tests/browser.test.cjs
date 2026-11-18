@@ -48,7 +48,7 @@ async function main(){
     for(let option=0;option<10;option++){
      await detail.locator('[data-creator-category="'+category+'"][data-creator-option="'+option+'"]').click();
      const svg=await page.locator('#character-render svg').evaluate(el=>el.outerHTML);
-     assert.match(svg,/<svg[\\s>]/,'Valid avatar SVG');
+     assert.match(svg,/<svg[\s>]/,'Valid avatar SVG');
      seen.add(svg);
     }
     assert.equal(seen.size,10,category+' must have ten visibly distinct SVG states');
