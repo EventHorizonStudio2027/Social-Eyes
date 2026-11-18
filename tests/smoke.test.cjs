@@ -13,7 +13,21 @@ const headShapes=avatarModuleScope.SocialEyesHeadShapes;
 const eyeModule=fs.readFileSync(path.join(root,'assets/avatar-eyes.js'),'utf8');
 new Function('window',eyeModule)(avatarModuleScope);
 const eyeShapes=avatarModuleScope.SocialEyesEyes;
+const faceModule=fs.readFileSync(path.join(root,'assets/avatar-face-parts.js'),'utf8');
+new Function('window',faceModule)(avatarModuleScope);
+const faceParts=avatarModuleScope.SocialEyesFaceParts;
 const checks=[
+  ['Face-parts module parses',()=>new Function(faceModule)],
+  ['Face parts load before renderer',()=>assert.ok(html.indexOf('avatar-face-parts.js')<html.indexOf('app.js'))],
+  ['Thirty distinct facial feature variants',()=>{
+    for(const [names,draw] of [
+      [faceParts.browNames,i=>faceParts.eyebrow(i,133,105,'#332322')],
+      [faceParts.noseNames,i=>faceParts.nose(i,150,124)],
+      [faceParts.mouthNames,i=>faceParts.mouth(i,150,151,19)]
+    ]){assert.equal(names.length,10);assert.equal(new Set(names.map((_,i)=>draw(i))).size,10)}
+  }],
+  ['Face layers integrated',()=>{for(const method of ['eyebrow','nose','mouth'])assert.ok(js.includes('SocialEyesFaceParts.'+method))}],
+
   ['Eye module parses',()=>new Function(eyeModule)],
   ['Eye layer loads before main renderer',()=>assert.ok(html.indexOf('avatar-eyes.js')<html.indexOf('app.js'))],
   ['Ten distinct human eye pairs',()=>{assert.equal(eyeShapes.names.length,10);const shapes=eyeShapes.names.map((_,i)=>eyeShapes.pair(i,150,117,17,'#548ac1',0));assert.equal(new Set(shapes).size,10);assert.ok(shapes.every(svg=>!svg.includes('eyebrow')))}],
@@ -36,7 +50,7 @@ const checks=[
   ['Hair geometry covers ten styles',()=>{for(let i=0;i<10;i++)assert.match(js,new RegExp('case '+i+':'))}],
   ['Reduced motion supported',()=>assert.match(css,/prefers-reduced-motion/)],
   ['Color swatches styled',()=>assert.match(css,/\.creator-swatch/)],
-  ['Facial geometry variants',()=>{for(const key of ['browTypes','noseTypes','mouthTypes','headContours'])assert.ok(js.includes(key),key)}],
+  ['Facial geometry variants',()=>{for(const key of ['headContours','SocialEyesFaceParts.eyebrow','SocialEyesFaceParts.nose','SocialEyesFaceParts.mouth'])assert.ok(js.includes(key),key)}],
   ['Lookbook restore validates data',()=>assert.match(js,/function normalizeLook\(/)],
   ['Avatar data clearing control',()=>{assert.match(html,/id="creator-clear-data"/);assert.match(js,/localStorage\.removeItem\(lookbookKey\)/)}],
   ['Backup file size limited',()=>assert.match(js,/file\.size>100000/)],
