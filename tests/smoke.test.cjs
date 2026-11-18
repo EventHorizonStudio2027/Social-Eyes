@@ -7,7 +7,15 @@ const root=path.resolve(__dirname,'..');
 const html=fs.readFileSync(path.join(root,'index.html'),'utf8');
 const css=fs.readFileSync(path.join(root,'assets/app.css'),'utf8');
 const js=fs.readFileSync(path.join(root,'assets/app.js'),'utf8');
+const headModule=fs.readFileSync(path.join(root,'assets/avatar-heads.js'),'utf8');
+const avatarModuleScope={};new Function('window',headModule)(avatarModuleScope);
+const headShapes=avatarModuleScope.SocialEyesHeadShapes;
 const checks=[
+  ['Head module parses',()=>new Function(headModule)],
+  ['Head module loads before app',()=>assert.ok(html.indexOf('avatar-heads.js')<html.indexOf('app.js'))],
+  ['Ten original head paths are distinct',()=>{assert.equal(headShapes.names.length,10);const paths=headShapes.names.map((_,i)=>headShapes.path(i,150,82,52,62));assert.equal(new Set(paths).size,10);assert.ok(paths.every(p=>p.endsWith('Z')))}],
+  ['Avatar renderer uses shared head module',()=>assert.match(js,/SocialEyesHeadShapes\.path\(head,150,top,headW,headH\)/)],
+
   ['HTML loads extracted styles',()=>assert.match(html,/href="\.\/assets\/app\.css"/)],
   ['HTML loads extracted script',()=>assert.match(html,/src="\.\/assets\/app\.js"/)],
   ['JavaScript parses',()=>new Function(js)],
