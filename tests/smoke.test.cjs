@@ -16,7 +16,15 @@ const eyeShapes=avatarModuleScope.SocialEyesEyes;
 const faceModule=fs.readFileSync(path.join(root,'assets/avatar-face-parts.js'),'utf8');
 new Function('window',faceModule)(avatarModuleScope);
 const faceParts=avatarModuleScope.SocialEyesFaceParts;
+const hairModule=fs.readFileSync(path.join(root,'assets/avatar-hair.js'),'utf8');
+new Function('window',hairModule)(avatarModuleScope);
+const hairstyles=avatarModuleScope.SocialEyesHair;
 const checks=[
+  ['Hairstyle module parses',()=>new Function(hairModule)],
+  ['Hair loads before main renderer',()=>assert.ok(html.indexOf('avatar-hair.js')<html.indexOf('app.js'))],
+  ['Ten distinct modular hairstyles',()=>{assert.equal(hairstyles.names.length,10);const styles=hairstyles.names.map((_,i)=>hairstyles.render(i,48,'#442c2c'));assert.equal(new Set(styles.map(x=>x.front+'|'+x.back)).size,10);assert.ok(styles.every(x=>typeof x.front==='string'&&typeof x.back==='string'))}],
+  ['Hairstyles are integrated into avatar',()=>assert.match(js,/SocialEyesHair\.render\(/)],
+
   ['Face-parts module parses',()=>new Function(faceModule)],
   ['Face parts load before renderer',()=>assert.ok(html.indexOf('avatar-face-parts.js')<html.indexOf('app.js'))],
   ['Thirty distinct facial feature variants',()=>{
@@ -47,7 +55,7 @@ const checks=[
   ['PNG export mounts',()=>assert.match(html,/id="creator-export-png"/)],
   ['Lookbook implementation exists',()=>assert.match(js,/function renderLookbook\(/)],
   ['Backup format validation exists',()=>assert.match(js,/social-eyes-avatar-backup/)],
-  ['Hair geometry covers ten styles',()=>{for(let i=0;i<10;i++)assert.match(js,new RegExp('case '+i+':'))}],
+  ['Hair geometry covers ten styles',()=>{for(let i=0;i<10;i++)assert.match(hairModule,new RegExp('case '+i+':'))}],
   ['Reduced motion supported',()=>assert.match(css,/prefers-reduced-motion/)],
   ['Color swatches styled',()=>assert.match(css,/\.creator-swatch/)],
   ['Facial geometry variants',()=>{for(const key of ['headContours','SocialEyesFaceParts.eyebrow','SocialEyesFaceParts.nose','SocialEyesFaceParts.mouth'])assert.ok(js.includes(key),key)}],
