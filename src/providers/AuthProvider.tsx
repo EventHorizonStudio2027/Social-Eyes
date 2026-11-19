@@ -90,7 +90,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
     };
     const linkListener = Linking.addEventListener('url', event => { void handleRecoveryLink(event.url); });
     void Linking.getInitialURL()
-      .then(async url => { await handleRecoveryLink(url); })
+      .then(async url => { await handleRecoveryLink(url ?? null); })
       .catch(() => { /* No initial link available; proceed with ordinary navigation. */ })
       .finally(() => {
         initialLinkPending.current = false;
