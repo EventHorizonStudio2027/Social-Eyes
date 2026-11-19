@@ -14,3 +14,9 @@ test('brand eye remains fully visible and not cropped in small or hero placement
  assert.match(css,/\.brand-symbol img\{[^}]*object-fit:contain/);
  assert.match(css,/\.hero-eye img\{[^}]*object-fit:contain/);
 });
+
+test('browser favicon uses the approved uploaded logo and never the mistaken original asset',()=>{
+ const html=read('index.html');
+ assert.match(html,/<link rel="icon" type="image\/svg\+xml" href="\.\/assets\/brand-approved-eye\.svg">/);
+ assert.ok(!html.includes('brand-original-eye.svg'));
+});
