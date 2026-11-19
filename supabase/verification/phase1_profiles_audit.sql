@@ -33,8 +33,8 @@ begin
   ) then raise exception 'authenticated role can execute a profile security function'; end if;
   foreach operation in array array['SELECT','INSERT','UPDATE','DELETE'] loop
     select count(*), count(*) filter (where
-      (qual is null or qual ~ 'auth\\.uid')
-      and (with_check is null or with_check ~ 'auth\\.uid')
+      (qual is null or qual ~ 'auth\.uid')
+      and (with_check is null or with_check ~ 'auth\.uid')
       and (qual is not null or with_check is not null))
     into policy_count, owner_policy_count
     from pg_policies
