@@ -1,0 +1,25 @@
+name: Phase 1 verification
+on:
+  push:
+    branches: [main, 'phase1/**']
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  offline-verification:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Foundation and static audits
+        run: npm run verify:phase1
+      - name: Avatar component audit
+        run: npm run audit:avatar
+      - name: Report native verification as pending
+        run: echo 'Offline checks do not certify iOS or Android builds, device tests, or live RLS.'
