@@ -57,11 +57,18 @@
     const activeSelection = selectionId;
     image.onload = () => {
       if (!objectUrl || activeSelection !== selectionId) return;
+      if (image.naturalWidth < 128 || image.naturalHeight < 128) {
+        reset();
+        feedback.textContent = 'This photo is too small. Choose a portrait at least 128 × 128 pixels.';
+        return;
+      }
       preview.hidden = false;
       suggest.disabled = false;
       placeholder.hidden = true;
       feedback.dataset.state = 'ready';
-      feedback.textContent = 'Photo ready. You can suggest colors or build your avatar manually.';
+      feedback.textContent = image.naturalWidth > image.naturalHeight * 1.5
+        ? 'Wide photo detected. The center will be cropped for suggestions; use a centered portrait for better results.'
+        : 'Photo ready. You can suggest colors or build your avatar manually.';
     };
     image.onerror = () => {
       if (activeSelection !== selectionId) return;
