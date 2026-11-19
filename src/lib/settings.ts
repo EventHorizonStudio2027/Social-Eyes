@@ -6,7 +6,7 @@ export type PrivacySettings = {
   allowNotifications: boolean;
 };
 
-export const defaultSettings: Readonly<PrivacySettings> = Object.freeze({
+export const defaultSettings = Object.freeze({
   incognito: true,
   showIntentions: false,
   allowNotifications: false,
