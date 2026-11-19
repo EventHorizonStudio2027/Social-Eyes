@@ -203,3 +203,6 @@
 
 /* Give the selfie preview a subtle, premium portrait-frame treatment. */
 .selfie-preview{box-shadow:0 0 0 4px #86e9f011,0 15px 34px #02081466}.selfie-preview:after{content:"";position:absolute;inset:6px;border:1px solid #b6f7ff55;border-radius:14px;pointer-events:none}.selfie-placeholder{border-style:dashed;border-color:#6c9ab0}
+
+/* Consistent, visible keyboard focus on the two primary selfie entry points. */
+.selfie-action-primary:focus-visible,.selfie-action-secondary:focus-visible{outline:3px solid #e2faff;outline-offset:4px;box-shadow:0 0 0 7px #45c9ed33}
