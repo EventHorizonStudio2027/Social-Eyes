@@ -11,7 +11,7 @@
     const center=average(imageData,width,height,[.39,.38,.61,.65]);
     const top=average(imageData,width,height,[.38,.08,.62,.22]);
     if(!center||!top)throw Error('Insufficient opaque pixels');
-    return {version:1,method:'simple-region-colors',values:{'Skin tone':nearest(center,skin),'Hair color':nearest(top,hair)},confidence:'unverified',editable:true};
+    return {version:1,method:'simple-region-colors',values:{'Skin tone':nearest(center,skin),'Hair color':nearest(top,hair)},confidence:'unverified',editable:true,warning:'Colors are approximate and may reflect lighting, background, or clothing. Review before saving.'};
   }
   root.SocialEyesPhotoPalette=Object.freeze({suggest});
 })(typeof window!=='undefined'?window:globalThis);
