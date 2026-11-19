@@ -43,3 +43,17 @@ test('photo onboarding communicates low-confidence sampling and manual control',
   assert.match(sampler,/warning:'Colors are approximate/);
   assert.match(html,/Create manually/);
 });
+
+test('photo palette rejects badly underexposed and blown-out center samples',()=>{
+ const context={};vm.runInNewContext(read('assets/photo-palette.js'),context);
+ for(const value of [0,255]){
+  const pixels=new Uint8ClampedArray(128*128*4);
+  for(let i=0;i<pixels.length;i+=4){pixels[i]=value;pixels[i+1]=value;pixels[i+2]=value;pixels[i+3]=255;}
+  assert.throws(()=>context.SocialEyesPhotoPalette.suggest(pixels,128,128),/too dark or overexposed/);
+ }
+});
+test('photo suggestions cannot be double-submitted while sampling',()=>{
+ const js=read('assets/selfie-onboarding.js');
+ assert.match(js,/suggest\.disabled = true;\s*const canvas/);
+ assert.match(js,/finally \{\s*suggest\.disabled = !objectUrl/);
+});
