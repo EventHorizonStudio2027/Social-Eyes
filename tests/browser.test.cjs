@@ -53,6 +53,17 @@ async function main(){
     }
     assert.equal(seen.size,10,category+' must have ten visibly distinct SVG states');
    }
+   // Search filters categories without altering the avatar or losing selections.
+   const search=page.locator('#creator-category-search');
+   const portraitBeforeSearch=await page.locator('#character-render svg').evaluate(el=>el.outerHTML);
+   await search.fill('hairstyle');
+   assert.equal(await page.locator('#creator-categories .creator-group:visible').count(),1,'Category search narrows to hairstyle');
+   assert.equal(await page.locator('#character-render svg').evaluate(el=>el.outerHTML),portraitBeforeSearch,'Filtering must not modify avatar');
+   await search.fill('zzzz-unmatched-style');
+   assert.equal(await page.locator('#creator-categories .creator-group:visible').count(),0,'Unmatched search hides all categories');
+   assert.equal(await page.locator('#creator-filter-empty:visible').count(),1,'Empty search shows explanation');
+   await search.fill('');
+   assert.equal(await page.locator('#creator-categories .creator-group:visible').count(),15,'Clearing search restores all categories');
    // Hair should follow crown dimensions when changing head geometry.
    const headDetail=page.locator('#creator-categories details').filter({has:page.locator('summary',{hasText:'Head shape'})});
    if(!(await headDetail.evaluate(node=>node.open)))await headDetail.locator('summary').click();
