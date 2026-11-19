@@ -8,7 +8,7 @@
   function luminance(c){return .2126*c[0]+.7152*c[1]+.0722*c[2];}
   function nearest(sample,palette){let index=0,best=Infinity;palette.forEach((color,i)=>{const d=distance(sample,rgb(color));if(d<best){best=d;index=i;}});return index;}
   function average(data,width,height,region){const [x0,y0,x1,y1]=region;let r=0,g=0,b=0,n=0;for(let y=Math.floor(y0*height);y<Math.floor(y1*height);y+=2){for(let x=Math.floor(x0*width);x<Math.floor(x1*width);x+=2){const i=(y*width+x)*4,a=data[i+3];if(a<220)continue;r+=data[i];g+=data[i+1];b+=data[i+2];n++;}}return n>=10?[r/n,g/n,b/n]:null;}
-  function suggest(imageData,width,height){if(!Number.isInteger(width)||!Number.isInteger(height)||width<32||height<32||!imageData||imageData.length!==width*height*4)throw Error('Invalid image sample');
+  function suggest(imageData,width,height){if(!Number.isInteger(width)||!Number.isInteger(height)||width<32||height<32||width>2048||height>2048||!imageData||imageData.length!==width*height*4)throw Error('Invalid image sample');
     const center=average(imageData,width,height,[.39,.38,.61,.65]);
     const top=average(imageData,width,height,[.38,.08,.62,.22]);
     if(!center||!top)throw Error('Insufficient opaque pixels');
