@@ -9,7 +9,8 @@
   const feedback = document.getElementById('selfie-feedback');
   const discard = document.getElementById('selfie-discard');
   const manual = document.getElementById('selfie-manual');
-  if (!camera || !upload || !preview || !image || !placeholder || !feedback || !discard || !manual) return;
+  const suggest = document.getElementById('selfie-suggest');
+  if (!camera || !upload || !preview || !image || !placeholder || !feedback || !discard || !manual || !suggest) return;
   let objectUrl = null;
   const reset = () => {
     if (objectUrl) URL.revokeObjectURL(objectUrl);
@@ -19,6 +20,7 @@
     placeholder.hidden = false;
     camera.value = '';
     upload.value = '';
+    suggest.disabled = true;
   };
   const select = event => {
     const file = event.target.files && event.target.files[0];
@@ -33,8 +35,9 @@
     image.onload = () => {
       if (!objectUrl) return;
       preview.hidden = false;
+      suggest.disabled = false;
       placeholder.hidden = true;
-      feedback.textContent = 'Private preview ready. Cartoon conversion is not connected yet; customize your avatar below.';
+      feedback.textContent = 'Private preview ready. Photo ready. You can optionally suggest two editable avatar colors; facial features are not analyzed.';
     };
     image.onerror = () => {
       reset();
@@ -42,6 +45,27 @@
     };
     image.src = objectUrl;
   };
+  suggest.addEventListener('click', () => {
+    if (!objectUrl || !image.complete || !image.naturalWidth || !window.SocialEyesPhotoPalette || !window.SocialEyesApplyPhotoSuggestions) return;
+    try {
+      const canvas = document.createElement('canvas');
+      canvas.width = 128;
+      canvas.height = 128;
+      const ctx = canvas.getContext('2d', { willReadFrequently: true });
+      if (!ctx) throw Error('Canvas unavailable');
+      ctx.drawImage(image, 0, 0, 128, 128);
+      const pixels = ctx.getImageData(0, 0, 128, 128);
+      const proposal = window.SocialEyesPhotoPalette.suggest(pixels.data, 128, 128);
+      if (!window.SocialEyesApplyPhotoSuggestions(proposal)) throw Error('Avatar editor unavailable');
+      feedback.textContent = 'Applied approximate skin and hair color suggestions. These are rough image samples, not face detection. Review and edit your avatar below.';
+      document.getElementById('manual-avatar-editor')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      ctx.clearRect(0, 0, 128, 128);
+      canvas.width = 0;
+      canvas.height = 0;
+    } catch {
+      feedback.textContent = 'Could not sample colors from this photo. Your avatar is unchanged; you can customize manually.';
+    }
+  });
   camera.addEventListener('change', select);
   upload.addEventListener('change', select);
   discard.addEventListener('click', () => { reset(); feedback.textContent = 'Photo removed from the preview.'; });
