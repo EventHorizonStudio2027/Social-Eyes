@@ -218,3 +218,6 @@
 
 /* Clear visual hierarchy for photo readiness messages without a bulky alert. */
 #selfie-feedback{max-width:46ch;padding-left:10px;border-left:2px solid #5d9aaf}#selfie-feedback[data-state="applied"]{border-left-color:#79d8af}#selfie-feedback[data-state="error"]{border-left-color:#e98c98}
+
+/* One concise action row keeps avatar comparison discoverable on narrow screens. */
+.selfie-next-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.selfie-next-actions .selfie-suggest{margin:0}.selfie-view-avatar{border:1px solid #6d9bad66;background:transparent;color:#d3ecf6;border-radius:12px;padding:10px 14px;font:inherit;font-weight:650;cursor:pointer}.selfie-view-avatar:hover{background:#8ce5f011}.selfie-view-avatar:focus-visible{outline:3px solid #e2faff;outline-offset:3px}@media(max-width:430px){.selfie-next-actions{display:grid;grid-template-columns:1fr}.selfie-next-actions .selfie-suggest,.selfie-view-avatar{width:100%}}
