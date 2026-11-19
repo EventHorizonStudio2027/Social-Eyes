@@ -26,7 +26,7 @@ jobs:
           echo 'Application source present; run full Phase 1 CI checks next.'
 
   restore-native-assets:
-    if: github.event_name == 'pull_request' && github.head_ref == 'phase1/verification-hardening-20261118' && hashFiles('assets/images/social-eyes-icon.png', 'assets/images/social-eyes-adaptive-foreground.png') == ''
+    if: github.event_name == 'pull_request' && github.head_ref == 'phase1/verification-hardening-20261118'
     runs-on: ubuntu-latest
     timeout-minutes: 20
     permissions:
