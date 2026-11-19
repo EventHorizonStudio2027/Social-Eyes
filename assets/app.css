@@ -206,3 +206,6 @@
 
 /* Consistent, visible keyboard focus on the two primary selfie entry points. */
 .selfie-action-primary:focus-visible,.selfie-action-secondary:focus-visible{outline:3px solid #e2faff;outline-offset:4px;box-shadow:0 0 0 7px #45c9ed33}
+
+/* Compact, meaningful status feedback in the selfie-first studio. */
+#selfie-feedback[data-state="ready"]{color:#c8e5ef}#selfie-feedback[data-state="applied"]{color:#a4f4d1}#selfie-feedback[data-state="error"]{color:#ffb7bb}#selfie-feedback[data-state]{font-weight:600;line-height:1.55}
