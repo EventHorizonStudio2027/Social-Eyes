@@ -12,6 +12,7 @@
     const center=average(imageData,width,height,[.39,.38,.61,.65]);
     const top=average(imageData,width,height,[.38,.08,.62,.22]);
     if(!center||!top)throw Error('Insufficient opaque pixels');
+    if(luminance(top)<5||luminance(top)>252)throw Error('Hair region too dark or overexposed');
     if(luminance(center)<18||luminance(center)>248)throw Error('Center sample too dark or overexposed');
     return {version:1,method:'simple-region-colors',values:{'Skin tone':nearest(center,skin),'Hair color':nearest(top,hair)},confidence:'unverified',editable:true,warning:'Colors are approximate and may reflect lighting, background, or clothing. Review before saving.'};
   }
