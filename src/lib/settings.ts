@@ -12,7 +12,7 @@ export const defaultSettings: Readonly<PrivacySettings> = Object.freeze({
   allowNotifications: false,
 });
 const STORAGE_KEY = 'social-eyes:settings:v1';
-const fields: (keyof PrivacySettings)[] = ['incognito', 'showIntentions', 'allowNotifications'];
+const fields = ['incognito', 'showIntentions', 'allowNotifications'] as const;
 
 function isRecord(value: unknown) {
   return value !== null && typeof value === 'object' && !Array.isArray(value);
@@ -23,7 +23,7 @@ export function validateSettingsPatch(patch: Partial<PrivacySettings>) {
   if (!entries.length) throw new TypeError('Privacy settings patch cannot be empty');
   const result: Partial<PrivacySettings> = {};
   for (const [key, value] of entries) {
-    if (!fields.includes(key as keyof PrivacySettings) || typeof value !== 'boolean') throw new TypeError('Privacy settings patch is invalid');
+    if (!fields.some(field => field === key) || typeof value !== 'boolean') throw new TypeError('Privacy settings patch is invalid');
     Object.assign(result, { [key]: value });
   }
   return result;
