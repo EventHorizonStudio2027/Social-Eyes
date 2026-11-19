@@ -31,8 +31,8 @@ export async function saveMyProfile(profile: PublicProfile): Promise<PublicProfi
     const { error } = await supabase!.from('profiles').upsert(payload, { onConflict: 'id' });
     if (error) throw error;
     const confirmed = await getMyProfile(identity.user.id);
-    if (!confirmed || confirmed.display_name !== payload.display_name || confirmed.bio !== payload.bio || confirmed.intent !== payload.intent)
-      throw new Error('Profile save verification failed');
+    if (!confirmed || confirmed.display_name !== validated.display_name || confirmed.bio !== validated.bio || confirmed.intent !== validated.intent)
+      throw new Error('Profile save could not be verified');
     return confirmed;
   } finally { saveInProgress = false; }
 }
