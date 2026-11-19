@@ -36,7 +36,7 @@ export default function ProfileScreen() {
         {settingsError ? <><Text accessibilityRole="alert" style={styles.error}>{settingsError}</Text><Pressable disabled={settingsSaving} accessibilityRole="button" accessibilityLabel="Reload saved privacy preferences" onPress={() => void retrySettings()}><Text style={styles.action}>Reload saved preferences</Text></Pressable></> : null}
       </Panel>
       <Panel>
-        <View style={styles.connectionHeading}><Text style={styles.title}>Service connection</Text><View style={styles.statusBadge} accessibilityLabel={'Service status: ' + backendStatus}><View style={[styles.statusDot, { backgroundColor: backendStatus === 'reachable' ? '#49D8B0' : backendStatus === 'checking' ? '#79BDFB' : '#E8AD69' }]} /><Text style={styles.statusLabel}>{backendStatus === 'reachable' ? 'Online' : backendStatus === 'checking' ? 'Checking' : backendStatus === 'paused' ? 'Paused' : backendStatus === 'unconfigured' ? 'Setup needed' : 'Offline'}</Text></View></View>
+        <View style={styles.connectionHeading}><Text style={styles.title}>Service connection</Text><View style={styles.statusBadge} accessibilityLabel={'Service status: ' + backendStatus}><View style={[styles.statusDot, { backgroundColor: backendStatus === 'reachable' ? '#49D8B0' : backendStatus === 'checking' ? '#79BDFB' : '#E8AD69' }]} /><Text style={styles.statusLabel}>{backendStatus === 'reachable' ? 'Reachable' : backendStatus === 'checking' ? 'Checking' : backendStatus === 'paused' ? 'Paused' : backendStatus === 'unconfigured' ? 'Setup needed' : 'Offline'}</Text></View></View>
         <Text style={styles.copy}>{backendStatus === 'unconfigured' ? 'Backend not configured. Live features remain unavailable.' : backendStatus === 'checking' ? 'Checking backend reachability…' : backendStatus === 'reachable' ? 'Backend reachable. Sign-in and private profile storage are configured; live account and device verification is still pending.' : backendStatus === 'paused' ? 'Connection status paused while the app is inactive. It will refresh when you return.' : 'Backend unreachable. Check your connection or project configuration.'}</Text>
         <Pressable accessibilityRole="button" accessibilityLabel="Check service connection again" disabled={backendStatus === 'checking' || backendStatus === 'paused'} accessibilityState={{ disabled: backendStatus === 'checking' || backendStatus === 'paused' }} onPress={() => void refreshBackend()} style={styles.button}><Text style={styles.buttonText}>Check connection again</Text></Pressable>
       </Panel>
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
   rule: { height: 1, backgroundColor: theme.colors.border },
   title: { color: theme.colors.text, fontSize: 15, fontWeight: '800', marginBottom: 8 },
   connectionHeading: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
-  statusBadge: { flexDirection: 'row', alignItems: 'center', gap: 6, paddingHorizontal: 9, paddingVertical: 5, borderRadius: 20, backgroundColor: '#142538', borderWidth: 1, borderColor: '#29465E' },
+  statusBadge: { flexDirection: 'row', alignItems: 'center', gap: 6, paddingHorizontal: 10, paddingVertical: 6, borderRadius: 20, backgroundColor: '#142538', borderWidth: 1, borderColor: '#29465E', maxWidth: '55%' },
   statusDot: { width: 7, height: 7, borderRadius: 4 },
   statusLabel: { color: theme.colors.muted, fontSize: 10, fontWeight: '800', textTransform: 'capitalize' },
   sectionHeading: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 10, marginBottom: 6 },
