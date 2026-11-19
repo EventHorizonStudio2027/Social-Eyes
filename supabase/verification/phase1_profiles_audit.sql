@@ -23,6 +23,9 @@ begin
      or has_column_privilege('authenticated', 'public.profiles', 'updated_at', 'UPDATE') then
     raise exception 'immutable profile column is writable';
   end if;
+  if (select count(*) from pg_policies where schemaname='public' and tablename='profiles') <> 4 then
+    raise exception 'unexpected total profile policy count';
+  end if;
   foreach operation in array array['SELECT','INSERT','UPDATE','DELETE'] loop
     select count(*), count(*) filter (where
       (qual is null or qual ~ 'auth\\.uid')
