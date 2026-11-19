@@ -16,7 +16,7 @@ const icons = {
 export default function TabLayout() {
   const { recoverySession, recoveryLinkChecking } = useAuth();
   // Do not briefly expose authenticated tabs while a recovery link is resolving.
-  if (recoveryLinkChecking) return <Screen><ActivityIndicator color={theme.colors.cyan} accessibilityLabel="Verifying account link" /></Screen>;
+  if (recoveryLinkChecking) return <Screen><ActivityIndicator color={String(theme.colors.cyan)} accessibilityLabel="Verifying account link" /></Screen>;
   // A recovery token creates a temporary authenticated session. Do not expose
   // the normal tab navigator until recovery has been completed or cancelled.
   if (recoverySession) {
