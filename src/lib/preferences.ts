@@ -1,29 +1,13 @@
-/**
- * Strict privacy-preference helpers. No remote writes or visibility side effects.
- * The native settings module owns persistence; this module owns pure normalization.
- */
-export type PrivacyPreferences = {
-  incognito: boolean;
-  showIntentions: boolean;
-  allowNotifications: boolean;
-};
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export const privacyDefaults: Readonly<PrivacyPreferences> = Object.freeze({
-  incognito: true,
-  showIntentions: false,
-  allowNotifications: false,
-});
-
-export function normalizePreferences(value: unknown): PrivacyPreferences {
-  if (!value || typeof value !== 'object' || Array.isArray(value)) return { ...privacyDefaults };
-  const raw = value as Record<string, unknown>;
-  return {
-    incognito: typeof raw.incognito === 'boolean' ? raw.incognito : true,
-    showIntentions: typeof raw.showIntentions === 'boolean' ? raw.showIntentions : false,
-    allowNotifications: typeof raw.allowNotifications === 'boolean' ? raw.allowNotifications : false,
-  };
+/** Onboarding completion is device-only; never changes venue visibility. */
+const WELCOME_KEY = 'social-eyes:welcome-completed:v1';
+export async function hasCompletedWelcome() {
+  return (await AsyncStorage.getItem(WELCOME_KEY)) === 'true';
 }
-
-export function isDiscoverable(preferences: PrivacyPreferences, checkedInAtVenue: boolean): boolean {
-  return checkedInAtVenue === true && preferences.incognito === false;
+export async function markWelcomeComplete() {
+  await AsyncStorage.setItem(WELCOME_KEY, 'true');
+}
+export async function resetWelcomeForTesting() {
+  await AsyncStorage.removeItem(WELCOME_KEY);
 }
