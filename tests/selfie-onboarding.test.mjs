@@ -24,3 +24,10 @@ test('selfie controls have visible focus and responsive layout', () => {
   assert.match(css, /@media\(max-width:650px\)/);
   assert.match(css, /\.selfie-preview\[hidden\]/);
 });
+
+test('private selfie preview is cleared on tab backgrounding', () => {
+  const js = read('assets/selfie-onboarding.js');
+  assert.match(js, /visibilitychange/);
+  assert.match(js, /visibilityState === 'hidden'/);
+  assert.match(js, /URL\.revokeObjectURL\(objectUrl\)/);
+});
