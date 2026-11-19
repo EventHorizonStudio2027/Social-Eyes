@@ -50,11 +50,11 @@ function Setting({ label, detail, value, disabled, onChange }: { label: string; 
 }
 
 const styles = StyleSheet.create({
-  profile: { alignItems: 'center', paddingVertical: 22, gap: 9 },
-  avatar: { width: 104, height: 104, borderRadius: 34, borderWidth: 1, borderColor: '#3D5D7D', backgroundColor: '#15263A', alignItems: 'center', justifyContent: 'center' },
+  profile: { alignItems: 'center', paddingTop: 12, paddingBottom: 16, gap: 8 },
+  avatar: { width: 92, height: 92, borderRadius: 30, borderWidth: 1, borderColor: '#3D5D7D', backgroundColor: '#15263A', alignItems: 'center', justifyContent: 'center' },
   name: { color: theme.colors.text, fontSize: 22, fontWeight: '900' },
-  privacyPill: { flexDirection: 'row', alignItems: 'center', gap: 7, paddingHorizontal: 12, paddingVertical: 7, borderRadius: 20, borderWidth: 1, borderColor: '#315B6A', backgroundColor: '#102D3B' },
-  privacyPillText: { color: theme.colors.cyan, fontSize: 11, fontWeight: '700' },
+  privacyPill: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 7, maxWidth: '100%', paddingHorizontal: 12, paddingVertical: 7, borderRadius: 20, borderWidth: 1, borderColor: '#315B6A', backgroundColor: '#102D3B' },
+  privacyPillText: { color: theme.colors.cyan, fontSize: 11, fontWeight: '700', flexShrink: 1, textAlign: 'center' },
   row: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingVertical: 4 },
   rowTitle: { color: theme.colors.text, fontSize: 14, fontWeight: '800' },
   copy: { color: theme.colors.muted, fontSize: 12, lineHeight: 19, textAlign: 'left' },
