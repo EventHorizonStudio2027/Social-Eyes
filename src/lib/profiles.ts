@@ -14,7 +14,7 @@ export async function getMyProfile(userId: string): Promise<PublicProfile | null
   if (identity.user.id !== userId) throw new Error('Profile owner mismatch');
   const { data, error } = await supabase!.from('profiles').select('id,display_name,bio,intent').eq('id', userId).maybeSingle();
   if (error) throw error;
-  const current = await authenticatedOwner();
+  const current = await authenticatedOwner().catch(() => { throw new Error('Profile owner changed during request'); });
   if (current.user.id !== userId) throw new Error('Profile owner changed during request');
   return data ? validateProfileRecord(data, current.user.id) : null;
 }
@@ -25,7 +25,7 @@ export async function saveMyProfile(profile: PublicProfile): Promise<PublicProfi
     const validated = validateProfileDraft(profile);
     const identity = await authenticatedOwner();
     if (identity.user.id !== profile.id) throw new Error('Profile owner mismatch');
-    const beforeWrite = await authenticatedOwner();
+    const beforeWrite = await authenticatedOwner().catch(() => { throw new Error('Profile owner changed before write'); });
     if (beforeWrite.user.id !== identity.user.id) throw new Error('Profile owner changed before write');
     const payload = { id: identity.user.id, ...validated };
     const { error } = await supabase!.from('profiles').upsert(payload, { onConflict: 'id' });
