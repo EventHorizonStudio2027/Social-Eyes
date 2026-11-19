@@ -97,7 +97,7 @@
       if (!window.SocialEyesApplyPhotoSuggestions(proposal)) throw Error('Avatar editor unavailable');
       feedback.dataset.state = 'applied';
       feedback.textContent = 'Two editable colors applied. Review your avatar below; use Undo to reverse these suggestions.';
-      document.getElementById('manual-avatar-editor')?.scrollIntoView({ behavior: window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+      document.getElementById('manual-avatar-editor')?.scrollIntoView({ behavior: window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches ? 'auto' : 'smooth', block: 'start' });
     } catch {
       feedback.dataset.state = 'error';
       feedback.textContent = 'Could not sample colors. Your avatar is unchanged; try brighter lighting or customize manually.';
@@ -110,7 +110,7 @@
   camera.addEventListener('change', select);
   upload.addEventListener('change', select);
   discard.addEventListener('click', () => { reset(); feedback.textContent = 'Photo removed from the preview.'; });
-  const openEditor = () => document.getElementById('manual-avatar-editor')?.scrollIntoView({ behavior: window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+  const openEditor = () => document.getElementById('manual-avatar-editor')?.scrollIntoView({ behavior: window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches ? 'auto' : 'smooth', block: 'start' });
   manual.addEventListener('click', openEditor);
   viewAvatar?.addEventListener('click', openEditor);
   document.addEventListener('visibilitychange', () => {
