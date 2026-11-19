@@ -239,3 +239,7 @@
 
 /* Routed sections receive programmatic focus without an accidental visual ring. */
 .page[tabindex="-1"]:focus{outline:none}.page[tabindex="-1"]:focus-visible{outline:2px solid #72e9ff;outline-offset:-2px}
+
+/* Mobile navigation remains reachable above device home indicators. */
+@supports(padding-bottom:env(safe-area-inset-bottom)){.mobile{padding-bottom:max(10px,env(safe-area-inset-bottom))}}
+@media(max-width:640px){.mobile button{min-width:0;min-height:48px}.mobile button span{white-space:nowrap}}
