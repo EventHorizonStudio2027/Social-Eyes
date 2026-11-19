@@ -168,3 +168,6 @@
 /* Give the avatar search field a restrained tactile focus cue. */
 #creator-category-search{transition:border-color .16s ease,box-shadow .16s ease}#creator-category-search:hover:not(:focus){border-color:rgba(145,220,233,.5)}
 @media(prefers-reduced-motion:reduce){#creator-category-search{transition:none}}
+
+/* Make keyboard focus obvious on small touch and keyboard devices alike. */
+#creator-category-search:focus-visible{outline:2px solid #b2f4ff;outline-offset:3px}#creator-category-search{caret-color:#8be7f0}
