@@ -6,6 +6,7 @@ const load = path => JSON.parse(readFileSync(new URL('../' + path, import.meta.u
 test('Expo SDK 58 native configuration excludes rejected Android schema fields', () => {
   const app = load('app.json').expo;
   assert.equal(app.android.edgeToEdgeEnabled, undefined);
+  assert.equal(app.newArchEnabled, undefined);
   assert.ok(app.android.adaptiveIcon.foregroundImage.endsWith('.png'));
   assert.equal(app.ios.supportsTablet, false);
 });
