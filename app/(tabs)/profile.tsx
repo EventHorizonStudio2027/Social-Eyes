@@ -15,6 +15,10 @@ export default function ProfileScreen() {
       <View style={styles.profile}>
         <View style={styles.avatar}><Ionicons name="person" size={42} color={theme.colors.cyan} /></View>
         <Text style={styles.name}>Your profile</Text>
+        <View style={styles.privacyPill} accessibilityRole="text">
+          <Ionicons name="shield-checkmark-outline" size={14} color={theme.colors.cyan} />
+          <Text style={styles.privacyPillText}>{!settingsReady || !settingsStorageAvailable ? 'Privacy status unverified' : settings.incognito ? 'Incognito preference on' : 'Incognito preference off · venue opt-in still required'}</Text>
+        </View>
         <Text style={styles.copy}>Your profile stays private until you choose to participate at a venue.</Text>
       </View>
       <AccountPanel />
@@ -49,6 +53,8 @@ const styles = StyleSheet.create({
   profile: { alignItems: 'center', paddingVertical: 22, gap: 9 },
   avatar: { width: 104, height: 104, borderRadius: 34, borderWidth: 1, borderColor: '#3D5D7D', backgroundColor: '#15263A', alignItems: 'center', justifyContent: 'center' },
   name: { color: theme.colors.text, fontSize: 22, fontWeight: '900' },
+  privacyPill: { flexDirection: 'row', alignItems: 'center', gap: 7, paddingHorizontal: 12, paddingVertical: 7, borderRadius: 20, borderWidth: 1, borderColor: '#315B6A', backgroundColor: '#102D3B' },
+  privacyPillText: { color: theme.colors.cyan, fontSize: 11, fontWeight: '700' },
   row: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingVertical: 4 },
   rowTitle: { color: theme.colors.text, fontSize: 14, fontWeight: '800' },
   copy: { color: theme.colors.muted, fontSize: 12, lineHeight: 19, textAlign: 'left' },
