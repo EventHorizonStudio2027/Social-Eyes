@@ -27,3 +27,9 @@ test('share previews describe the app and do not expose the wrong logo name',()=
  assert.ok(html.includes('property="og:title"'));
  assert.ok(!html.includes('Original Social Eyes eye logo'));
 });
+
+test('mobile navigation clears the device safe-area inset',()=>{
+ const css=read('assets/app.css');
+ assert.ok(css.includes('env(safe-area-inset-bottom)'));
+ assert.ok(css.includes('.mobile button{min-width:0;min-height:48px}'));
+});
