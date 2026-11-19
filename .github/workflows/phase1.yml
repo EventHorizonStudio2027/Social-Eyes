@@ -21,6 +21,8 @@ jobs:
         run: npm install --no-package-lock --ignore-scripts --no-audit --no-fund
       - name: Foundation and static audits
         run: npm run verify:phase1
+      - name: Release preflight (fail closed)
+        run: npm run preflight:release
       - name: Avatar component audit
         run: npm run audit:avatar
       - name: Report native verification as pending
