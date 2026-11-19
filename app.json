@@ -20,7 +20,6 @@
     },
     "android": {
       "package": "com.socialeyes.app",
-      "edgeToEdgeEnabled": true,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/social-eyes-adaptive-foreground.png",
         "backgroundColor": "#0A1026"
