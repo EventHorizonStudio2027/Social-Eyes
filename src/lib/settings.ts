@@ -42,8 +42,8 @@ export async function loadSettings() {
   const raw = await AsyncStorage.getItem(STORAGE_KEY);
   if (raw === null) return { ...defaultSettings };
   let value;
-  try { value = JSON.parse(raw); } catch { throw new Error('Saved privacy preference is invalid'); }
-  try { return validateSettings(value); } catch { throw new Error('Saved privacy preference is invalid'); }
+  try { value = JSON.parse(raw); } catch { throw new Error('Saved privacy preference is invalid: Stored privacy settings are invalid'); }
+  try { return validateSettings(value); } catch { throw new Error('Saved privacy preference is invalid: Stored privacy settings are invalid'); }
 }
 export async function saveSettings(settings: PrivacySettings) {
   const validated = validateSettings(settings);
