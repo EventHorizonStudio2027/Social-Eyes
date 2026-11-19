@@ -66,3 +66,13 @@ test('selfie suggestion feedback reports undo and differentiates errors',()=>{
  assert.match(js,/use Undo to reverse these suggestions/);
  assert.match(css,/#selfie-feedback\[data-state="error"\]/);
 });
+
+test('photo adapter only changes documented colors and skips redundant undo snapshots',()=>{
+ const editor=read('assets/app.js');
+ assert.match(editor,/\['Skin tone','Hair color'\]\.includes\(key\)/);
+ assert.match(editor,/entries\.every\(\(\[key,value\]\)=>creatorState\.values\[key\]===value\)/);
+});
+test('temporary pixel buffer is released on both successful and failed suggestions',()=>{
+ const js=read('assets/selfie-onboarding.js');
+ assert.match(js,/finally \{\s*if \(canvas\) \{ canvas\.width = 0; canvas\.height = 0; \}/);
+});
