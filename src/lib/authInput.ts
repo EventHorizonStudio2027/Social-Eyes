@@ -3,7 +3,7 @@ export type AuthInputResult = { ok: true; email: string; password: string } | { 
 export function validateAuthInput(email: string, password: string, mode: AuthMode): AuthInputResult {
   if (mode !== 'sign-in' && mode !== 'sign-up') return { ok: false, message: 'Invalid authentication mode.' };
   const normalized = typeof email === 'string' ? email.trim().toLowerCase() : '';
-  if (normalized.length > 254 || !/^[^\\s@\\x00-\\x1f\\x7f]+@[^\\s@\\x00-\\x1f\\x7f]+\\.[^\\s@\\x00-\\x1f\\x7f]+$/.test(normalized)) return { ok: false, message: 'Enter a valid email address.' };
+  if (normalized.length > 254 || !/^[^\s@\x00-\x1f\x7f]+@[^\s@\x00-\x1f\x7f]+\.[^\s@\x00-\x1f\x7f]+$/.test(normalized)) return { ok: false, message: 'Enter a valid email address.' };
   if (typeof password !== 'string' || password.length < 6 || password.length > 1024) return { ok: false, message: 'Invalid password length.' };
   return { ok: true, email: normalized, password };
 }
