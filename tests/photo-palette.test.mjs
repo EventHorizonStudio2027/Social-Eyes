@@ -89,3 +89,18 @@ test('reentrant palette clicks are guarded by internal state',()=>{
  assert.match(js,/isSampling = true/);
  assert.match(js,/isSampling = false;\s*suggest\.disabled/);
 });
+
+test('photo onboarding refuses low-resolution inputs and warns when cropping wide photos',()=>{
+ const js=read('assets/selfie-onboarding.js');
+ assert.match(js,/image\.naturalWidth < 128 \|\| image\.naturalHeight < 128/);
+ assert.match(js,/image\.naturalWidth > image\.naturalHeight \* 1\.5/);
+ assert.match(js,/The center will be cropped/);
+});
+test('photo palette rejects unusable hair sample even when center is valid',()=>{
+ const context={};vm.runInNewContext(read('assets/photo-palette.js'),context);
+ const pixels=new Uint8ClampedArray(128*128*4);
+ for(let y=0;y<128;y++)for(let x=0;x<128;x++){
+  const i=(y*128+x)*4,c=y<32?[0,0,0]:[200,150,120];pixels.set([...c,255],i);
+ }
+ assert.throws(()=>context.SocialEyesPhotoPalette.suggest(pixels,128,128),/Hair region too dark/);
+});
