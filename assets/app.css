@@ -200,3 +200,6 @@
 
 /* Clear focus and tighter action hierarchy for narrow mobile devices. */
 @media(max-width:430px){.selfie-start-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}.selfie-action-primary,.selfie-action-secondary{width:100%;padding:11px 7px;text-align:center}.selfie-action-text{grid-column:1/-1;min-height:36px;padding:6px}.selfie-suggest{width:100%}}
+
+/* Give the selfie preview a subtle, premium portrait-frame treatment. */
+.selfie-preview{box-shadow:0 0 0 4px #86e9f011,0 15px 34px #02081466}.selfie-preview:after{content:"";position:absolute;inset:6px;border:1px solid #b6f7ff55;border-radius:14px;pointer-events:none}.selfie-placeholder{border-style:dashed;border-color:#6c9ab0}
