@@ -42,3 +42,17 @@ test('failed settings writes fail closed and require a storage reload', () => {
   assert.match(provider, /setSettingsStorageAvailable\(false\)/);
   assert.match(provider, /setSettings\(\{ \.\.\.defaultSettings \}\)/);
 });
+
+test('settings module validates all three preference keys and persists locally', () => {
+  const settings = read('src/lib/settings.ts');
+  for (const key of ['incognito', 'showIntentions', 'allowNotifications']) assert.match(settings, new RegExp(key));
+  assert.match(settings, /AsyncStorage\.getItem\(STORAGE_KEY\)/);
+  assert.match(settings, /AsyncStorage\.setItem\(STORAGE_KEY/);
+  assert.match(settings, /typeof value !== 'boolean'/);
+  assert.match(settings, /throw new Error\('Saved privacy preference is invalid/);
+});
+test('native profile does not claim live discoverability from local preferences', () => {
+  const profile = read('app/(tabs)/profile.tsx');
+  assert.match(profile, /venue opt-in still required/);
+  assert.match(profile, /Privacy status unverified/);
+});
