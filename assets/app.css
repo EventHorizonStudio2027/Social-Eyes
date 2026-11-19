@@ -227,3 +227,6 @@
 
 /* Compact portrait framing control lives over the photo rather than adding another panel. */
 .selfie-crop-control{position:absolute;z-index:3;right:9px;top:9px;display:flex;align-items:center;gap:7px;background:#092a35e8;color:#e2f7fa;border:1px solid #b4f3e155;border-radius:9px;padding:5px 8px;font-size:11px;font-weight:700}.selfie-crop-control select{font:inherit;color:#e2f7fa;background:#123b49;border:1px solid #b4f3e166;border-radius:6px;padding:4px}.selfie-crop-control select:focus-visible{outline:2px solid #e2faff;outline-offset:2px}@media(max-width:430px){.selfie-crop-control{top:auto;bottom:9px;right:9px}}
+
+/* Original approved brand mark: retain full uncropped eye silhouette at every size. */
+.brand-symbol img{display:block;width:100%;height:100%;object-fit:contain;padding:3px}.hero-eye img{display:block;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 0 24px #18d8ff55)}
