@@ -22,7 +22,7 @@ test('static preview uses project-relative browser asset URLs',()=>{
 
 test('preview rejects missing approved brand asset and deprecated incorrect branding',()=>{
  const yaml=read('.github/workflows/web-preview.yml');
- assert.ok(yaml.includes('test -s assets/brand-approved-eye.svg'));
+ assert.ok(yaml.includes('brand-official-${logo}.svg'));
  assert.ok(yaml.includes('Deprecated mistaken logo'));
  const html=read('index.html');
  assert.ok(!html.includes('brand-original-eye.svg'));
