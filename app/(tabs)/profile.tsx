@@ -36,7 +36,7 @@ export default function ProfileScreen() {
         {settingsError ? <><Text accessibilityRole="alert" style={styles.error}>{settingsError}</Text><Pressable disabled={settingsSaving} accessibilityRole="button" accessibilityLabel="Reload saved privacy preferences" onPress={() => void retrySettings()}><Text style={styles.action}>Reload saved preferences</Text></Pressable></> : null}
       </Panel>
       <Panel>
-        <Text style={styles.title}>Service connection</Text>
+        <View style={styles.connectionHeading}><Text style={styles.title}>Service connection</Text><View style={[styles.statusDot, { backgroundColor: backendStatus === 'reachable' ? '#49D8B0' : backendStatus === 'checking' ? '#79BDFB' : '#E8AD69' }]} accessibilityLabel={'Service status: ' + backendStatus} /></View>
         <Text style={styles.copy}>{backendStatus === 'unconfigured' ? 'Backend not configured. Live features remain unavailable.' : backendStatus === 'checking' ? 'Checking backend reachability…' : backendStatus === 'reachable' ? 'Backend reachable. Sign-in and private profile storage are configured; live account and device verification is still pending.' : backendStatus === 'paused' ? 'Connection status paused while the app is inactive. It will refresh when you return.' : 'Backend unreachable. Check your connection or project configuration.'}</Text>
         <Pressable accessibilityRole="button" accessibilityLabel="Check service connection again" disabled={backendStatus === 'checking' || backendStatus === 'paused'} accessibilityState={{ disabled: backendStatus === 'checking' || backendStatus === 'paused' }} onPress={() => void refreshBackend()} style={styles.button}><Text style={styles.buttonText}>Check connection again</Text></Pressable>
       </Panel>
@@ -60,6 +60,8 @@ const styles = StyleSheet.create({
   copy: { color: theme.colors.muted, fontSize: 12, lineHeight: 19, textAlign: 'left' },
   rule: { height: 1, backgroundColor: theme.colors.border },
   title: { color: theme.colors.text, fontSize: 15, fontWeight: '800', marginBottom: 8 },
+  connectionHeading: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
+  statusDot: { width: 9, height: 9, borderRadius: 5 },
   sectionHeading: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 10, marginBottom: 6 },
   error: { color: theme.colors.danger, fontSize: 12, marginTop: 10 },
   action: { color: theme.colors.cyan, fontSize: 13, marginTop: 8 },
