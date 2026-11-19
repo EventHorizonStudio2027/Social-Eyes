@@ -1,5 +1,7 @@
 import { supabase } from '@/lib/supabase';
-import { validateProfileDraft, validateProfileRecord, type PublicProfile } from '@/lib/profileValidation';
+import { validateProfileDraft, validateProfileRecord } from '@/lib/profileValidation';
+import type { PublicProfile, SocialIntent } from '@/lib/profileTypes';
+export type { PublicProfile, SocialIntent } from '@/lib/profileTypes';
 
 let saveInProgress = false;
 async function authenticatedOwner() {
