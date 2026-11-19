@@ -171,3 +171,6 @@
 
 /* Make keyboard focus obvious on small touch and keyboard devices alike. */
 #creator-category-search:focus-visible{outline:2px solid #b2f4ff;outline-offset:3px}#creator-category-search{caret-color:#8be7f0}
+
+/* Search feels intentional on mobile: large enough touch target and calm text selection. */
+#creator-category-search{min-height:44px;accent-color:#78dbe9}#creator-category-search::selection{background:rgba(98,207,231,.28);color:#f5fcff}
