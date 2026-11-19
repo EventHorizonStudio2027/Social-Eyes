@@ -164,3 +164,7 @@
 
 /* Compact, stable live-result feedback prevents layout jumps while searching. */
 #creator-filter-count{font-variant-numeric:tabular-nums;min-height:1.25em;display:inline-flex;align-items:center}
+
+/* Give the avatar search field a restrained tactile focus cue. */
+#creator-category-search{transition:border-color .16s ease,box-shadow .16s ease}#creator-category-search:hover:not(:focus){border-color:rgba(145,220,233,.5)}
+@media(prefers-reduced-motion:reduce){#creator-category-search{transition:none}}
