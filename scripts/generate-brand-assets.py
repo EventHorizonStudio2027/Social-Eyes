@@ -63,3 +63,5 @@ for name, center in [('aurora', (87, 52, 160)), ('violet-haze', (87, 41, 128)), 
         return tuple(max(0, min(255, int(9 + v * glow * .75 + wave))) for v in c)
     png(OUT / 'brand' / (name + '.png'), gradient)
 print('Generated 6 original PNG brand assets')
+
+# Asset generation is deterministic; committed PNGs are the build inputs.
