@@ -18,7 +18,7 @@ test('backend state includes lifecycle states shown by the native profile screen
 
 test('device privacy settings keep typed fail-closed defaults', () => {
   const settings = read('src/lib/settings.ts');
-  assert.match(settings, /defaultSettings: Readonly<PrivacySettings>/);
+  assert.match(settings, /export const defaultSettings = Object\.freeze\(/);
   assert.match(settings, /incognito: true/);
   assert.match(settings, /showIntentions: false/);
   assert.match(settings, /allowNotifications: false/);
