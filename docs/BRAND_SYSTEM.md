@@ -1,5 +1,5 @@
 # Social Eyes brand system
-Approved visual direction: a premium, privacy-first, mobile-native social discovery experience. Deep midnight navy surfaces, restrained cyan and violet accents, generous whitespace, crisp typography and an approachable eye mark.
+The approved visual direction: a premium, privacy-first, mobile-native social discovery experience. Deep midnight navy surfaces, restrained cyan and violet accents, generous whitespace, crisp typography and an approachable eye mark.
 
 **Product:** Social Eyes
 **Tagline:** Discover. Connect. Belong.
