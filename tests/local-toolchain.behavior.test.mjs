@@ -9,7 +9,7 @@ test('toolchain diagnostic produces parseable redacted JSON with actionable chec
   const report = JSON.parse(r.stdout);
   assert.equal(report.phase, 1);
   assert.ok(report.checks.some(c => c.name === 'Dependency lockfile'));
-  assert.equal(report.readyForDependencyChecks, false);
+  assert.equal(report.readyForDependencyChecks, report.checks.filter(c => ['Node.js', 'npm', 'Dependency lockfile', 'Installed dependencies'].includes(c.name)).every(c => c.status === 'ready'));
   assert.doesNotMatch(r.stdout, /do-not-print-token/);
 });
 test('toolchain diagnostic rejects unknown options without running checks', () => {
