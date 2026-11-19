@@ -212,3 +212,6 @@
 
 /* Make the suggested-colors action feel clearly secondary to photo capture. */
 .selfie-suggest{letter-spacing:.015em;transition:transform .16s ease,box-shadow .16s ease}.selfie-suggest:not(:disabled):hover{transform:translateY(-1px);box-shadow:0 8px 24px #47d8e022}.selfie-suggest:disabled{cursor:not-allowed;filter:saturate(.55)}@media(prefers-reduced-motion:reduce){.selfie-suggest{transition:none}.selfie-suggest:not(:disabled):hover{transform:none}}
+
+/* Keep the new three-step journey readable without consuming another card. */
+.selfie-start .selfie-tip strong{letter-spacing:.01em}.selfie-start .selfie-tip+.selfie-tip{margin-top:3px;color:#819eb5}
