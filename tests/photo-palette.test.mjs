@@ -76,3 +76,16 @@ test('temporary pixel buffer is released on both successful and failed suggestio
  const js=read('assets/selfie-onboarding.js');
  assert.match(js,/finally \{\s*if \(canvas\) \{ canvas\.width = 0; canvas\.height = 0; \}/);
 });
+
+test('palette rejects unreasonable dimensions before accessing image data',()=>{
+ const context={};vm.runInNewContext(read('assets/photo-palette.js'),context);
+ assert.throws(()=>context.SocialEyesPhotoPalette.suggest([],2049,32),/Invalid image sample/);
+ assert.throws(()=>context.SocialEyesPhotoPalette.suggest([],32,2049),/Invalid image sample/);
+});
+test('reentrant palette clicks are guarded by internal state',()=>{
+ const js=read('assets/selfie-onboarding.js');
+ assert.match(js,/let isSampling = false/);
+ assert.match(js,/if \(isSampling \|\| !objectUrl/);
+ assert.match(js,/isSampling = true/);
+ assert.match(js,/isSampling = false;\s*suggest\.disabled/);
+});
