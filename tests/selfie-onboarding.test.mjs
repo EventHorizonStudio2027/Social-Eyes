@@ -31,3 +31,11 @@ test('private selfie preview is cleared on tab backgrounding', () => {
   assert.match(js, /visibilityState === 'hidden'/);
   assert.match(js, /URL\.revokeObjectURL\(objectUrl\)/);
 });
+
+test('camera and gallery pickers support keyboard activation', () => {
+  const js = read('assets/selfie-onboarding.js');
+  assert.match(js, /keyboardFilePicker\(cameraLabel, camera\)/);
+  assert.match(js, /keyboardFilePicker\(uploadLabel, upload\)/);
+  assert.match(js, /setAttribute\('tabindex', '0'\)/);
+  assert.match(js, /event\.key === 'Enter' \|\| event\.key === ' '/);
+});
