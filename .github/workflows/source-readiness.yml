@@ -25,3 +25,30 @@ jobs:
           done
           echo 'Application source present; run full Phase 1 CI checks next.'
 
+
+  reconcile-expo-lockfile:
+    if: github.event_name == 'pull_request' && github.head_ref == 'phase1/verification-hardening-20261118'
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: phase1/verification-hardening-20261118
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Regenerate lockfile from Expo SDK 58 dependencies
+        run: |
+          npm install --package-lock-only --ignore-scripts --no-audit --no-fund
+          node scripts/verify-lockfile.mjs
+          npm ci --no-audit --no-fund
+      - name: Commit verified lockfile only when changed
+        run: |
+          git add -- package-lock.json
+          if ! git diff --cached --quiet; then
+            git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'Refresh lockfile for Expo SDK 58 peer dependencies'
+            git push origin HEAD:phase1/verification-hardening-20261118
+          fi
