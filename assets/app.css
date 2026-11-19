@@ -161,3 +161,6 @@
 
 /* Reduce visual motion in the avatar editor when requested by the OS. */
 @media(prefers-reduced-motion:reduce){#creator-category-search,.creator-filter-count{transition:none!important;animation:none!important}}
+
+/* Compact, stable live-result feedback prevents layout jumps while searching. */
+#creator-filter-count{font-variant-numeric:tabular-nums;min-height:1.25em;display:inline-flex;align-items:center}
