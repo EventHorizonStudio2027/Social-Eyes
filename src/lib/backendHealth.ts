@@ -1,10 +1,10 @@
 import { isBackendConfigured, isSafePublicBackendConfig } from '@/lib/supabase';
-export type BackendStatus = 'unconfigured' | 'reachable' | 'unreachable';
+export type BackendStatus = 'unconfigured' | 'checking' | 'paused' | 'reachable' | 'unreachable';
 /** Public auth endpoint reachability, not database authorization. */
 export async function checkBackendHealth(): Promise<BackendStatus> {
   const raw = process.env.EXPO_PUBLIC_SUPABASE_URL;
   const key = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY;
-  if (!isBackendConfigured || !isSafePublicBackendConfig(raw, key)) return 'unconfigured';
+  if (typeof raw !== 'string' || typeof key !== 'string' || !isBackendConfigured || !isSafePublicBackendConfig(raw, key)) return 'unconfigured';
   let endpoint: URL;
   try {
     endpoint = new URL(raw);
