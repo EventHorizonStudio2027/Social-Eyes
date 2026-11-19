@@ -33,7 +33,7 @@ jobs:
           test -s assets/app.css
           test -s assets/selfie-onboarding.js
           test -s assets/photo-palette.js
-          test -s assets/brand-approved-eye.svg
+          for logo in wordmark app enlarged mono; do test -s "assets/brand-official-${logo}.svg"; done
           if grep -Eq "brand-original-eye\\.svg" index.html; then
             echo "::error::Deprecated mistaken logo is still referenced"
             exit 1
