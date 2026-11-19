@@ -149,3 +149,6 @@
 .creator-filter-count{justify-self:end;font-size:11px;font-weight:700;letter-spacing:.02em;color:#91dce9;font-variant-numeric:tabular-nums}
 
 .creator-filter label{display:flex;align-items:center;justify-content:space-between;gap:12px}.creator-filter-shortcut{font-size:10px;font-weight:600;letter-spacing:.025em;color:#8da5bd;text-align:right}@media(max-width:370px){.creator-filter-shortcut{display:none}}
+
+/* Clear keyboard focus without changing the studio's quiet visual hierarchy. */
+#creator-category-search:focus-visible{outline:2px solid #91dce9;outline-offset:3px;box-shadow:0 0 0 5px rgba(145,220,233,.12)}
