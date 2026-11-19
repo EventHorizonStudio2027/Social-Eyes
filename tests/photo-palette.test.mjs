@@ -57,3 +57,12 @@ test('photo suggestions cannot be double-submitted while sampling',()=>{
  assert.match(js,/suggest\.disabled = true;\s*const canvas/);
  assert.match(js,/finally \{\s*suggest\.disabled = !objectUrl/);
 });
+
+test('selfie suggestion feedback reports undo and differentiates errors',()=>{
+ const js=read('assets/selfie-onboarding.js'),css=read('assets/app.css');
+ assert.match(js,/feedback\.dataset\.state = 'ready'/);
+ assert.match(js,/feedback\.dataset\.state = 'applied'/);
+ assert.match(js,/feedback\.dataset\.state = 'error'/);
+ assert.match(js,/use Undo to reverse these suggestions/);
+ assert.match(css,/#selfie-feedback\[data-state="error"\]/);
+});
