@@ -22,7 +22,7 @@ jobs:
       - name: Legacy source smoke checks
         run: node tests/smoke.test.cjs
       - name: Foundation tests (Node built-in runner)
-        run: node --test tests/*.test.mjs
+        run: node --test --test-concurrency=1 tests/*.test.mjs
       - name: Avatar module and integration audit
         run: npm run audit:avatar
       - name: Phase 1 static source audit
