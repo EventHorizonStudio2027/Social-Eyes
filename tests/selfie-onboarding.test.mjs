@@ -40,3 +40,12 @@ test('camera and gallery pickers support keyboard activation', () => {
   assert.match(js, /setAttribute\('tabindex', '0'\)/);
   assert.match(js, /event\.key === 'Enter' \|\| event\.key === ' '/);
 });
+
+test('avatar navigation is direct and respects reduced motion',()=>{
+ const html=read('index.html'),js=read('assets/selfie-onboarding.js'),css=read('assets/app.css');
+ assert.match(html,/id="selfie-view-avatar"/);
+ assert.match(js,/viewAvatar\?\.addEventListener\('click', openEditor\)/);
+ assert.match(js,/prefers-reduced-motion: reduce/);
+ assert.match(css,/\.selfie-next-actions/);
+ assert.match(css,/\.selfie-view-avatar:focus-visible/);
+});
