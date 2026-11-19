@@ -7,7 +7,7 @@ export function validateProfileDraft(input: unknown): Omit<PublicProfile, 'id'> 
   const name = draft.display_name.trim();
   const bio = draft.bio.trim();
   if (Array.from(name).length < 2 || Array.from(name).length > 40 || Array.from(bio).length > 280) throw new Error('Invalid profile length');
-  if (/[\x00-\x1f\x7f]/.test(name) || /[\x00-\x09\x0b-\x1f\x7f]/.test(bio)) throw new Error('Invalid profile control characters');
+  if (/[\x00-\x1f\x7f]/.test(name) || /[\x00-\x09\x0b-\x1f\x7f]/.test(bio)) throw new Error('Profile contains unsupported control characters');
   if (!VALID_INTENTS.has(draft.intent)) throw new Error('Invalid profile intent');
   return { display_name: name, bio, intent: draft.intent as SocialIntent };
 }
