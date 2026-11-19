@@ -71,9 +71,10 @@
   };
   suggest.addEventListener('click', () => {
     if (!objectUrl || !image.complete || !image.naturalWidth || !window.SocialEyesPhotoPalette || !window.SocialEyesApplyPhotoSuggestions) return;
+    let canvas = null;
     try {
       suggest.disabled = true;
-      const canvas = document.createElement('canvas');
+      canvas = document.createElement('canvas');
       canvas.width = 128;
       canvas.height = 128;
       const ctx = canvas.getContext('2d', { willReadFrequently: true });
@@ -87,13 +88,11 @@
       feedback.dataset.state = 'applied';
       feedback.textContent = 'Two editable colors applied. Review your avatar below; use Undo to reverse these suggestions.';
       document.getElementById('manual-avatar-editor')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      ctx.clearRect(0, 0, 128, 128);
-      canvas.width = 0;
-      canvas.height = 0;
     } catch {
       feedback.dataset.state = 'error';
       feedback.textContent = 'Could not sample colors. Your avatar is unchanged; try brighter lighting or customize manually.';
     } finally {
+      if (canvas) { canvas.width = 0; canvas.height = 0; }
       suggest.disabled = !objectUrl;
     }
   });
