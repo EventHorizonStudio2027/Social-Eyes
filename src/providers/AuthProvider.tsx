@@ -41,7 +41,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
     client.auth.getSession().then(({ data, error: authError }) => {
       if (!active) return;
       // An auth event can arrive while getSession is pending; never overwrite its newer state.
-      if (!authEventSeen.current) setSession(data.session ?? null);
+      if (!authEventSeen.current) setSession(data.session);
       if (authError && !authEventSeen.current) setError(authError.message);
       setLoading(false);
     }).catch(() => { if (active && !authEventSeen.current) { setError('Unable to restore your session.'); setLoading(false); } });
