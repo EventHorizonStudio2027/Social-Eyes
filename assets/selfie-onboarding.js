@@ -50,6 +50,7 @@
     if (!file) return;
     if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type) || file.size > 8 * 1024 * 1024 || file.size === 0) {
       reset();
+      feedback.dataset.state = 'error';
       feedback.textContent = 'Choose a JPEG, PNG, or WebP photo under 8 MB.';
       return;
     }
@@ -60,6 +61,7 @@
       if (!objectUrl || activeSelection !== selectionId) return;
       if (image.naturalWidth < 128 || image.naturalHeight < 128) {
         reset();
+        feedback.dataset.state = 'error';
         feedback.textContent = 'This photo is too small. Choose a portrait at least 128 × 128 pixels.';
         return;
       }
@@ -74,6 +76,7 @@
     image.onerror = () => {
       if (activeSelection !== selectionId) return;
       reset();
+      feedback.dataset.state = 'error';
       feedback.textContent = 'This image could not be opened. Please choose another photo.';
     };
     image.src = objectUrl;
@@ -109,7 +112,7 @@
   });
   camera.addEventListener('change', select);
   upload.addEventListener('change', select);
-  discard.addEventListener('click', () => { reset(); feedback.textContent = 'Photo removed from the preview.'; });
+  discard.addEventListener('click', () => { reset(); feedback.dataset.state = 'ready'; feedback.textContent = 'Photo removed from the preview.'; });
   const openEditor = () => document.getElementById('manual-avatar-editor')?.scrollIntoView({ behavior: window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches ? 'auto' : 'smooth', block: 'start' });
   manual.addEventListener('click', openEditor);
   viewAvatar?.addEventListener('click', openEditor);
