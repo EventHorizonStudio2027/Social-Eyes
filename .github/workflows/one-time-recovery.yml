@@ -1,0 +1,41 @@
+name: One-time source asset and lockfile recovery
+on:
+  push:
+    branches: ['phase1/verification-hardening-20261118']
+    paths: ['scripts/generate-brand-assets.py']
+permissions:
+  contents: write
+jobs:
+  recover:
+    if: github.repository == 'FatesPassage/Social-Eyes'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: phase1/verification-hardening-20261118
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Generate native branding from source
+        run: python3 scripts/generate-brand-assets.py
+      - name: Generate dependency lockfile from npm registry
+        run: npm install --package-lock-only --ignore-scripts --no-audit --no-fund
+      - name: Verify generated PNG metadata and dependency lockfile
+        run: |
+          python3 - <<'PY'
+          import pathlib,struct
+          for name, expected in [('social-eyes-icon.png',2),('social-eyes-adaptive-foreground.png',6)]:
+              b=(pathlib.Path('assets/images')/name).read_bytes()
+              assert b[:8] == bytes.fromhex('89504e470d0a1a0a')
+              assert struct.unpack('>II',b[16:24]) == (1024,1024)
+              assert b[25] == expected and len(b)>10000
+          PY
+          node scripts/verify-lockfile.mjs
+      - name: Commit only generated assets and lockfile
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- package-lock.json assets/images/social-eyes-icon.png assets/images/social-eyes-adaptive-foreground.png assets/images/social-eyes-mark.png assets/images/brand/aurora.png assets/images/brand/violet-haze.png assets/images/brand/cyan-depth.png
+          git diff --cached --quiet || git commit -m 'Restore original native branding and reproducible dependency lockfile'
+          git push origin HEAD:phase1/verification-hardening-20261118
