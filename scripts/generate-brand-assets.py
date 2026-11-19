@@ -20,7 +20,7 @@ def png(path, pixels, rgba=False):
     def chunk(kind, data):
         return struct.pack('!I', len(data)) + kind + data + struct.pack('!I', zlib.crc32(kind + data) & 0xffffffff)
     header = struct.pack('!2I5B', SIZE, SIZE, 8, 6 if rgba else 2, 0, 0, 0)
-    path.write_bytes(b'\\x89PNG\\r\\n\\x1a\\n' + chunk(b'IHDR', header) + chunk(b'IDAT', zlib.compress(bytes(raw), 9)) + chunk(b'IEND', b''))
+    path.write_bytes(b'\x89PNG\r\n\x1a\n' + chunk(b'IHDR', header) + chunk(b'IDAT', zlib.compress(bytes(raw), 9)) + chunk(b'IEND', b''))
 
 def artwork(x, y, transparent=False):
     dx, dy = (x - 512) / 370, (y - 512) / 370
