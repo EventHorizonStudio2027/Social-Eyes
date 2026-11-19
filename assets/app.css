@@ -236,3 +236,6 @@
 
 /* Navigation polish: consistent tap targets, crisp icon alignment, no unnecessary motion. */
 .nav button,.mobile button{min-height:46px}.nav button svg,.mobile button svg{flex:0 0 21px}.nav button:focus-visible,.mobile button:focus-visible{outline:2px solid #7feaff;outline-offset:2px}.nav button.active{box-shadow:inset 3px 0 0 #6ce7ff}.hero-eye{pointer-events:none}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.page{animation:none}button{transition:none}}
+
+/* Routed sections receive programmatic focus without an accidental visual ring. */
+.page[tabindex="-1"]:focus{outline:none}.page[tabindex="-1"]:focus-visible{outline:2px solid #72e9ff;outline-offset:-2px}
