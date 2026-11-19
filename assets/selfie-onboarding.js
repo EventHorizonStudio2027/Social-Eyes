@@ -1,4 +1,4 @@
-/* Selfie-first entry: local preview only. No uploads, storage, or conversion claims. */
+/* Selfie-first local photo preview and opt-in approximate palette suggestions. No uploads. */
 (() => {
   'use strict';
   const camera = document.getElementById('selfie-camera');
@@ -36,6 +36,7 @@
     objectUrl = null;
     image.removeAttribute('src');
     image.alt = 'Your selected selfie, shown privately on this device';
+    feedback.removeAttribute('data-state');
     preview.hidden = true;
     placeholder.hidden = false;
     camera.value = '';
@@ -58,7 +59,8 @@
       preview.hidden = false;
       suggest.disabled = false;
       placeholder.hidden = true;
-      feedback.textContent = 'Private preview ready. Suggest approximate colors or continue with the manual editor.';
+      feedback.dataset.state = 'ready';
+      feedback.textContent = 'Photo ready. You can suggest colors or build your avatar manually.';
     };
     image.onerror = () => {
       if (activeSelection !== selectionId) return;
@@ -82,13 +84,15 @@
       const pixels = ctx.getImageData(0, 0, 128, 128);
       const proposal = window.SocialEyesPhotoPalette.suggest(pixels.data, 128, 128);
       if (!window.SocialEyesApplyPhotoSuggestions(proposal)) throw Error('Avatar editor unavailable');
-      feedback.textContent = 'Applied approximate skin and hair color suggestions. These are rough image samples, not face detection. Review and edit your avatar below.';
+      feedback.dataset.state = 'applied';
+      feedback.textContent = 'Two editable colors applied. Review your avatar below; use Undo to reverse these suggestions.';
       document.getElementById('manual-avatar-editor')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
       ctx.clearRect(0, 0, 128, 128);
       canvas.width = 0;
       canvas.height = 0;
     } catch {
-      feedback.textContent = 'Could not sample colors from this photo. Your avatar is unchanged; try brighter lighting or customize manually.';
+      feedback.dataset.state = 'error';
+      feedback.textContent = 'Could not sample colors. Your avatar is unchanged; try brighter lighting or customize manually.';
     } finally {
       suggest.disabled = !objectUrl;
     }
