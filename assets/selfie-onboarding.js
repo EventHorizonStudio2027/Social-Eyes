@@ -17,6 +17,7 @@
   let objectUrl = null;
   let selectionId = 0;
   let isSampling = false;
+  let pendingFile = null;
   const keyboardFilePicker = (label, input) => {
     if (!label) return;
     label.setAttribute('role', 'button');
@@ -32,6 +33,7 @@
   keyboardFilePicker(uploadLabel, upload);
   const reset = () => {
     selectionId += 1;
+    pendingFile = null;
     image.onload = null;
     image.onerror = null;
     if (objectUrl) URL.revokeObjectURL(objectUrl);
@@ -55,6 +57,7 @@
       return;
     }
     reset();
+    pendingFile = file;
     objectUrl = URL.createObjectURL(file);
     const activeSelection = selectionId;
     image.onload = () => {
@@ -65,6 +68,7 @@
         feedback.textContent = 'This photo is too small. Choose a portrait at least 128 × 128 pixels.';
         return;
       }
+      pendingFile = null;
       preview.hidden = false;
       suggest.disabled = false;
       placeholder.hidden = true;
