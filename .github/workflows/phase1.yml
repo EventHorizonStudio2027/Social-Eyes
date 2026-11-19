@@ -17,6 +17,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Install dependencies for TypeScript-aware tests
+        run: npm install --no-package-lock --ignore-scripts --no-audit --no-fund
       - name: Foundation and static audits
         run: npm run verify:phase1
       - name: Avatar component audit
