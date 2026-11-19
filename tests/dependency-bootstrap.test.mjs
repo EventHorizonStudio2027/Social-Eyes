@@ -12,8 +12,8 @@ test('bootstrap refuses unsupported flags before network calls', () => {
 test('bootstrap refuses duplicate flags', () => {
   const r = run('--verify', '--verify'); assert.equal(r.status, 2);
 });
-test('bootstrap refuses installation without genuine lockfile', () => {
-  const r = run('--verify'); assert.equal(r.status, 2); assert.match(r.stderr, /package-lock\.json missing/i);
+test('bootstrap refuses lockfile regeneration when the committed lockfile exists', () => {
+  const r = run('--generate-lockfile'); assert.equal(r.status, 2); assert.match(r.stderr, /lockfile already exists/i);
 });
 test('bootstrap uses npm ci, never npm install for locked installation', () => {
   const source = readFileSync(script, 'utf8');
