@@ -64,6 +64,12 @@ async function main(){
    assert.equal(await page.locator('#creator-filter-empty:visible').count(),1,'Empty search shows explanation');
    await search.fill('');
    assert.equal(await page.locator('#creator-categories .creator-group:visible').count(),15,'Clearing search restores all categories');
+   // Capture visual baselines for human review; CI artifacts must retain these files.
+   if(process.env.SOCIAL_EYES_VISUAL_CAPTURE==='1'){
+    const screenshotDir=path.join(root,'artifacts','avatar-visual');
+    fs.mkdirSync(screenshotDir,{recursive:true});
+    await page.locator('.creator-layout').screenshot({path:path.join(screenshotDir,'studio-'+viewport.width+'.png')});
+   }
    // Hair should follow crown dimensions when changing head geometry.
    const headDetail=page.locator('#creator-categories details').filter({has:page.locator('summary',{hasText:'Head shape'})});
    if(!(await headDetail.evaluate(node=>node.open)))await headDetail.locator('summary').click();
