@@ -33,7 +33,7 @@ test('photo preview guards against stale image loads and preserves portrait aspe
   assert.match(js,/image\.onload = null/);
   assert.match(js,/image\.onerror = null/);
   assert.match(js,/const square = Math\.min\(width, height\)/);
-  assert.match(js,/\(width - square\) \/ 2, \(height - square\) \/ 2/);
+  assert.match(js,/horizontalOffset, \(height - square\) \/ 2/);
 });
 test('photo onboarding communicates low-confidence sampling and manual control',()=>{
   const html=read('index.html');
@@ -94,7 +94,7 @@ test('photo onboarding refuses low-resolution inputs and warns when cropping wid
  const js=read('assets/selfie-onboarding.js');
  assert.match(js,/image\.naturalWidth < 128 \|\| image\.naturalHeight < 128/);
  assert.match(js,/image\.naturalWidth > image\.naturalHeight \* 1\.5/);
- assert.match(js,/The center will be cropped/);
+ assert.match(js,/Choose left, center, or right framing/);
 });
 test('photo palette rejects unusable hair sample even when center is valid',()=>{
  const context={};vm.runInNewContext(read('assets/photo-palette.js'),context);
@@ -103,4 +103,12 @@ test('photo palette rejects unusable hair sample even when center is valid',()=>
   const i=(y*128+x)*4,c=y<32?[0,0,0]:[200,150,120];pixels.set([...c,255],i);
  }
  assert.throws(()=>context.SocialEyesPhotoPalette.suggest(pixels,128,128),/Hair region too dark/);
+});
+
+test('wide photo framing is explicitly selected and sampled locally',()=>{
+ const html=read('index.html'),js=read('assets/selfie-onboarding.js');
+ assert.match(html,/id="selfie-crop-position"/);
+ for(const value of ['left','center','right'])assert.match(html,new RegExp('value="'+value+'"'));
+ assert.match(js,/framing === 'left' \? 0 : framing === 'right' \? width - square/);
+ assert.match(js,/ctx\.drawImage\(image, horizontalOffset/);
 });
