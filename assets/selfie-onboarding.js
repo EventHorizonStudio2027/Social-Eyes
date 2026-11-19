@@ -10,9 +10,24 @@
   const discard = document.getElementById('selfie-discard');
   const manual = document.getElementById('selfie-manual');
   const suggest = document.getElementById('selfie-suggest');
+  const cameraLabel = document.querySelector('label[for="selfie-camera"]');
+  const uploadLabel = document.querySelector('label[for="selfie-upload"]');
   if (!camera || !upload || !preview || !image || !placeholder || !feedback || !discard || !manual || !suggest) return;
   let objectUrl = null;
   let selectionId = 0;
+  const keyboardFilePicker = (label, input) => {
+    if (!label) return;
+    label.setAttribute('role', 'button');
+    label.setAttribute('tabindex', '0');
+    label.addEventListener('keydown', event => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        input.click();
+      }
+    });
+  };
+  keyboardFilePicker(cameraLabel, camera);
+  keyboardFilePicker(uploadLabel, upload);
   const reset = () => {
     selectionId += 1;
     image.onload = null;
