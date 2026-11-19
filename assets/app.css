@@ -243,3 +243,6 @@
 /* Mobile navigation remains reachable above device home indicators. */
 @supports(padding-bottom:env(safe-area-inset-bottom)){.mobile{padding-bottom:max(10px,env(safe-area-inset-bottom))}}
 @media(max-width:640px){.mobile button{min-width:0;min-height:48px}.mobile button span{white-space:nowrap}}
+
+/* Exact user-provided Social Eyes identity: full wordmark, hero eye, discreet monochrome signature. */
+.brand-wordmark{display:block;width:min(100%,224px);height:auto;object-fit:contain}.brand{min-height:88px;align-items:center}.brand-mono-signature{position:fixed;right:12px;bottom:12px;width:22px;height:22px;opacity:.22;pointer-events:none;z-index:0}@media(max-width:720px){.brand-mono-signature{display:none}.brand-wordmark{width:160px}}
