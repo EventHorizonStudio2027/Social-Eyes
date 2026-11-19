@@ -194,3 +194,6 @@
 .selfie-suggest{display:inline-flex;align-items:center;justify-content:center;min-height:42px;margin-top:12px;padding:10px 15px;border-radius:12px;border:1px solid #6cb4c6;background:#14394b;color:#d8fcff;font:inherit;font-size:13px;font-weight:800;cursor:pointer;transition:background .15s ease,border-color .15s ease}
 .selfie-suggest:hover:not(:disabled){background:#205269;border-color:#90eaf3}.selfie-suggest:focus-visible{outline:3px solid #7cebf0;outline-offset:3px}.selfie-suggest:disabled{opacity:.48;cursor:not-allowed}
 @media(prefers-reduced-motion:reduce){.selfie-suggest{transition:none}}
+
+/* Quiet quality guidance without a second oversized callout. */
+.selfie-start .selfie-tip{margin:10px 0 0;max-width:510px;font-size:11px;line-height:1.5;color:#a3b9cd}.selfie-tip strong{color:#a5edf4;font-weight:800}.selfie-preview img{object-position:center center}
