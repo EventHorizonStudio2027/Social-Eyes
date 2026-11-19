@@ -1,5 +1,4 @@
-export type SocialIntent = 'friends' | 'dating' | 'events' | 'casual';
-export type PublicProfile = { id: string; display_name: string; bio: string; intent: SocialIntent };
+import type { PublicProfile, SocialIntent } from './profileTypes';
 const VALID_INTENTS: ReadonlySet<string> = new Set(['friends', 'dating', 'events', 'casual']);
 export function validateProfileDraft(input: unknown): Omit<PublicProfile, 'id'> {
   if (!input || typeof input !== 'object' || Array.isArray(input)) throw new Error('Invalid profile draft');
