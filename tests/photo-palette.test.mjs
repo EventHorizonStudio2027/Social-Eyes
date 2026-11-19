@@ -55,7 +55,7 @@ test('photo palette rejects badly underexposed and blown-out center samples',()=
 test('photo suggestions cannot be double-submitted while sampling',()=>{
  const js=read('assets/selfie-onboarding.js');
  assert.match(js,/suggest\.disabled = true;\s*canvas = document\.createElement\('canvas'\)/);
- assert.match(js,/finally \{\s*suggest\.disabled = !objectUrl/);
+ assert.match(js,/finally \{\s*if \(canvas\) \{ canvas\.width = 0; canvas\.height = 0; \}\s*isSampling = false;\s*suggest\.disabled = !objectUrl/);
 });
 
 test('selfie suggestion feedback reports undo and differentiates errors',()=>{
