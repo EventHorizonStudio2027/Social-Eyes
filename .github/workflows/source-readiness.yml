@@ -54,7 +54,7 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -- assets/images/social-eyes-icon.png assets/images/social-eyes-adaptive-foreground.png assets/images/social-eyes-mark.png assets/images/brand/aurora.png assets/images/brand/violet-haze.png assets/images/brand/cyan-depth.png
+          git add -f -- assets/images/social-eyes-icon.png assets/images/social-eyes-adaptive-foreground.png assets/images/social-eyes-mark.png assets/images/brand/aurora.png assets/images/brand/violet-haze.png assets/images/brand/cyan-depth.png
           if ! git diff --cached --quiet; then
             git commit -m 'Generate verified original Social Eyes PNG assets'
             git push origin HEAD:phase1/verification-hardening-20261118
