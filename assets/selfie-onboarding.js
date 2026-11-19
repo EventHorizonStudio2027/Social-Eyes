@@ -20,6 +20,7 @@
     if (objectUrl) URL.revokeObjectURL(objectUrl);
     objectUrl = null;
     image.removeAttribute('src');
+    image.alt = 'Your selected selfie, shown privately on this device';
     preview.hidden = true;
     placeholder.hidden = false;
     camera.value = '';
@@ -42,7 +43,7 @@
       preview.hidden = false;
       suggest.disabled = false;
       placeholder.hidden = true;
-      feedback.textContent = 'Private preview ready. You can optionally suggest two editable avatar colors; facial features are not analyzed.';
+      feedback.textContent = 'Private preview ready. Suggest approximate colors or continue with the manual editor.';
     };
     image.onerror = () => {
       if (activeSelection !== selectionId) return;
@@ -54,6 +55,7 @@
   suggest.addEventListener('click', () => {
     if (!objectUrl || !image.complete || !image.naturalWidth || !window.SocialEyesPhotoPalette || !window.SocialEyesApplyPhotoSuggestions) return;
     try {
+      suggest.disabled = true;
       const canvas = document.createElement('canvas');
       canvas.width = 128;
       canvas.height = 128;
@@ -71,7 +73,9 @@
       canvas.width = 0;
       canvas.height = 0;
     } catch {
-      feedback.textContent = 'Could not sample colors from this photo. Your avatar is unchanged; you can customize manually.';
+      feedback.textContent = 'Could not sample colors from this photo. Your avatar is unchanged; try brighter lighting or customize manually.';
+    } finally {
+      suggest.disabled = !objectUrl;
     }
   });
   camera.addEventListener('change', select);
