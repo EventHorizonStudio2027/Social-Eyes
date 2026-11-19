@@ -82,5 +82,8 @@
   upload.addEventListener('change', select);
   discard.addEventListener('click', () => { reset(); feedback.textContent = 'Photo removed from the preview.'; });
   manual.addEventListener('click', () => document.getElementById('manual-avatar-editor')?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'hidden') reset();
+  });
   window.addEventListener('pagehide', reset);
 })();
