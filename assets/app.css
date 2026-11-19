@@ -174,3 +174,6 @@
 
 /* Search feels intentional on mobile: large enough touch target and calm text selection. */
 #creator-category-search{min-height:44px;accent-color:#78dbe9}#creator-category-search::selection{background:rgba(98,207,231,.28);color:#f5fcff}
+
+/* Mobile creator: preserve breathing room without wasting vertical screen space. */
+@media(max-width:480px){.creator-filter{padding-block:10px}.creator-filter-count{font-size:.8rem;letter-spacing:.015em}#creator-category-search-help{line-height:1.35}}
