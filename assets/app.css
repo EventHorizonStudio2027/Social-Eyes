@@ -215,3 +215,6 @@
 
 /* Keep the new three-step journey readable without consuming another card. */
 .selfie-start .selfie-tip strong{letter-spacing:.01em}.selfie-start .selfie-tip+.selfie-tip{margin-top:3px;color:#819eb5}
+
+/* Clear visual hierarchy for photo readiness messages without a bulky alert. */
+#selfie-feedback{max-width:46ch;padding-left:10px;border-left:2px solid #5d9aaf}#selfie-feedback[data-state="applied"]{border-left-color:#79d8af}#selfie-feedback[data-state="error"]{border-left-color:#e98c98}
