@@ -11,7 +11,7 @@
     "typecheck": "tsc --noEmit",
     "doctor": "npx expo-doctor",
     "audit:static": "node scripts/phase1-static-audit.mjs",
-    "test:foundation": "node --test tests/*.test.mjs",
+    "test:foundation": "node --test --test-concurrency=1 tests/*.test.mjs",
     "diagnose:install": "node scripts/diagnose-install.mjs",
     "diagnose:build": "node scripts/build-readiness.mjs",
     "audit:syntax": "node scripts/check-typescript-syntax.mjs",
