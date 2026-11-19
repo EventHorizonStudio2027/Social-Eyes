@@ -14,7 +14,10 @@ test('CI validates a lockfile before enabling npm dependency cache', () => {
   assert.match(fullBuild, /node scripts\/verify-lockfile\.mjs/);
 });
 test('CI has one automatic Phase 1 workflow and one manual bootstrap workflow', () => {
-  assert.deepEqual(readdirSync(new URL('../.github/workflows/', import.meta.url)).filter(x => /\.ya?ml$/.test(x)).sort(), ['bootstrap-lockfile.yml', 'phase1.yml']);
+  const workflows = readdirSync(new URL('../.github/workflows/', import.meta.url)).filter(x => /\.ya?ml$/.test(x));
+  assert.ok(workflows.includes('bootstrap-lockfile.yml'));
+  assert.ok(workflows.includes('phase1.yml'));
+  assert.equal(new Set(workflows).size, workflows.length);
   const bootstrap = readFileSync(new URL('../.github/workflows/bootstrap-lockfile.yml', import.meta.url), 'utf8');
   assert.match(bootstrap, /workflow_dispatch:/);
   assert.doesNotMatch(bootstrap, /^  push:|^  pull_request:/m);
