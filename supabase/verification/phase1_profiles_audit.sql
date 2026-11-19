@@ -26,6 +26,9 @@ begin
   if (select count(*) from pg_policies where schemaname='public' and tablename='profiles') <> 4 then
     raise exception 'unexpected total profile policy count';
   end if;
+  if has_function_privilege('authenticated', 'public.set_profiles_updated_at()', 'EXECUTE') then
+    raise exception 'authenticated role can invoke profile timestamp function';
+  end if;
   foreach operation in array array['SELECT','INSERT','UPDATE','DELETE'] loop
     select count(*), count(*) filter (where
       (qual is null or qual ~ 'auth\\.uid')
