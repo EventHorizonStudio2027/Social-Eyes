@@ -15,7 +15,7 @@ test('selfie preview is local-only and never misrepresented as AI conversion', (
   assert.match(js, /URL\.createObjectURL\(file\)/);
   assert.match(js, /URL\.revokeObjectURL\(objectUrl\)/);
   assert.match(js, /8 \* 1024 \* 1024/);
-  assert.match(js, /Cartoon conversion is not connected yet/);
+  assert.match(js, /facial features are not analyzed|rough image samples, not face detection/);
   assert.doesNotMatch(js, /fetch\(|XMLHttpRequest|localStorage|sessionStorage|FormData|FileReader/);
 });
 test('selfie controls have visible focus and responsive layout', () => {
