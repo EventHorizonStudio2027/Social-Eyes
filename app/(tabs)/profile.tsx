@@ -23,7 +23,7 @@ export default function ProfileScreen() {
       </View>
       <AccountPanel />
       <Panel>
-        <Text style={styles.title}>Privacy preferences</Text>
+        <View style={styles.sectionHeading}><Text style={styles.title}>Privacy preferences</Text><Ionicons name="lock-closed-outline" size={17} color={theme.colors.cyan} accessibilityLabel="Privacy controls" /></View>
         {settingsSaving ? <Text accessibilityLiveRegion="polite" style={styles.copy}>Saving preferences…</Text> : null}
         {!settingsReady ? <ActivityIndicator color={theme.colors.cyan} /> : <>
           <Setting disabled={settingsSaving || !settingsStorageAvailable} label="Incognito" detail="Default on. Live presence will require a separate explicit venue check-in." value={settings.incognito} onChange={value => void updateSettings({ incognito: value })} />
@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
   copy: { color: theme.colors.muted, fontSize: 12, lineHeight: 19, textAlign: 'left' },
   rule: { height: 1, backgroundColor: theme.colors.border },
   title: { color: theme.colors.text, fontSize: 15, fontWeight: '800', marginBottom: 8 },
+  sectionHeading: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 10, marginBottom: 6 },
   error: { color: theme.colors.danger, fontSize: 12, marginTop: 10 },
   action: { color: theme.colors.cyan, fontSize: 13, marginTop: 8 },
   button: { alignSelf: 'flex-start', borderRadius: 12, backgroundColor: theme.colors.surfaceRaised, paddingHorizontal: 15, paddingVertical: 12, marginTop: 12 },
