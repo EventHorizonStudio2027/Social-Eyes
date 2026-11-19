@@ -59,9 +59,11 @@ async function main(){
    await search.fill('hairstyle');
    assert.equal(await page.locator('#creator-categories .creator-group:visible').count(),1,'Category search narrows to hairstyle');
    assert.equal(await page.locator('#character-render svg').evaluate(el=>el.outerHTML),portraitBeforeSearch,'Filtering must not modify avatar');
+   assert.match(await page.locator('#creator-filter-count').innerText(),/^1 of 15 feature groups$/,'Search result count matches visible categories');
    await search.fill('zzzz-unmatched-style');
    assert.equal(await page.locator('#creator-categories .creator-group:visible').count(),0,'Unmatched search hides all categories');
    assert.equal(await page.locator('#creator-filter-empty:visible').count(),1,'Empty search shows explanation');
+   assert.match(await page.locator('#creator-filter-count').innerText(),/^0 of 15 feature groups$/,'Empty search result count is accurate');
    await search.fill('');
    assert.equal(await page.locator('#creator-categories .creator-group:visible').count(),15,'Clearing search restores all categories');
    // Capture visual baselines for human review; CI artifacts must retain these files.
