@@ -25,3 +25,21 @@ test('explicit suggestion action maps into undoable avatar editor, no image uplo
   assert.match(editor,/recordCreatorChange\(\);for\(const \[key,value\]/);
   assert.doesNotMatch(js,/fetch\(|XMLHttpRequest|FormData/);
 });
+
+test('photo preview guards against stale image loads and preserves portrait aspect ratio',()=>{
+  const js=read('assets/selfie-onboarding.js');
+  assert.match(js,/let selectionId = 0/);
+  assert.match(js,/activeSelection !== selectionId/);
+  assert.match(js,/image\.onload = null/);
+  assert.match(js,/image\.onerror = null/);
+  assert.match(js,/const square = Math\.min\(width, height\)/);
+  assert.match(js,/\(width - square\) \/ 2, \(height - square\) \/ 2/);
+});
+test('photo onboarding communicates low-confidence sampling and manual control',()=>{
+  const html=read('index.html');
+  const sampler=read('assets/photo-palette.js');
+  assert.match(html,/Photo tip/);
+  assert.match(html,/Colors are only suggestions/);
+  assert.match(sampler,/warning:'Colors are approximate/);
+  assert.match(html,/Create manually/);
+});
