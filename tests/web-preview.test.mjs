@@ -15,7 +15,7 @@ test('static preview uses project-relative browser asset URLs',()=>{
  const html=read('index.html');
  for(const match of html.matchAll(/(?:src|href)="([^"]+)"/g)){
   const url=match[1];
-  if(url.startsWith('#'))continue;
+  if(url.startsWith('#')||url.startsWith('data:image/webp;base64,'))continue;
   assert.match(url,/^\.\/assets\//,'Non-portable URL: '+url);
  }
 });
