@@ -12,7 +12,11 @@
   const suggest = document.getElementById('selfie-suggest');
   if (!camera || !upload || !preview || !image || !placeholder || !feedback || !discard || !manual || !suggest) return;
   let objectUrl = null;
+  let selectionId = 0;
   const reset = () => {
+    selectionId += 1;
+    image.onload = null;
+    image.onerror = null;
     if (objectUrl) URL.revokeObjectURL(objectUrl);
     objectUrl = null;
     image.removeAttribute('src');
@@ -32,14 +36,16 @@
     }
     reset();
     objectUrl = URL.createObjectURL(file);
+    const activeSelection = selectionId;
     image.onload = () => {
-      if (!objectUrl) return;
+      if (!objectUrl || activeSelection !== selectionId) return;
       preview.hidden = false;
       suggest.disabled = false;
       placeholder.hidden = true;
-      feedback.textContent = 'Private preview ready. Photo ready. You can optionally suggest two editable avatar colors; facial features are not analyzed.';
+      feedback.textContent = 'Private preview ready. You can optionally suggest two editable avatar colors; facial features are not analyzed.';
     };
     image.onerror = () => {
+      if (activeSelection !== selectionId) return;
       reset();
       feedback.textContent = 'This image could not be opened. Please choose another photo.';
     };
@@ -53,7 +59,9 @@
       canvas.height = 128;
       const ctx = canvas.getContext('2d', { willReadFrequently: true });
       if (!ctx) throw Error('Canvas unavailable');
-      ctx.drawImage(image, 0, 0, 128, 128);
+      const width = image.naturalWidth, height = image.naturalHeight;
+      const square = Math.min(width, height);
+      ctx.drawImage(image, (width - square) / 2, (height - square) / 2, square, square, 0, 0, 128, 128);
       const pixels = ctx.getImageData(0, 0, 128, 128);
       const proposal = window.SocialEyesPhotoPalette.suggest(pixels.data, 128, 128);
       if (!window.SocialEyesApplyPhotoSuggestions(proposal)) throw Error('Avatar editor unavailable');
