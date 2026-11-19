@@ -15,6 +15,7 @@
   if (!camera || !upload || !preview || !image || !placeholder || !feedback || !discard || !manual || !suggest) return;
   let objectUrl = null;
   let selectionId = 0;
+  let isSampling = false;
   const keyboardFilePicker = (label, input) => {
     if (!label) return;
     label.setAttribute('role', 'button');
@@ -70,8 +71,9 @@
     image.src = objectUrl;
   };
   suggest.addEventListener('click', () => {
-    if (!objectUrl || !image.complete || !image.naturalWidth || !window.SocialEyesPhotoPalette || !window.SocialEyesApplyPhotoSuggestions) return;
+    if (isSampling || !objectUrl || !image.complete || !image.naturalWidth || !window.SocialEyesPhotoPalette || !window.SocialEyesApplyPhotoSuggestions) return;
     let canvas = null;
+    isSampling = true;
     try {
       suggest.disabled = true;
       canvas = document.createElement('canvas');
@@ -93,6 +95,7 @@
       feedback.textContent = 'Could not sample colors. Your avatar is unchanged; try brighter lighting or customize manually.';
     } finally {
       if (canvas) { canvas.width = 0; canvas.height = 0; }
+      isSampling = false;
       suggest.disabled = !objectUrl;
     }
   });
