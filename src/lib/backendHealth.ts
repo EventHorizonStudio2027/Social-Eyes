@@ -7,13 +7,13 @@ export async function checkBackendHealth(): Promise<BackendStatus> {
   if (!isBackendConfigured || !isSafePublicBackendConfig(raw, key)) return 'unconfigured';
   let endpoint: URL;
   try {
-    endpoint = new URL(raw!);
+    endpoint = new URL(raw);
     if (endpoint.protocol !== 'https:' || endpoint.username || endpoint.password || endpoint.search || endpoint.hash || (endpoint.pathname !== '/' && endpoint.pathname !== '')) return 'unconfigured';
   } catch { return 'unconfigured'; }
   const controller = new AbortController();
   let timer: ReturnType<typeof setTimeout> | undefined;
   const request: Promise<BackendStatus> = Promise.resolve().then(() => fetch(endpoint.origin + '/auth/v1/health', {
-    method: 'GET', headers: { apikey: key! }, signal: controller.signal,
+    method: 'GET', headers: { apikey: key }, signal: controller.signal,
   })).then(response => response.ok ? 'reachable' : 'unreachable', () => 'unreachable');
   try {
     return await Promise.race([request, new Promise<BackendStatus>(resolve => {
