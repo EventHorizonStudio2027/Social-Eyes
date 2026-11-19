@@ -40,7 +40,7 @@ export default function TabLayout() {
       tabBarLabelStyle: { fontSize: 10, fontWeight: '800', letterSpacing: 0.3 },
       tabBarIcon: ({ focused, color, size }) => {
         const pair = icons[route.name as keyof typeof icons] ?? icons.index;
-        return <Ionicons name={(focused ? pair[1] : pair[0]) as keyof typeof Ionicons.glyphMap} size={size + 1} color={color} />;
+        return <Ionicons name={(focused ? pair[1] : pair[0]) as keyof typeof Ionicons.glyphMap} size={size + 1} color={String(color)} />;
       },
     })}>
       <Tabs.Screen name="index" options={{ title: 'Discover' }} />
