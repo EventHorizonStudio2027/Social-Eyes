@@ -197,3 +197,6 @@
 
 /* Quiet quality guidance without a second oversized callout. */
 .selfie-start .selfie-tip{margin:10px 0 0;max-width:510px;font-size:11px;line-height:1.5;color:#a3b9cd}.selfie-tip strong{color:#a5edf4;font-weight:800}.selfie-preview img{object-position:center center}
+
+/* Clear focus and tighter action hierarchy for narrow mobile devices. */
+@media(max-width:430px){.selfie-start-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}.selfie-action-primary,.selfie-action-secondary{width:100%;padding:11px 7px;text-align:center}.selfie-action-text{grid-column:1/-1;min-height:36px;padding:6px}.selfie-suggest{width:100%}}
