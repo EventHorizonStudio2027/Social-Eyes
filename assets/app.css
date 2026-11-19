@@ -155,3 +155,6 @@
 
 /* Make the avatar feature search legible at a glance on compact screens. */
 #creator-category-search::placeholder{color:#9bacc2;opacity:1}#creator-category-search:focus::placeholder{color:#73869f}
+
+/* Keep long customization labels readable without clipping on narrow phones. */
+@media(max-width:420px){.creator-filter label{flex-wrap:wrap;row-gap:3px}.creator-filter-shortcut{white-space:normal}}
