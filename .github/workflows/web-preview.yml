@@ -33,6 +33,11 @@ jobs:
           test -s assets/app.css
           test -s assets/selfie-onboarding.js
           test -s assets/photo-palette.js
+          test -s assets/brand-approved-eye.svg
+          if grep -Eq "brand-original-eye\\.svg" index.html; then
+            echo "::error::Deprecated mistaken logo is still referenced"
+            exit 1
+          fi
           if grep -Eq '(src|href)="/assets/' index.html; then
             echo "::error::Absolute asset paths break project-scoped Pages URLs"
             exit 1
