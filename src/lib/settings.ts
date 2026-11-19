@@ -23,7 +23,7 @@ export function validateSettingsPatch(patch: Partial<PrivacySettings>) {
   if (!entries.length) throw new TypeError('Privacy settings patch cannot be empty');
   const result: Partial<PrivacySettings> = {};
   for (const [key, value] of entries) {
-    if (!fields.includes(key) || typeof value !== 'boolean') throw new TypeError('Privacy settings patch is invalid');
+    if (!fields.includes(key as keyof PrivacySettings) || typeof value !== 'boolean') throw new TypeError('Privacy settings patch is invalid');
     Object.assign(result, { [key]: value });
   }
   return result;
