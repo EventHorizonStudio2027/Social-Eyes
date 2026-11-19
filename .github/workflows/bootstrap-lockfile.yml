@@ -14,20 +14,32 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Resolve dependencies
+      - name: Resolve dependency graph
         run: npm install --package-lock-only --ignore-scripts --no-audit --no-fund
-      - name: Verify reproducible installation
+      - name: Reproducible install
         run: npm ci --no-audit --no-fund
       - name: Check TypeScript
+        id: typecheck
         continue-on-error: true
         run: npm run typecheck
-      - name: Check Expo dependencies
+      - name: Check Expo Doctor
+        id: doctor
         continue-on-error: true
         run: npm run doctor
-      - name: Upload reviewable dependency lockfile
+      - name: Upload lockfile even if compilation fails
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: social-eyes-package-lock
           path: package-lock.json
           if-no-files-found: error
+      - name: Fail if dependency checks failed
+        if: always()
+        env:
+          TYPECHECK_RESULT: ${{ steps.typecheck.outcome }}
+          DOCTOR_RESULT: ${{ steps.doctor.outcome }}
+        run: |
+          if [[ "$TYPECHECK_RESULT" != 'success' || "$DOCTOR_RESULT" != 'success' ]]; then
+            echo 'Lockfile uploaded for review, but dependency checks failed'
+            exit 1
+          fi
