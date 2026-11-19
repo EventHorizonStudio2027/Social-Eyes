@@ -11,6 +11,7 @@
   const manual = document.getElementById('selfie-manual');
   const suggest = document.getElementById('selfie-suggest');
   const viewAvatar = document.getElementById('selfie-view-avatar');
+  const cropPosition = document.getElementById('selfie-crop-position');
   const cameraLabel = document.querySelector('label[for="selfie-camera"]');
   const uploadLabel = document.querySelector('label[for="selfie-upload"]');
   if (!camera || !upload || !preview || !image || !placeholder || !feedback || !discard || !manual || !suggest) return;
@@ -43,6 +44,7 @@
     feedback.removeAttribute('data-state');
     preview.hidden = true;
     placeholder.hidden = false;
+    if (cropPosition) cropPosition.value = 'center';
     camera.value = '';
     upload.value = '';
     suggest.disabled = true;
@@ -74,7 +76,7 @@
       placeholder.hidden = true;
       feedback.dataset.state = 'ready';
       feedback.textContent = image.naturalWidth > image.naturalHeight * 1.5
-        ? 'Wide photo detected. The center will be cropped for suggestions; use a centered portrait for better results.'
+        ? 'Wide photo detected. Choose left, center, or right framing before suggesting colors.'
         : 'Photo ready. You can suggest colors or build your avatar manually.';
     };
     image.onerror = () => {
@@ -98,7 +100,9 @@
       if (!ctx) throw Error('Canvas unavailable');
       const width = image.naturalWidth, height = image.naturalHeight;
       const square = Math.min(width, height);
-      ctx.drawImage(image, (width - square) / 2, (height - square) / 2, square, square, 0, 0, 128, 128);
+      const framing = cropPosition?.value;
+      const horizontalOffset = width > height ? (framing === 'left' ? 0 : framing === 'right' ? width - square : (width - square) / 2) : 0;
+      ctx.drawImage(image, horizontalOffset, (height - square) / 2, square, square, 0, 0, 128, 128);
       const pixels = ctx.getImageData(0, 0, 128, 128);
       const proposal = window.SocialEyesPhotoPalette.suggest(pixels.data, 128, 128);
       if (!window.SocialEyesApplyPhotoSuggestions(proposal)) throw Error('Avatar editor unavailable');
