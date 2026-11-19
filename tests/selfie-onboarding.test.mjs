@@ -49,3 +49,11 @@ test('avatar navigation is direct and respects reduced motion',()=>{
  assert.match(css,/\.selfie-next-actions/);
  assert.match(css,/\.selfie-view-avatar:focus-visible/);
 });
+
+test('private preview is visibly labeled and photo validation errors use the status channel',()=>{
+ const html=read('index.html'),js=read('assets/selfie-onboarding.js');
+ assert.match(html,/PRIVATE PHOTO · LOCAL ONLY/);
+ assert.match(js,/feedback\.dataset\.state = 'error';\s*feedback\.textContent = 'Choose a JPEG/);
+ assert.match(js,/feedback\.dataset\.state = 'error';\s*feedback\.textContent = 'This photo is too small/);
+ assert.match(js,/feedback\.dataset\.state = 'error';\s*feedback\.textContent = 'This image could not be opened/);
+});
