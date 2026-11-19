@@ -24,3 +24,10 @@ test('Expo dependencies and toolchain match committed lockfile', () => {
   }
   assert.equal(lock.packages[''].devDependencies.typescript, pkg.devDependencies.typescript);
 });
+
+test('TypeScript 6 aliases resolve without deprecated baseUrl', () => {
+  const tsconfig = load('tsconfig.json');
+  assert.equal(tsconfig.compilerOptions.baseUrl, undefined);
+  assert.deepEqual(tsconfig.compilerOptions.paths['@/*'], ['./src/*']);
+  assert.equal(tsconfig.compilerOptions.strict, true);
+});
