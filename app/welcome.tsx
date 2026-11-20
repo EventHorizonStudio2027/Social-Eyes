@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { ActivityIndicator, Image, Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { router } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -9,10 +9,12 @@ export default function WelcomeScreen() {
   const { height, width } = useWindowDimensions();
   const compact = height < 720;
   const narrow = width < 360;
+  const submissionInProgress = useRef(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const continueToApp = async () => {
-    if (saving) return;
+    if (submissionInProgress.current) return;
+    submissionInProgress.current = true;
     setSaving(true);
     setError(null);
     try {
@@ -21,19 +23,20 @@ export default function WelcomeScreen() {
     } catch {
       setError('We could not save your welcome progress. Please try again.');
     } finally {
+      submissionInProgress.current = false;
       setSaving(false);
     }
   };
   return (
     <SafeAreaView style={styles.safe}>
       <ScrollView contentContainerStyle={[styles.scroll, compact && styles.scrollCompact]} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
-      <View style={[styles.orb, compact && styles.orbCompact]} accessible={false}><Image source={require('../assets/images/social-eyes-mark.png')} style={[styles.welcomeMark, compact && styles.welcomeMarkCompact]} accessibilityLabel="Social Eyes eye logo" /></View>
+      <View style={[styles.orb, compact && styles.orbCompact]} accessible={false}><Image source={require('../assets/images/social-eyes-mark.png')} style={[styles.welcomeMark, compact && styles.welcomeMarkCompact]} accessibilityLabel="Social Eyes eye logo" accessibilityRole="image" /></View>
       <View style={[styles.content, narrow && styles.contentNarrow]}>
         <Text style={styles.brand}>Social <Text style={{ color: theme.colors.cyan }}>Eyes</Text></Text>
         <Text style={styles.kicker}>SEE BEFORE YOU GO</Text>
         <Text style={[styles.title, narrow && styles.titleNarrow]}>The social layer{'\n'}over real life.</Text>
         <Text style={styles.copy}>Discover who's out, get a feel for the room, and make a connection before you cross it.</Text>
-        <View style={styles.trustRow} accessible accessibilityLabel="Private by design. Venue presence is opt in. Connections require mutual interest."><Text style={styles.trustText}>◉  Opt-in presence</Text><Text style={styles.trustText}>♡  Mutual connections</Text></View>
+        <View style={styles.trustRow} accessibilityRole="text" accessible accessibilityLabel="Private by design. Venue presence is opt in. Connections require mutual interest."><Text style={styles.trustText}>◉  Opt-in presence</Text><Text style={styles.trustText}>♡  Mutual connections</Text></View>
         <Pressable accessibilityRole="button" accessibilityLabel="Explore Social Eyes" accessibilityHint="Opens the discovery experience" accessibilityState={{ disabled: saving, busy: saving }} disabled={saving} onPress={() => { void continueToApp(); }} style={[styles.button, saving && styles.disabled]}>
           {saving ? <ActivityIndicator color="#06111B" /> : <Text style={styles.buttonText}>Explore Social Eyes  →</Text>}
         </Pressable>
@@ -64,7 +67,7 @@ const styles = StyleSheet.create({
   kicker: { color: theme.colors.cyan, fontSize: 10, fontWeight: '900', letterSpacing: 2.2, marginTop: 6 },
   title: { color: theme.colors.text, fontSize: 43, lineHeight: 46, letterSpacing: -2, fontWeight: '900' },
   copy: { color: theme.colors.muted, fontSize: 14, lineHeight: 22, marginBottom: 12 },
-  button: { backgroundColor: theme.colors.cyan, borderRadius: 16, paddingVertical: 17, alignItems: 'center' },
+  button: { backgroundColor: theme.colors.cyan, borderRadius: 16, minHeight: 52, paddingHorizontal: 16, paddingVertical: 17, alignItems: 'center', justifyContent: 'center' },
   disabled: { opacity: 0.7 },
   buttonText: { color: '#06111B', fontWeight: '900', fontSize: 14 },
   error: { color: '#FF9DAD', fontSize: 13, textAlign: 'center' },
