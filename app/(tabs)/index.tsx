@@ -42,9 +42,9 @@ function Feature({ icon, title, description }: { icon: keyof typeof Ionicons.gly
 }
 
 const styles = StyleSheet.create({
-  hero: { paddingTop: 18, paddingBottom: 6, gap: 9 },
+  hero: { paddingTop: 16, paddingBottom: 8, gap: 10 },
   kicker: { color: theme.colors.cyan, fontSize: 10, fontWeight: '900', letterSpacing: 2 },
-  title: { color: theme.colors.text, fontSize: 43, lineHeight: 46, letterSpacing: -2.2, fontWeight: '900' },
+  title: { color: theme.colors.text, fontSize: 42, lineHeight: 47, letterSpacing: -1.9, fontWeight: '900' },
   subtitle: { color: theme.colors.muted, fontSize: 14, lineHeight: 21, maxWidth: 340 },
   status: { flexDirection: 'row', alignItems: 'center', gap: 8, paddingVertical: 4 },
   dot: { width: 7, height: 7, borderRadius: 4, backgroundColor: theme.colors.gold },
