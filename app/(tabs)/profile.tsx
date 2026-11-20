@@ -15,7 +15,7 @@ export default function ProfileScreen() {
       <View style={styles.profile}>
         <View style={styles.avatar}><Ionicons name="person" size={42} color={theme.colors.cyan} /></View>
         <Text style={styles.name}>Your profile</Text>
-        <Text style={styles.copy}>Your profile stays private until you choose to participate at a venue.</Text>
+        <Text style={styles.copy}>Your profile details are private by default. Venue visibility requires a separate, explicit check-in.</Text>
       </View>
       <AccountPanel />
       <Panel>
