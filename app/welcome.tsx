@@ -1,11 +1,14 @@
 import { useState } from 'react';
-import { ActivityIndicator, Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Image, Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { router } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { theme } from '@/constants/theme';
 import { markWelcomeComplete } from '@/lib/preferences';
 
 export default function WelcomeScreen() {
+  const { height, width } = useWindowDimensions();
+  const compact = height < 720;
+  const narrow = width < 360;
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const continueToApp = async () => {
@@ -23,24 +26,34 @@ export default function WelcomeScreen() {
   };
   return (
     <SafeAreaView style={styles.safe}>
-      <View style={styles.orb}><Image source={require('../assets/images/social-eyes-mark.png')} style={styles.welcomeMark} accessibilityLabel="Social Eyes eye logo" /></View>
-      <View style={styles.content}>
+      <ScrollView contentContainerStyle={[styles.scroll, compact && styles.scrollCompact]} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
+      <View style={[styles.orb, compact && styles.orbCompact]} accessible={false}><Image source={require('../assets/images/social-eyes-mark.png')} style={styles.welcomeMark} accessibilityLabel="Social Eyes eye logo" /></View>
+      <View style={[styles.content, narrow && styles.contentNarrow]}>
         <Text style={styles.brand}>Social <Text style={{ color: theme.colors.cyan }}>Eyes</Text></Text>
         <Text style={styles.kicker}>SEE BEFORE YOU GO</Text>
-        <Text style={styles.title}>The social layer{'\n'}over real life.</Text>
+        <Text style={[styles.title, narrow && styles.titleNarrow]}>The social layer{'\n'}over real life.</Text>
         <Text style={styles.copy}>Discover who's out, get a feel for the room, and make a connection before you cross it.</Text>
-        <Pressable accessibilityRole="button" accessibilityLabel="Explore Social Eyes" disabled={saving} onPress={() => { void continueToApp(); }} style={[styles.button, saving && styles.disabled]}>
+        <View style={styles.trustRow} accessible accessibilityLabel="Private by design. Venue presence is opt in. Connections require mutual interest."><Text style={styles.trustText}>◉  Opt-in presence</Text><Text style={styles.trustText}>♡  Mutual connections</Text></View>
+        <Pressable accessibilityRole="button" accessibilityLabel="Explore Social Eyes" accessibilityHint="Opens the discovery experience" accessibilityState={{ disabled: saving, busy: saving }} disabled={saving} onPress={() => { void continueToApp(); }} style={[styles.button, saving && styles.disabled]}>
           {saving ? <ActivityIndicator color="#06111B" /> : <Text style={styles.buttonText}>Explore Social Eyes  →</Text>}
         </Pressable>
         {error ? <Text accessibilityRole="alert" style={styles.error}>{error}</Text> : null}
         <Text style={styles.note}>A new way to connect in the real world.</Text>
       </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: theme.colors.background, justifyContent: 'flex-end', padding: 25 },
+  safe: { flex: 1, backgroundColor: theme.colors.background },
+  scroll: { flexGrow: 1, justifyContent: 'flex-end', paddingHorizontal: 25, paddingTop: 250, paddingBottom: 25 },
+  scrollCompact: { paddingTop: 170 },
+  orbCompact: { transform: [{ scale: 0.72 }], top: 5 },
+  contentNarrow: { gap: 9 },
+  titleNarrow: { fontSize: 36, lineHeight: 39 },
+  trustRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 9, marginBottom: 7 },
+  trustText: { color: theme.colors.muted, fontSize: 11, fontWeight: '700', borderWidth: 1, borderColor: theme.colors.border, borderRadius: 20, paddingHorizontal: 11, paddingVertical: 7 },
   orb: { position: 'absolute', top: '13%', alignSelf: 'center', width: 220, height: 220, borderRadius: 110, borderWidth: 1, borderColor: '#23475B', alignItems: 'center', justifyContent: 'center', shadowColor: theme.colors.cyan, shadowOpacity: 0.22, shadowRadius: 55 },
   welcomeMark: { width: 210, height: 210, borderRadius: 46 },
   orbInner: { width: 155, height: 155, borderRadius: 78, borderWidth: 1, borderColor: '#3C3567', alignItems: 'center', justifyContent: 'center' },
