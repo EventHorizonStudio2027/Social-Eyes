@@ -51,7 +51,7 @@ export default function WelcomeScreen() {
 
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: theme.colors.background },
-  scroll: { flexGrow: 1, justifyContent: 'space-between', paddingHorizontal: 25, paddingTop: 28, paddingBottom: 25 },
+  scroll: { flexGrow: 1, justifyContent: 'space-between', paddingHorizontal: 24, paddingTop: 26, paddingBottom: 24 },
   scrollCompact: { paddingTop: 12 },
   scrollLandscape: { paddingTop: 8, paddingBottom: 12 },
   orbLandscape: { width: 96, height: 96, borderRadius: 48, marginVertical: 6 },
