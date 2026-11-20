@@ -269,3 +269,7 @@
 /* Improve brand hierarchy on compact displays without stealing content space. */
 @media(min-width:721px){aside .brand{margin-bottom:24px}.brand-wordmark{max-width:216px}}
 @media(max-width:720px){.hero-eye img{max-height:180px}.brand-wordmark{max-width:160px}}
+
+/* Clear visual hierarchy: keep the official brand sharp and respect reduced motion. */
+.brand-wordmark,.hero-eye img{image-rendering:auto;transform:translateZ(0)}
+@media(prefers-reduced-motion:reduce){.brand-wordmark,.hero-eye img{transition:none!important;animation:none!important;transform:none!important}}
