@@ -295,3 +295,10 @@
 #discover-page .search:focus-visible{outline:2px solid var(--cyan);outline-offset:3px;box-shadow:0 0 0 5px rgba(88,236,250,.09)}
 #discover-page .discover-summary{font-variant-numeric:tabular-nums;letter-spacing:.01em}
 @media(prefers-reduced-motion:reduce){#discover-page .search{transition:none}}
+
+/* Selfie studio: make framing feel like a real crop tool, with calm high-contrast controls. */
+.selfie-preview{background:linear-gradient(145deg,#101d36,#172b45);border:1px solid rgba(130,190,220,.32);box-shadow:0 18px 48px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.06)}
+.selfie-preview img{object-position:center center;transition:object-position .16s ease}
+.selfie-crop-control{box-shadow:0 8px 24px rgba(0,0,0,.28);backdrop-filter:blur(12px)}
+#selfie-suggest[aria-busy="true"]{opacity:.78;cursor:progress}
+@media(prefers-reduced-motion:reduce){.selfie-preview img{transition:none}}
