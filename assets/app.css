@@ -256,3 +256,7 @@
 
 /* Official logo framing: never crop the wordmark or the eye mark. */
 .brand-wordmark{aspect-ratio:2/1;max-height:126px;object-fit:contain;object-position:center;flex-shrink:0}.hero-eye{overflow:visible}.hero-eye img{object-fit:contain;object-position:center;max-width:100%;max-height:100%}.brand-mono-signature{object-fit:contain}
+
+/* Public brand polish: readable artwork without cropping on phones or desktops. */
+.brand{isolation:isolate;min-height:104px;justify-content:center}.brand-wordmark{display:block;width:100%;max-width:226px;height:auto;max-height:116px;object-fit:contain;object-position:center;opacity:1;visibility:visible}.hero-eye{isolation:isolate}.hero-eye img{display:block;object-fit:contain;opacity:1;visibility:visible;filter:drop-shadow(0 14px 30px rgba(89,185,244,.2))}
+@media(max-width:720px){.brand{min-height:64px}.brand-wordmark{max-width:174px;max-height:84px}}
