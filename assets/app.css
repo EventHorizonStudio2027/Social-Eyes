@@ -249,3 +249,7 @@
 
 /* Ensure official image artwork is visible above decorative layers. */
 .brand{position:relative;z-index:2}.brand-wordmark{position:relative;z-index:2;opacity:1;visibility:visible}.hero-eye{position:relative;z-index:1}.hero-eye img{display:block;width:100%;height:100%;object-fit:contain;opacity:1;visibility:visible}
+
+/* Give the official wordmark a calm, high-contrast presentation in the sidebar. */
+.brand{padding-block:14px 18px}.brand-wordmark{width:min(100%,240px);filter:drop-shadow(0 8px 20px rgba(72,174,235,.12))}.hero-eye img{filter:drop-shadow(0 16px 36px rgba(79,185,242,.22))}
+@media(max-width:720px){.brand{padding-block:8px 10px}.brand-wordmark{width:min(100%,178px)}}
