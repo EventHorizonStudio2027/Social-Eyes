@@ -17,6 +17,9 @@ assert.match(html, /class="brand-wordmark"[^>]*fetchpriority="high"/, 'Wordmark 
 assert.match(html, /class="hero-eye"[^>]*role="img"/, 'Hero image needs accessible image semantics');
 assert.match(html, /brand-mono-signature/, 'Monochrome brand mark missing');
 assert.match(css, /\.brand-wordmark/, 'Wordmark styles missing');
+assert.match(html, /class="skip-to-content"/, 'Keyboard skip link missing');
+assert.match(html, /id="main-content"/, 'Skip target missing');
+assert.match(html, /<noscript>/, 'No-JavaScript fallback missing');
 assert.match(css, /object-fit:contain/, 'Brand image containment missing');
 assert.match(html, /build-brand[^>]*official-social-eyes-four-logos/, 'Public build marker missing');
 for (const [, url] of html.matchAll(/(?:src|href)="(\.\/assets\/[^"]+)"/g)) {
