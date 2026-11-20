@@ -6,3 +6,8 @@ export async function hasCompletedWelcome(): Promise<boolean> {
 export async function markWelcomeComplete(): Promise<void> {
   await AsyncStorage.setItem(WELCOME_KEY, 'true');
 }
+
+/** Test-only reset hook; never called from production navigation. */
+export async function resetWelcomeForTesting(): Promise<void> {
+  await AsyncStorage.removeItem(WELCOME_KEY);
+}
