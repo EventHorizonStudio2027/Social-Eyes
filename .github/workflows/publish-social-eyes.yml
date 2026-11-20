@@ -5,6 +5,7 @@ on:
     paths:
       - .github/workflows/publish-social-eyes.yml
       - index.html
+      - manifest.webmanifest
       - assets/**
       - tests/public-brand.test.cjs
   workflow_dispatch:
@@ -31,6 +32,7 @@ jobs:
         run: |
           set -euo pipefail
           test -s index.html
+          test -s manifest.webmanifest
           test -s assets/app.js
           test -s assets/app.css
           node tests/public-brand.test.cjs
@@ -38,6 +40,7 @@ jobs:
         run: |
           mkdir -p _web-preview
           cp index.html _web-preview/index.html
+          cp manifest.webmanifest _web-preview/manifest.webmanifest
           printf 'Social Eyes public build\\nCommit: %s\\n' "$GITHUB_SHA" > _web-preview/deployment-version.txt
           cp -R assets _web-preview/assets
           touch _web-preview/.nojekyll
