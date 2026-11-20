@@ -27,7 +27,7 @@ export default function WelcomeScreen() {
   return (
     <SafeAreaView style={styles.safe}>
       <ScrollView contentContainerStyle={[styles.scroll, compact && styles.scrollCompact]} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
-      <View style={[styles.orb, compact && styles.orbCompact]} accessible={false}><Image source={require('../assets/images/social-eyes-mark.png')} style={styles.welcomeMark} accessibilityLabel="Social Eyes eye logo" /></View>
+      <View style={[styles.orb, compact && styles.orbCompact]} accessible={false}><Image source={require('../assets/images/social-eyes-mark.png')} style={[styles.welcomeMark, compact && styles.welcomeMarkCompact]} accessibilityLabel="Social Eyes eye logo" /></View>
       <View style={[styles.content, narrow && styles.contentNarrow]}>
         <Text style={styles.brand}>Social <Text style={{ color: theme.colors.cyan }}>Eyes</Text></Text>
         <Text style={styles.kicker}>SEE BEFORE YOU GO</Text>
@@ -47,15 +47,16 @@ export default function WelcomeScreen() {
 
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: theme.colors.background },
-  scroll: { flexGrow: 1, justifyContent: 'flex-end', paddingHorizontal: 25, paddingTop: 250, paddingBottom: 25 },
-  scrollCompact: { paddingTop: 170 },
-  orbCompact: { transform: [{ scale: 0.72 }], top: 5 },
+  scroll: { flexGrow: 1, justifyContent: 'space-between', paddingHorizontal: 25, paddingTop: 28, paddingBottom: 25 },
+  scrollCompact: { paddingTop: 12 },
+  orbCompact: { width: 168, height: 168, borderRadius: 84, marginVertical: 8 },
   contentNarrow: { gap: 9 },
   titleNarrow: { fontSize: 36, lineHeight: 39 },
   trustRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 9, marginBottom: 7 },
   trustText: { color: theme.colors.muted, fontSize: 11, fontWeight: '700', borderWidth: 1, borderColor: theme.colors.border, borderRadius: 20, paddingHorizontal: 11, paddingVertical: 7 },
-  orb: { position: 'absolute', top: '13%', alignSelf: 'center', width: 220, height: 220, borderRadius: 110, borderWidth: 1, borderColor: '#23475B', alignItems: 'center', justifyContent: 'center', shadowColor: theme.colors.cyan, shadowOpacity: 0.22, shadowRadius: 55 },
+  orb: { alignSelf: 'center', width: 220, height: 220, borderRadius: 110, borderWidth: 1, borderColor: '#23475B', alignItems: 'center', justifyContent: 'center', marginVertical: 24, shadowColor: theme.colors.cyan, shadowOpacity: 0.22, shadowRadius: 55 },
   welcomeMark: { width: 210, height: 210, borderRadius: 46 },
+  welcomeMarkCompact: { width: 160, height: 160, borderRadius: 36 },
   orbInner: { width: 155, height: 155, borderRadius: 78, borderWidth: 1, borderColor: '#3C3567', alignItems: 'center', justifyContent: 'center' },
   orbCore: { width: 76, height: 76, borderRadius: 38, borderWidth: 1, borderColor: '#70476E', backgroundColor: '#10182A' },
   content: { gap: 13, paddingBottom: 20 },
