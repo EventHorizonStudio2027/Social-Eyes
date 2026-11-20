@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
   orbInner: { width: 155, height: 155, borderRadius: 78, borderWidth: 1, borderColor: '#3C3567', alignItems: 'center', justifyContent: 'center' },
   orbCore: { width: 76, height: 76, borderRadius: 38, borderWidth: 1, borderColor: '#70476E', backgroundColor: '#10182A' },
   content: { gap: 12, paddingBottom: 20 },
-  brand: { color: theme.colors.text, fontSize: 43, fontWeight: '900', letterSpacing: -2.2, lineHeight: 49 },
+  brand: { color: theme.colors.text, fontSize: 43, fontWeight: '900', letterSpacing: -1.9, lineHeight: 49 },
   kicker: { color: theme.colors.cyan, fontSize: 10, fontWeight: '900', letterSpacing: 2.5, marginTop: 7, textTransform: 'uppercase' },
   title: { color: theme.colors.text, fontSize: 43, lineHeight: 47, letterSpacing: -1.8, fontWeight: '900' },
   copy: { color: theme.colors.muted, fontSize: 14, lineHeight: 23, letterSpacing: 0.1, marginBottom: 12 },
