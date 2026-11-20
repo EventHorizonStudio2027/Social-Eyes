@@ -260,3 +260,8 @@
 /* Public brand polish: readable artwork without cropping on phones or desktops. */
 .brand{isolation:isolate;min-height:104px;justify-content:center}.brand-wordmark{display:block;width:100%;max-width:226px;height:auto;max-height:116px;object-fit:contain;object-position:center;opacity:1;visibility:visible}.hero-eye{isolation:isolate}.hero-eye img{display:block;object-fit:contain;opacity:1;visibility:visible;filter:drop-shadow(0 14px 30px rgba(89,185,244,.2))}
 @media(max-width:720px){.brand{min-height:64px}.brand-wordmark{max-width:174px;max-height:84px}}
+
+/* Final public-brand refinement: protect logo contrast on dark and narrow layouts. */
+.brand{border-radius:20px;background:linear-gradient(135deg,rgba(15,29,56,.64),rgba(20,21,53,.18));padding:14px 10px;box-shadow:inset 0 1px 0 rgba(255,255,255,.045)}
+.brand-wordmark{filter:drop-shadow(0 4px 16px rgba(87,195,255,.13));object-fit:contain}
+@media(max-width:720px){.brand{padding:8px 10px;border-radius:14px}}
