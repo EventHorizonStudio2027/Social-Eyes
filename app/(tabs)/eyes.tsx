@@ -26,8 +26,8 @@ export default function EyesScreen() {
 const styles = StyleSheet.create({
   title: { color: theme.colors.text, fontSize: 35, fontWeight: '900', letterSpacing: -1.5 },
   subtitle: { color: theme.colors.muted, fontSize: 13, lineHeight: 20 },
-  emptyCard: { minHeight: 300, justifyContent: 'center', alignItems: 'center', padding: 28, borderWidth: 1, borderColor: theme.colors.border, borderRadius: 25, backgroundColor: theme.colors.surface, gap: 12 },
-  eye: { width: 70, height: 70, borderRadius: 24, backgroundColor: '#13283A', alignItems: 'center', justifyContent: 'center' },
+  emptyCard: { minHeight: 252, justifyContent: 'center', alignItems: 'center', padding: 24, borderWidth: 1, borderColor: theme.colors.border, borderRadius: 25, backgroundColor: theme.colors.surface, gap: 12 },
+  eye: { width: 66, height: 66, borderRadius: 22, backgroundColor: '#13283A', alignItems: 'center', justifyContent: 'center' },
   heading: { color: theme.colors.text, fontSize: 17, fontWeight: '800', textAlign: 'center' },
   copy: { color: theme.colors.muted, fontSize: 12, lineHeight: 19, textAlign: 'center' },
   panelTitle: { color: theme.colors.text, fontSize: 14, fontWeight: '800' },
