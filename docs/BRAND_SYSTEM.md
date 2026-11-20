@@ -1,6 +1,6 @@
 # Social Eyes — Brand System
 
-## Approved visual direction
+## approved visual direction
 Social Eyes uses a midnight-blue foundation with cyan, electric blue, violet, and restrained pink highlights. The approved brand line is **Discover. Connect. Belong.** This is a privacy-first, welcoming real-world discovery product, not a surveillance or tracking experience.
 
 ## Brand identity
