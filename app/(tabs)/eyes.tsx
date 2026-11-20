@@ -10,13 +10,13 @@ export default function EyesScreen() {
     <Screen>
       <BrandHeader eyebrow="Your connections" />
       <View style={{ paddingTop: 17, gap: 8 }}>
-        <Text style={styles.title}>Eyes on you.</Text>
-        <Text style={styles.subtitle}>Mutual interest appears here only after both people independently choose each other.</Text>
+        <Text style={styles.title}>Mutual Eyes.</Text>
+        <Text style={styles.subtitle}>A connection appears only when you and someone at the same participating venue choose each other.</Text>
       </View>
       <View style={styles.emptyCard}>
         <View style={styles.eye}><Ionicons name="eye-outline" size={30} color={theme.colors.cyan} /></View>
-        <Text style={styles.heading}>Your connections will appear here</Text>
-        <Text style={styles.copy}>When you and another person both express interest, you'll have a private mutual connection.</Text>
+        <Text style={styles.heading}>No mutual Eyes yet</Text>
+        <Text style={styles.copy}>You won't see strangers or one-sided interest here. When both people choose each other, a private connection can appear.</Text>
       </View>
       <Panel><Text style={styles.panelTitle}>No one gets notified about a one-sided Eye.</Text><Text style={styles.copy}>Your interest stays private unless the other person chooses you too.</Text></Panel>
     </Screen>
