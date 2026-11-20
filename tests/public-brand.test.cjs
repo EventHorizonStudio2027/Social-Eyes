@@ -3,7 +3,7 @@ const assert = require('node:assert/strict');
 const html = fs.readFileSync('index.html', 'utf8');
 const css = fs.readFileSync('assets/app.css', 'utf8');
 const images = [...html.matchAll(/data:image\/webp;base64,([A-Za-z0-9+/=]+)/g)];
-assert.equal(images.length, 4, 'Four official logo images must be embedded in the public HTML');
+assert.equal(new Set(images.map(x => x[1])).size, 4, 'Four distinct official logo images must be embedded in the public HTML');
 for (const [, encoded] of images) {
   const binary = Buffer.from(encoded, 'base64');
   assert.equal(binary.subarray(0,4).toString(), 'RIFF', 'Embedded logo must be valid WebP RIFF');
@@ -25,4 +25,10 @@ assert.match(html, /build-brand[^>]*official-social-eyes-four-logos/, 'Public bu
 for (const [, url] of html.matchAll(/(?:src|href)="(\.\/assets\/[^"]+)"/g)) {
   assert.ok(fs.existsSync(url.slice(2)), 'Missing referenced asset: ' + url);
 }
-console.log('PASS: four WebP logos and all relative public assets are present');
+const manifest = JSON.parse(fs.readFileSync('manifest.webmanifest', 'utf8'));
+assert.equal(manifest.name, 'Social Eyes');
+assert.equal(manifest.display, 'standalone');
+assert.ok(manifest.icons.some(icon => icon.type === 'image/webp'));
+assert.match(html, /rel="manifest" href="\.\/manifest\.webmanifest"/);
+assert.match(html, /rel="apple-touch-icon"/);
+console.log('PASS: four unique WebP logos, branded manifest and all relative public assets are present');
