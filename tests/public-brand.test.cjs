@@ -7,11 +7,16 @@ assert.equal(images.length, 5, 'App icon, Apple icon, wordmark, hero, and mono l
 assert.equal(new Set(images.map(x => x[1])).size, 4, 'Four distinct official logo images must be embedded');
 assert.ok(Math.max(...images.map(x => x[1].length)) > 20000, 'Original wordmark is too compressed');
 assert.ok(Math.min(...images.map(x => x[1].length)) > 6500, 'A logo has been reduced to an unacceptable thumbnail');
-for (const [, encoded] of images) {
+const expectedDimensions = [[226,229],[226,229],[684,335],[298,286],[241,241]];
+for (const [index, [, encoded]] of images.entries()) {
   const binary = Buffer.from(encoded, 'base64');
   assert.equal(binary.subarray(0,4).toString(), 'RIFF', 'Embedded logo must be valid WebP RIFF');
   assert.equal(binary.subarray(8,12).toString(), 'WEBP', 'Embedded logo must be WebP');
   assert.ok(binary.length > 100, 'Embedded logo must not be empty');
+  assert.equal(binary.subarray(12,16).toString(), 'VP8 ', 'Unexpected WebP encoding; update dimension validator');
+  const width = binary.readUInt16LE(26) & 0x3fff;
+  const height = binary.readUInt16LE(28) & 0x3fff;
+  assert.deepEqual([width,height], expectedDimensions[index], 'Original image dimensions changed: logo '+index);
 }
 assert.match(html, /class="brand-wordmark"/, 'Official wordmark missing');
 assert.match(html, /class="hero-eye"/, 'Official hero eye missing');
