@@ -5,7 +5,9 @@ const read=p=>readFileSync(new URL('../'+p,import.meta.url),'utf8');
 test('all four user-uploaded logo crops are embedded directly as browser-displayable WebP',()=>{
  const html=read('index.html');
  const images=[...html.matchAll(/data:image\/webp;base64,[A-Za-z0-9+/=]+/g)];
- assert.ok(images.length>=4,'wordmark, favicon, hero and monochrome logo must all be embedded');
+ assert.ok(images.length>=2,'wordmark and monochrome logo remain embedded');
+ assert.ok(html.includes('./assets/official-social-eyes-app.webp'));
+ assert.ok(html.includes('./assets/official-social-eyes-hero.webp'));
  assert.ok(html.includes('class="brand-wordmark"'));
  assert.ok(html.includes('class="hero-eye"'));
  assert.ok(html.includes('class="brand-mono-signature"'));
