@@ -1,6 +1,6 @@
 'use strict';
 const CACHE_PREFIX='social-eyes-static-';
-const CACHE_NAME=CACHE_PREFIX+'v1';
+const CACHE_NAME=CACHE_PREFIX+'v2';
 const CORE=['./','./index.html','./manifest.webmanifest','./assets/app.css','./assets/avatar-heads.js','./assets/avatar-eyes.js','./assets/avatar-face-parts.js','./assets/avatar-hair.js','./assets/app.js','./assets/photo-palette.js','./assets/selfie-onboarding.js'];
 self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE_NAME).then(cache=>cache.addAll(CORE)).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',event=>{event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key.startsWith(CACHE_PREFIX)&&key!==CACHE_NAME).map(key=>caches.delete(key)))).then(()=>self.clients.claim()))});
