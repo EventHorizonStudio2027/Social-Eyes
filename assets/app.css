@@ -310,3 +310,7 @@
 .creator-tools button:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
 @media(max-width:520px){.creator-tools button{flex:1 1 calc(50% - 9px)}}
 @media(prefers-reduced-motion:reduce){.creator-tools button{transition:none}}
+
+/* Persistent, unobtrusive offline indicator; only appears when connectivity is lost. */
+.connection-status{position:fixed;z-index:1000;left:50%;bottom:calc(18px + env(safe-area-inset-bottom));transform:translateX(-50%);width:max-content;max-width:calc(100vw - 28px);padding:10px 16px;border:1px solid rgba(88,236,250,.36);border-radius:999px;background:rgba(12,23,43,.94);box-shadow:0 12px 36px rgba(0,0,0,.38);backdrop-filter:blur(16px);color:#eafcff;font-size:12px;font-weight:650;text-align:center;pointer-events:none}
+.connection-status[hidden]{display:none}
