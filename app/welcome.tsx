@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
   contentNarrow: { gap: 9 },
   titleNarrow: { fontSize: 36, lineHeight: 39 },
   trustRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginBottom: 9, alignItems: 'center' },
-  trustText: { color: theme.colors.muted, backgroundColor: '#122A36', fontSize: 11, fontWeight: '700', borderWidth: 1, borderColor: theme.colors.border, borderRadius: 20, paddingHorizontal: 11, paddingVertical: 7, overflow: 'hidden' },
+  trustText: { color: theme.colors.text, backgroundColor: '#122A36', fontSize: 11, fontWeight: '700', borderWidth: 1, borderColor: theme.colors.border, borderRadius: 20, paddingHorizontal: 11, paddingVertical: 7, overflow: 'hidden' },
   orb: { alignSelf: 'center', width: 220, height: 220, borderRadius: 110, borderWidth: 1, borderColor: '#2B5D73', alignItems: 'center', justifyContent: 'center', marginVertical: 24, shadowColor: theme.colors.cyan, shadowOpacity: 0.22, shadowRadius: 55 },
   welcomeMark: { width: 210, height: 210, borderRadius: 46 },
   welcomeMarkCompact: { width: 160, height: 160, borderRadius: 36 },
