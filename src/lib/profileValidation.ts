@@ -7,7 +7,8 @@ export function validateProfileDraft(input: unknown): Omit<PublicProfile, 'id'> 
   if (typeof draft.display_name !== 'string' || typeof draft.bio !== 'string' || typeof draft.intent !== 'string' || !VALID_INTENTS.has(draft.intent)) throw new Error('Invalid profile fields');
   const display_name = draft.display_name.trim();
   const bio = draft.bio.trim();
-  if (display_name.length < 2 || display_name.length > 40 || bio.length > 280) throw new Error('Profile field length invalid');
+  if (Array.from(display_name).length < 2 || Array.from(display_name).length > 40 || Array.from(bio).length > 280) throw new Error('Profile field length invalid');
+  if (/[\\x00-\\x1F\\x7F]/.test(display_name) || /[\\x00-\\x09\\x0B-\\x1F\\x7F]/.test(bio)) throw new Error('Profile contains disallowed control characters');
   return { display_name, bio, intent: draft.intent as SocialIntent };
 }
 export function validateProfileRecord(input: unknown, expectedUserId: string): PublicProfile {
