@@ -265,3 +265,7 @@
 .brand{border-radius:20px;background:linear-gradient(135deg,rgba(15,29,56,.64),rgba(20,21,53,.18));padding:14px 10px;box-shadow:inset 0 1px 0 rgba(255,255,255,.045)}
 .brand-wordmark{filter:drop-shadow(0 4px 16px rgba(87,195,255,.13));object-fit:contain}
 @media(max-width:720px){.brand{padding:8px 10px;border-radius:14px}}
+
+/* Improve brand hierarchy on compact displays without stealing content space. */
+@media(min-width:721px){aside .brand{margin-bottom:24px}.brand-wordmark{max-width:216px}}
+@media(max-width:720px){.hero-eye img{max-height:180px}.brand-wordmark{max-width:160px}}
