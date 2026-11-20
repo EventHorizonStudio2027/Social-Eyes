@@ -314,3 +314,10 @@
 /* Persistent, unobtrusive offline indicator; only appears when connectivity is lost. */
 .connection-status{position:fixed;z-index:1000;left:50%;bottom:calc(18px + env(safe-area-inset-bottom));transform:translateX(-50%);width:max-content;max-width:calc(100vw - 28px);padding:10px 16px;border:1px solid rgba(88,236,250,.36);border-radius:999px;background:rgba(12,23,43,.94);box-shadow:0 12px 36px rgba(0,0,0,.38);backdrop-filter:blur(16px);color:#eafcff;font-size:12px;font-weight:650;text-align:center;pointer-events:none}
 .connection-status[hidden]{display:none}
+
+/* Install action appears only when the browser confirms the app is installable. */
+.install-app{min-height:36px;padding:7px 12px;border:1px solid rgba(88,236,250,.42);border-radius:999px;background:linear-gradient(135deg,rgba(88,236,250,.14),rgba(172,117,255,.14));color:#eafcff;font-size:11px;font-weight:750;letter-spacing:.02em;white-space:nowrap}
+.install-app:hover{border-color:var(--cyan);box-shadow:0 0 22px rgba(88,236,250,.12)}
+.install-app:disabled{opacity:.55;cursor:wait}
+.install-app[hidden]{display:none}
+@media(max-width:520px){.install-app{padding:6px 9px;font-size:10px}}
