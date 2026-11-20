@@ -46,8 +46,8 @@ function Setting({ label, detail, value, disabled, onChange }: { label: string; 
 }
 
 const styles = StyleSheet.create({
-  profile: { alignItems: 'center', paddingVertical: 22, gap: 9 },
-  avatar: { width: 104, height: 104, borderRadius: 34, borderWidth: 1, borderColor: '#3D5D7D', backgroundColor: '#15263A', alignItems: 'center', justifyContent: 'center' },
+  profile: { alignItems: 'center', paddingVertical: 16, gap: 8 },
+  avatar: { width: 92, height: 92, borderRadius: 30, borderWidth: 1, borderColor: '#3D5D7D', backgroundColor: '#15263A', alignItems: 'center', justifyContent: 'center' },
   name: { color: theme.colors.text, fontSize: 22, fontWeight: '900' },
   row: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingVertical: 4 },
   rowTitle: { color: theme.colors.text, fontSize: 14, fontWeight: '800' },
