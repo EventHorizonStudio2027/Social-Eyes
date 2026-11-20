@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
   orbCore: { width: 76, height: 76, borderRadius: 38, borderWidth: 1, borderColor: '#70476E', backgroundColor: '#10182A' },
   content: { gap: 13, paddingBottom: 20 },
   brand: { color: theme.colors.text, fontSize: 43, fontWeight: '900', letterSpacing: -2.2, lineHeight: 49 },
-  kicker: { color: theme.colors.cyan, fontSize: 10, fontWeight: '900', letterSpacing: 2.2, marginTop: 6, textTransform: 'uppercase' },
+  kicker: { color: theme.colors.cyan, fontSize: 10, fontWeight: '900', letterSpacing: 2.5, marginTop: 7, textTransform: 'uppercase' },
   title: { color: theme.colors.text, fontSize: 43, lineHeight: 47, letterSpacing: -1.8, fontWeight: '900' },
   copy: { color: theme.colors.muted, fontSize: 14, lineHeight: 23, letterSpacing: 0.1, marginBottom: 12 },
   button: { backgroundColor: theme.colors.cyan, borderRadius: 18, minHeight: 52, paddingHorizontal: 16, paddingVertical: 17, alignItems: 'center', justifyContent: 'center', shadowColor: theme.colors.cyan, shadowOpacity: 0.2, shadowRadius: 16, elevation: 3 },
