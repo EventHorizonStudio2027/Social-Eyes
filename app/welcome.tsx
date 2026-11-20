@@ -9,6 +9,7 @@ export default function WelcomeScreen() {
   const { height, width } = useWindowDimensions();
   const compact = height < 720;
   const narrow = width < 360;
+  const landscape = width > height;
   const submissionInProgress = useRef(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -29,9 +30,9 @@ export default function WelcomeScreen() {
   };
   return (
     <SafeAreaView style={styles.safe}>
-      <ScrollView contentContainerStyle={[styles.scroll, compact && styles.scrollCompact]} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
-      <View style={[styles.orb, compact && styles.orbCompact]} accessible={false}><Image source={require('../assets/images/social-eyes-mark.png')} style={[styles.welcomeMark, compact && styles.welcomeMarkCompact]} accessibilityLabel="Social Eyes eye logo" accessibilityRole="image" /></View>
-      <View style={[styles.content, narrow && styles.contentNarrow]}>
+      <ScrollView contentContainerStyle={[styles.scroll, compact && styles.scrollCompact, landscape && styles.scrollLandscape]} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
+      <View style={[styles.orb, compact && styles.orbCompact, landscape && styles.orbLandscape]} accessible={false}><Image source={require('../assets/images/social-eyes-mark.png')} style={[styles.welcomeMark, compact && styles.welcomeMarkCompact, landscape && styles.welcomeMarkLandscape]} accessibilityLabel="Social Eyes eye logo" accessibilityRole="image" /></View>
+      <View style={[styles.content, narrow && styles.contentNarrow, landscape && styles.contentLandscape]}>
         <Text style={styles.brand}>Social <Text style={{ color: theme.colors.cyan }}>Eyes</Text></Text>
         <Text style={styles.kicker}>SEE BEFORE YOU GO</Text>
         <Text style={[styles.title, narrow && styles.titleNarrow]}>The social layer{'\n'}over real life.</Text>
@@ -52,11 +53,15 @@ const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: theme.colors.background },
   scroll: { flexGrow: 1, justifyContent: 'space-between', paddingHorizontal: 25, paddingTop: 28, paddingBottom: 25 },
   scrollCompact: { paddingTop: 12 },
+  scrollLandscape: { paddingTop: 8, paddingBottom: 12 },
+  orbLandscape: { width: 96, height: 96, borderRadius: 48, marginVertical: 6 },
+  welcomeMarkLandscape: { width: 90, height: 90, borderRadius: 22 },
+  contentLandscape: { gap: 7, paddingBottom: 8 },
   orbCompact: { width: 168, height: 168, borderRadius: 84, marginVertical: 8 },
   contentNarrow: { gap: 9 },
   titleNarrow: { fontSize: 36, lineHeight: 39 },
   trustRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 9, marginBottom: 7 },
-  trustText: { color: theme.colors.muted, fontSize: 11, fontWeight: '700', borderWidth: 1, borderColor: theme.colors.border, borderRadius: 20, paddingHorizontal: 11, paddingVertical: 7 },
+  trustText: { color: theme.colors.muted, fontSize: 11, fontWeight: '700', borderWidth: 1, borderColor: theme.colors.border, borderRadius: 20, paddingHorizontal: 11, paddingVertical: 7, overflow: 'hidden' },
   orb: { alignSelf: 'center', width: 220, height: 220, borderRadius: 110, borderWidth: 1, borderColor: '#23475B', alignItems: 'center', justifyContent: 'center', marginVertical: 24, shadowColor: theme.colors.cyan, shadowOpacity: 0.22, shadowRadius: 55 },
   welcomeMark: { width: 210, height: 210, borderRadius: 46 },
   welcomeMarkCompact: { width: 160, height: 160, borderRadius: 36 },
