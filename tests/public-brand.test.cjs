@@ -13,6 +13,8 @@ for (const [, encoded] of images) {
 assert.match(html, /class="brand-wordmark"/, 'Official wordmark missing');
 assert.match(html, /class="hero-eye"/, 'Official hero eye missing');
 assert.match(html, /rel="icon"/, 'App icon missing');
+assert.match(html, /class="brand-wordmark"[^>]*fetchpriority="high"/, 'Wordmark should load early');
+assert.match(html, /class="hero-eye"[^>]*role="img"/, 'Hero image needs accessible image semantics');
 assert.match(html, /brand-mono-signature/, 'Monochrome brand mark missing');
 assert.match(css, /\.brand-wordmark/, 'Wordmark styles missing');
 assert.match(css, /object-fit:contain/, 'Brand image containment missing');
