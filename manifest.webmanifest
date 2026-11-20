@@ -1,0 +1,19 @@
+{
+  "name": "Social Eyes",
+  "short_name": "Social Eyes",
+  "description": "Discover venues, connect with people, and belong in your city.",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#070b19",
+  "theme_color": "#070b19",
+  "icons": [
+    {
+      "src": "data:image/webp;base64,UklGRggBAABXRUJQVlA4IPwAAAAQCACdASovADAAPzGMuliuqSUjqrVZWdAmCWwAs6GgvYAhJKiOa7bnlDsip838hfMErWSBYyv6INhsy2xE0n3O8Nv3Wj+6ZbIAAP72i2bjSRjuR7flcVYC+oosAGlFpncOCJY/KbtSStDqgsEx4vN5R3qTMT1ylmTP5bAdPRPYMLQHhPHH1hPN+jTrUEesyf3WTxTLSkyvYtd/3KFb8vAfiYTyzOymyDOwct/0kWJHhK+URcJkTAb29bQheipk7zWOi1e16meI2sI6qUgECuagbZ3h7Wb2vmyCdQ6ItY6FLdo7eS7kCiLKM8xmHGN0vSIM2dGI3zjvLq/HgAA=",
+      "sizes": "any",
+      "type": "image/webp",
+      "purpose": "any"
+    }
+  ]
+}
