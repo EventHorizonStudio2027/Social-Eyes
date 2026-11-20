@@ -6,7 +6,6 @@
     "version": "0.3.0",
     "orientation": "portrait",
     "userInterfaceStyle": "dark",
-    "newArchEnabled": true,
     "plugins": [
       "expo-router"
     ],
@@ -20,7 +19,6 @@
     },
     "android": {
       "package": "com.socialeyes.app",
-      "edgeToEdgeEnabled": true,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/social-eyes-adaptive-foreground.png",
         "backgroundColor": "#0A1026"

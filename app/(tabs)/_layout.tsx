@@ -16,7 +16,7 @@ const icons = {
 export default function TabLayout() {
   const { recoverySession, recoveryLinkChecking } = useAuth();
   // Do not briefly expose authenticated tabs while a recovery link is resolving.
-  if (recoveryLinkChecking) return <Screen><ActivityIndicator color={theme.colors.cyan} accessibilityLabel="Verifying account link" /></Screen>;
+  if (recoveryLinkChecking) return <Screen><ActivityIndicator color={String(theme.colors.cyan)} accessibilityLabel="Verifying account link" /></Screen>;
   // A recovery token creates a temporary authenticated session. Do not expose
   // the normal tab navigator until recovery has been completed or cancelled.
   if (recoverySession) {
@@ -40,7 +40,7 @@ export default function TabLayout() {
       tabBarLabelStyle: { fontSize: 10, fontWeight: '800', letterSpacing: 0.3 },
       tabBarIcon: ({ focused, color, size }) => {
         const pair = icons[route.name as keyof typeof icons] ?? icons.index;
-        return <Ionicons name={(focused ? pair[1] : pair[0]) as keyof typeof Ionicons.glyphMap} size={size + 1} color={color} />;
+        return <Ionicons name={(focused ? pair[1] : pair[0]) as keyof typeof Ionicons.glyphMap} size={size + 1} color={String(color)} />;
       },
     })}>
       <Tabs.Screen name="index" options={{ title: 'Discover' }} />

@@ -1,0 +1,55 @@
+name: Social Eyes web preview
+on:
+  push:
+    branches: [phase1/verification-hardening-20261118]
+    paths:
+      - index.html
+      - assets/**
+      - .github/workflows/web-preview.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: social-eyes-web-preview
+  cancel-in-progress: true
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Validate static preview inputs
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -s index.html
+          test -s assets/app.js
+          test -s assets/app.css
+          test -s assets/selfie-onboarding.js
+          test -s assets/photo-palette.js
+          for logo in wordmark app enlarged mono; do test -s "assets/brand-official-${logo}.svg"; done
+          if grep -Eq "brand-original-eye\\.svg" index.html; then
+            echo "::error::Deprecated mistaken logo is still referenced"
+            exit 1
+          fi
+          if grep -Eq '(src|href)="/assets/' index.html; then
+            echo "::error::Absolute asset paths break project-scoped Pages URLs"
+            exit 1
+          fi
+      - name: Stage public-only web preview
+        run: |
+          mkdir -p _web-preview
+          cp index.html _web-preview/index.html
+          cp -R assets _web-preview/assets
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _web-preview
+      - id: deployment
+        uses: actions/deploy-pages@v4

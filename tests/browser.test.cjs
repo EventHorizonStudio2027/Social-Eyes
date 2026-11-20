@@ -48,10 +48,60 @@ async function main(){
     for(let option=0;option<10;option++){
      await detail.locator('[data-creator-category="'+category+'"][data-creator-option="'+option+'"]').click();
      const svg=await page.locator('#character-render svg').evaluate(el=>el.outerHTML);
-     assert.match(svg,/<svg[\\s>]/,'Valid avatar SVG');
+     assert.match(svg,/<svg[\s>]/,'Valid avatar SVG');
      seen.add(svg);
     }
     assert.equal(seen.size,10,category+' must have ten visibly distinct SVG states');
+   }
+   // Search filters categories without altering the avatar or losing selections.
+   const search=page.locator('#creator-category-search');
+   const portraitBeforeSearch=await page.locator('#character-render svg').evaluate(el=>el.outerHTML);
+   await search.fill('hairstyle');
+   assert.equal(await page.locator('#creator-categories .creator-group:visible').count(),1,'Category search narrows to hairstyle');
+   assert.equal(await page.locator('#character-render svg').evaluate(el=>el.outerHTML),portraitBeforeSearch,'Filtering must not modify avatar');
+   assert.match(await page.locator('#creator-filter-count').innerText(),/^1 of 15 feature groups$/,'Search result count matches visible categories');
+   await search.fill('zzzz-unmatched-style');
+   assert.equal(await page.locator('#creator-categories .creator-group:visible').count(),0,'Unmatched search hides all categories');
+   assert.equal(await page.locator('#creator-filter-empty:visible').count(),1,'Empty search shows explanation');
+   assert.match(await page.locator('#creator-filter-count').innerText(),/^0 of 15 feature groups$/,'Empty search result count is accurate');
+   await search.fill('');
+   assert.equal(await page.locator('#creator-categories .creator-group:visible').count(),15,'Clearing search restores all categories');
+   // Capture visual baselines for human review; CI artifacts must retain these files.
+   if(process.env.SOCIAL_EYES_VISUAL_CAPTURE==='1'){
+    const screenshotDir=path.join(root,'artifacts','avatar-visual');
+    fs.mkdirSync(screenshotDir,{recursive:true});
+    await page.locator('.creator-layout').screenshot({path:path.join(screenshotDir,'studio-'+viewport.width+'.png')});
+   }
+   // Hair should follow crown dimensions when changing head geometry.
+   const headDetail=page.locator('#creator-categories details').filter({has:page.locator('summary',{hasText:'Head shape'})});
+   if(!(await headDetail.evaluate(node=>node.open)))await headDetail.locator('summary').click();
+   await headDetail.locator('[data-creator-category="Head shape"][data-creator-option="4"]').click();
+   const narrowHair=await page.locator('#character-render svg g[transform]').first().getAttribute('transform');
+   await headDetail.locator('[data-creator-category="Head shape"][data-creator-option="8"]').click();
+   const broadHair=await page.locator('#character-render svg g[transform]').first().getAttribute('transform');
+   assert.notEqual(narrowHair,broadHair,'Hairstyle placement follows selected head geometry');
+   // Cross-category composition checks: verify all face parts remain mounted
+   // while head, hair, complexion, and accessories change together.
+   const combinations=[
+    {'Head shape':0,'Hairstyle':9,'Eye shape':4,'Eyebrows':7,'Nose':3,'Mouth':8,'Complexion':5,'Accessories':1},
+    {'Head shape':8,'Hairstyle':2,'Eye shape':9,'Eyebrows':2,'Nose':9,'Mouth':1,'Complexion':2,'Accessories':6},
+    {'Head shape':4,'Hairstyle':6,'Eye shape':0,'Eyebrows':9,'Nose':5,'Mouth':6,'Complexion':8,'Accessories':3}
+   ];
+   for(const combo of combinations){
+    for(const [category,option] of Object.entries(combo)){
+     const detail=page.locator('#creator-categories details').filter({has:page.locator('summary',{hasText:category})});
+     if(!(await detail.evaluate(node=>node.open)))await detail.locator('summary').click();
+     await detail.locator('[data-creator-category="'+category+'"][data-creator-option="'+option+'"]').click();
+    }
+    assert.equal(await page.locator('#character-render .avatar-eye').count(),2,'Both eyes survive mixed customization');
+    assert.equal(await page.locator('#character-render [data-nose]').count(),1,'Nose survives mixed customization');
+    assert.equal(await page.locator('#character-render [data-mouth]').count(),1,'Mouth survives mixed customization');
+    const geometry=await page.locator('#character-render svg').evaluate(el=>el.outerHTML);
+    assert.doesNotMatch(geometry,/NaN|undefined|Infinity/,'Combined avatar contains valid numeric geometry');
+    for(const [category,option] of Object.entries(combo)){
+     const button=page.locator('[data-creator-category="'+category+'"][data-creator-option="'+option+'"]');
+     assert.equal(await button.getAttribute('aria-pressed'),'true','Selection state remains accurate for '+category);
+    }
    }
    // Restore eye style 2 before verifying saved persistence.
    await page.locator('[data-creator-category="Eye shape"][data-creator-option="2"]').click();

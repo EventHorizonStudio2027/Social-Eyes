@@ -11,7 +11,7 @@
     "typecheck": "tsc --noEmit",
     "doctor": "npx expo-doctor",
     "audit:static": "node scripts/phase1-static-audit.mjs",
-    "test:foundation": "node --test tests/*.test.mjs",
+    "test:foundation": "node --test --test-concurrency=1 tests/*.test.mjs",
     "diagnose:install": "node scripts/diagnose-install.mjs",
     "diagnose:build": "node scripts/build-readiness.mjs",
     "audit:syntax": "node scripts/check-typescript-syntax.mjs",
@@ -26,7 +26,9 @@
     "install:locked": "node scripts/bootstrap-dependencies.mjs --verify",
     "check:backend-config": "node scripts/check-live-backend-config.mjs",
     "verify:anonymous-boundary": "node scripts/verify-anonymous-boundary.mjs",
-    "preflight:github": "node scripts/github-handoff.mjs"
+    "preflight:github": "node scripts/github-handoff.mjs",
+    "preflight:release": "node scripts/release-preflight.mjs",
+    "audit:avatar": "node scripts/avatar-audit.mjs"
   },
   "dependencies": {
     "@expo/vector-icons": "^15.0.3",
@@ -42,10 +44,12 @@
     "react-native-safe-area-context": "~5.11.1",
     "react-native-screens": "~4.30.0",
     "@react-native-async-storage/async-storage": "2.2.0",
-    "expo-dev-client": "~58.0.20"
+    "expo-dev-client": "~58.0.20",
+    "react-dom": "19.3.0",
+    "expo-font": "~58.0.12"
   },
   "devDependencies": {
     "@types/react": "~19.3.0",
-    "typescript": "~5.9.0"
+    "typescript": "~6.0.3"
   }
 }

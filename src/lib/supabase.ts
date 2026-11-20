@@ -22,7 +22,7 @@ export function isSafePublicBackendConfig(url: unknown, key: unknown): boolean {
 
 /** This only validates public client configuration, not backend readiness. */
 export const supabase = isSafePublicBackendConfig(url, key)
-  ? createClient(url, key, {
+  ? createClient(url as string, key as string, {
       auth: {
         storage: AsyncStorage,
         autoRefreshToken: true,
