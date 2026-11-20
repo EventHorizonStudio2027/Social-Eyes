@@ -13,6 +13,11 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Install isolated TypeScript parser for foundation tests
+        run: |
+          npm install --prefix /tmp/social-eyes-ci-parser --no-save --ignore-scripts --no-package-lock typescript@5.9.3
+          mkdir -p node_modules
+          ln -s /tmp/social-eyes-ci-parser/node_modules/typescript node_modules/typescript
       - name: JavaScript syntax
         run: |
           for file in assets/*.js tests/*.cjs; do node --check "$file"; done
