@@ -50,5 +50,9 @@ assert.doesNotMatch(selfie, /addEventListener\('visibilitychange'/, 'Camera hand
 assert.match(selfie, /image\.style\.objectPosition/, 'Crop control must update visible preview');
 assert.match(selfie, /aria-busy/, 'Color sampling should expose busy state');
 assert.match(css, /\.selfie-preview\{background:linear-gradient/, 'Selfie preview polish missing');
+assert.match(html, /id="creator-share"/, 'Avatar share control missing');
+assert.match(app, /async function shareCreatorLook\(\)/, 'Avatar native sharing workflow missing');
+assert.match(app, /canvas\.width=1800;canvas\.height=2340/, 'High-resolution PNG export dimensions missing');
+assert.match(css, /\.creator-tools button:focus-visible/, 'Avatar export controls need visible keyboard focus');
 assert.match(css, /#results \.empty/, 'Discovery empty-state design missing');
 console.log('PASS: native-resolution logos, branded manifest, public assets and discovery recovery action');
