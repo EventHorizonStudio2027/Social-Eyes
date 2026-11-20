@@ -75,6 +75,6 @@ const styles = StyleSheet.create({
   button: { backgroundColor: theme.colors.cyan, borderRadius: 16, minHeight: 52, paddingHorizontal: 16, paddingVertical: 17, alignItems: 'center', justifyContent: 'center', shadowColor: theme.colors.cyan, shadowOpacity: 0.2, shadowRadius: 16, elevation: 3 },
   disabled: { opacity: 0.7 },
   buttonText: { color: '#06111B', fontWeight: '900', fontSize: 14, letterSpacing: 0.2 },
-  error: { color: '#FF9DAD', fontSize: 13, textAlign: 'center' },
+  error: { color: '#FFB6C2', fontSize: 13, lineHeight: 19, textAlign: 'center', paddingVertical: 4 },
   note: { color: theme.colors.faint, fontSize: 11, lineHeight: 17, textAlign: 'center', marginTop: 6, letterSpacing: 0.15 },
 });
