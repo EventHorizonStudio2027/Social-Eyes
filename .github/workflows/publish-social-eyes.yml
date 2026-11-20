@@ -42,6 +42,7 @@ jobs:
           mkdir -p _web-preview
           cp index.html _web-preview/index.html
           cp manifest.webmanifest _web-preview/manifest.webmanifest
+          cp service-worker.js _web-preview/service-worker.js
           printf 'Social Eyes public build\\nCommit: %s\\n' "$GITHUB_SHA" > _web-preview/deployment-version.txt
           cp -R assets _web-preview/assets
           touch _web-preview/.nojekyll
