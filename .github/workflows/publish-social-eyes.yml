@@ -1,9 +1,11 @@
 name: Publish Social Eyes development preview
 on:
   push:
-    branches: [main]
+    branches: [main, phase1/verification-hardening-20261118]
     paths:
       - .github/workflows/publish-social-eyes.yml
+      - index.html
+      - assets/**
   workflow_dispatch:
 permissions:
   contents: read
