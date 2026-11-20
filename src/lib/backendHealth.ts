@@ -2,7 +2,7 @@ import { isBackendConfigured, isSafePublicBackendConfig } from '@/lib/supabase';
 
 export type BackendStatus = 'checking' | 'reachable' | 'unreachable' | 'unconfigured' | 'paused';
 
-/** Reachability, not database authorization or proof that RLS is configured. */
+/** reachability, not database authorization or proof that RLS is configured. */
 export async function checkBackendHealth(): Promise<BackendStatus> {
   const url = process.env.EXPO_PUBLIC_SUPABASE_URL;
   const key = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY;
