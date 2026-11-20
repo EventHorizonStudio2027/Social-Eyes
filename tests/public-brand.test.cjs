@@ -15,6 +15,8 @@ assert.match(html, /class="hero-eye"/, 'Official hero eye missing');
 assert.match(html, /rel="icon"/, 'App icon missing');
 assert.match(html, /brand-mono-signature/, 'Monochrome brand mark missing');
 assert.match(css, /\.brand-wordmark/, 'Wordmark styles missing');
+assert.match(css, /object-fit:contain/, 'Brand image containment missing');
+assert.match(html, /build-brand[^>]*official-social-eyes-four-logos/, 'Public build marker missing');
 for (const [, url] of html.matchAll(/(?:src|href)="(\.\/assets\/[^"]+)"/g)) {
   assert.ok(fs.existsSync(url.slice(2)), 'Missing referenced asset: ' + url);
 }
