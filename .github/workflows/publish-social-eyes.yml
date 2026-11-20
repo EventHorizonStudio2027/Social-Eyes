@@ -36,6 +36,7 @@ jobs:
           test -s assets/app.js
           test -s assets/app.css
           node tests/public-brand.test.cjs
+          for source in assets/*.js; do node --check "$source"; done
       - name: Stage public-only static preview
         run: |
           mkdir -p _web-preview
