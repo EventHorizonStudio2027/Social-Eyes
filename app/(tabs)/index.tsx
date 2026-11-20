@@ -15,7 +15,7 @@ export default function DiscoverScreen() {
         <Text style={styles.title}>Where's the{ '\n' }energy?</Text>
         <Text style={styles.subtitle}>Find participating places, discover who's around, and make your next night out more social.</Text>
       </View>
-      <View style={styles.status}><View style={styles.dot} /><Text style={styles.statusText}>{isBackendConfigured ? 'Backend configured' : 'Development preview · backend not connected'}</Text></View>
+      <View style={styles.status}><View style={styles.dot} /><Text style={styles.statusText}>{isBackendConfigured ? 'Backend credentials configured · live connection not yet verified' : 'Development preview · backend not connected'}</Text></View>
       <Panel>
         <View style={styles.panelTop}>
           <View style={styles.iconCircle}><Ionicons name="map-outline" size={21} color={theme.colors.cyan} /></View>
@@ -25,7 +25,7 @@ export default function DiscoverScreen() {
           </View>
           <Text style={styles.soon}>NEXT</Text>
         </View>
-        <Text style={styles.body}>Once venue data is connected, this area will show real participating venues, useful details and verified live activity. No fabricated crowd counts.</Text>
+        <Text style={styles.body}>Once venue data and live presence are verified, this area will show participating venues, useful details and real activity. No fabricated crowd counts.</Text>
       </Panel>
       <Panel>
         <Text style={styles.panelTitle}>How Social Eyes works</Text>
