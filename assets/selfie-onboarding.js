@@ -45,7 +45,7 @@
     feedback.removeAttribute('data-state');
     preview.hidden = true;
     placeholder.hidden = false;
-    if (cropPosition) cropPosition.value = 'center';
+    if (cropPosition) { cropPosition.value = 'center'; image.style.objectPosition = 'center center'; }
     camera.value = '';
     upload.value = '';
     suggest.disabled = true;
@@ -94,6 +94,10 @@
     };
     image.src = objectUrl;
   };
+  cropPosition?.addEventListener('change', () => {
+    const horizontal = cropPosition.value === 'left' ? 'left' : cropPosition.value === 'right' ? 'right' : 'center';
+    image.style.objectPosition = horizontal + ' center';
+  });
   suggest.addEventListener('click', () => {
     if (isSampling || !objectUrl || !image.complete || !image.naturalWidth || !window.SocialEyesPhotoPalette || !window.SocialEyesApplyPhotoSuggestions) return;
     let canvas = null;
