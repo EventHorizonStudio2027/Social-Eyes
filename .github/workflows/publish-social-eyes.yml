@@ -38,6 +38,7 @@ jobs:
         run: |
           mkdir -p _web-preview
           cp index.html _web-preview/index.html
+          printf 'Social Eyes public build\\nCommit: %s\\n' "$GITHUB_SHA" > _web-preview/deployment-version.txt
           cp -R assets _web-preview/assets
           touch _web-preview/.nojekyll
           cp tests/public-brand.test.cjs _web-preview/brand-validation-source.txt
