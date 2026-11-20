@@ -3,7 +3,10 @@ const assert = require('node:assert/strict');
 const html = fs.readFileSync('index.html', 'utf8');
 const css = fs.readFileSync('assets/app.css', 'utf8');
 const images = [...html.matchAll(/data:image\/webp;base64,([A-Za-z0-9+/=]+)/g)];
-assert.equal(new Set(images.map(x => x[1])).size, 4, 'Four distinct official logo images must be embedded in the public HTML');
+assert.equal(images.length, 5, 'App icon, Apple icon, wordmark, hero, and mono logo must be embedded');
+assert.equal(new Set(images.map(x => x[1])).size, 4, 'Four distinct official logo images must be embedded');
+assert.ok(Math.max(...images.map(x => x[1].length)) > 20000, 'Original wordmark is too compressed');
+assert.ok(Math.min(...images.map(x => x[1].length)) > 6500, 'A logo has been reduced to an unacceptable thumbnail');
 for (const [, encoded] of images) {
   const binary = Buffer.from(encoded, 'base64');
   assert.equal(binary.subarray(0,4).toString(), 'RIFF', 'Embedded logo must be valid WebP RIFF');
