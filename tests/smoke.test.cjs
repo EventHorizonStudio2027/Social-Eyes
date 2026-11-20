@@ -20,6 +20,12 @@ const hairModule=fs.readFileSync(path.join(root,'assets/avatar-hair.js'),'utf8')
 new Function('window',hairModule)(avatarModuleScope);
 const hairstyles=avatarModuleScope.SocialEyesHair;
 const checks=[
+  ['Expo native application source is present',()=>{
+    for(const file of ['app.json','tsconfig.json','app/_layout.tsx','app/index.tsx','src/providers/AuthProvider.tsx','src/providers/AppProvider.tsx','src/lib/supabase.ts','.github/workflows/phase1-smoke.yml']){
+      assert.ok(fs.existsSync(path.join(root,file)), 'Missing native application source: '+file);
+    }
+  }],
+
   ['Displayed facial labels match actual artwork',()=>{
     for(const [category,names] of [
       ['Head shape',headShapes.names],
