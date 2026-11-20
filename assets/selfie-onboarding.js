@@ -19,6 +19,7 @@
   let selectionId = 0;
   let isSampling = false;
   let pendingFile = null;
+  const MAX_IMAGE_PIXELS = 40000000;
   const keyboardFilePicker = (label, input) => {
     if (!label) return;
     label.setAttribute('role', 'button');
@@ -70,6 +71,12 @@
         feedback.textContent = 'This photo is too small. Choose a portrait at least 128 × 128 pixels.';
         return;
       }
+      if (image.naturalWidth * image.naturalHeight > MAX_IMAGE_PIXELS) {
+        reset();
+        feedback.dataset.state = 'error';
+        feedback.textContent = 'This photo is too large to process safely. Choose an image under 40 megapixels.';
+        return;
+      }
       pendingFile = null;
       preview.hidden = false;
       suggest.disabled = false;
@@ -93,6 +100,7 @@
     isSampling = true;
     try {
       suggest.disabled = true;
+      suggest.setAttribute('aria-busy', 'true');
       canvas = document.createElement('canvas');
       canvas.width = 128;
       canvas.height = 128;
@@ -116,6 +124,7 @@
       if (canvas) { canvas.width = 0; canvas.height = 0; }
       isSampling = false;
       suggest.disabled = !objectUrl;
+      suggest.removeAttribute('aria-busy');
     }
   });
   camera.addEventListener('change', select);
@@ -124,8 +133,5 @@
   const openEditor = () => document.getElementById('manual-avatar-editor')?.scrollIntoView({ behavior: window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches ? 'auto' : 'smooth', block: 'start' });
   manual.addEventListener('click', openEditor);
   viewAvatar?.addEventListener('click', openEditor);
-  document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState === 'hidden') reset();
-  });
   window.addEventListener('pagehide', reset);
 })();
