@@ -18,6 +18,12 @@ jobs:
           for file in assets/*.js tests/*.cjs; do node --check "$file"; done
       - name: Static integration smoke tests
         run: node tests/smoke.test.cjs
+      - name: Phase 1 static audit
+        run: npm run audit:static
+      - name: Foundation regression tests
+        run: npm run test:foundation
+      - name: TypeScript source syntax audit
+        run: npm run audit:syntax
   browser:
     runs-on: ubuntu-latest
     timeout-minutes: 12
