@@ -76,5 +76,5 @@ const styles = StyleSheet.create({
   disabled: { opacity: 0.7 },
   buttonText: { color: '#06111B', fontWeight: '900', fontSize: 14, letterSpacing: 0.2 },
   error: { color: '#FFB6C2', fontSize: 13, lineHeight: 19, textAlign: 'center', paddingVertical: 4 },
-  note: { color: theme.colors.faint, fontSize: 11, lineHeight: 17, textAlign: 'center', marginTop: 6, letterSpacing: 0.15 },
+  note: { color: theme.colors.muted, fontSize: 11, lineHeight: 17, textAlign: 'center', marginTop: 8, letterSpacing: 0.2 },
 });
