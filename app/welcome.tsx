@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
   copy: { color: theme.colors.muted, fontSize: 14, lineHeight: 23, letterSpacing: 0.1, marginBottom: 12 },
   button: { backgroundColor: theme.colors.cyan, borderRadius: 18, minHeight: 52, paddingHorizontal: 16, paddingVertical: 17, alignItems: 'center', justifyContent: 'center', shadowColor: theme.colors.cyan, shadowOpacity: 0.2, shadowRadius: 16, elevation: 3 },
   disabled: { opacity: 0.7 },
-  buttonText: { color: '#06111B', fontWeight: '900', fontSize: 14, letterSpacing: 0.2 },
+  buttonText: { color: '#06111B', fontWeight: '900', fontSize: 14, letterSpacing: 0.35 },
   error: { color: '#FFB6C2', fontSize: 13, lineHeight: 19, textAlign: 'center', paddingVertical: 4 },
   note: { color: theme.colors.muted, fontSize: 11, lineHeight: 18, textAlign: 'center', marginTop: 8, letterSpacing: 0.3 },
 });
