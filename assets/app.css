@@ -283,3 +283,9 @@
 .top .status{display:inline-flex;align-items:center;gap:8px;letter-spacing:.09em;font-size:11px;font-weight:750;white-space:nowrap}
 .top .status::before{content:"";width:7px;height:7px;border-radius:50%;background:#58ecfa;box-shadow:0 0 0 3px rgba(88,236,250,.12)}
 @media(max-width:520px){.top .status{font-size:10px;letter-spacing:.04em}}
+
+/* Discovery empty state: a clear next action rather than a dead end. */
+#results .empty{display:grid;justify-items:center;gap:9px;padding:clamp(28px,5vw,52px) 20px;text-align:center;border:1px dashed rgba(125,165,213,.32);border-radius:20px;background:linear-gradient(140deg,rgba(35,48,81,.45),rgba(17,25,46,.28))}
+#results .empty strong{font-size:18px;letter-spacing:-.025em;color:var(--text)}
+#results .empty p{margin:0 0 8px;color:var(--muted)}
+#results .empty button{min-height:44px;padding:10px 18px;border-radius:12px}
