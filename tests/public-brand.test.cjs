@@ -41,5 +41,7 @@ assert.match(html, /rel="manifest" href="\.\/manifest\.webmanifest"/);
 assert.match(html, /rel="apple-touch-icon"/);
 const app = fs.readFileSync('assets/app.js', 'utf8');
 assert.match(app, /data-reset-discover/, 'Discovery empty-state recovery action missing');
+assert.match(app, /function closeVenueDetails\(\)/, 'Venue dialog needs centralized close logic');
+assert.match(app, /e\.key==="Escape"/, 'Search should clear with Escape');
 assert.match(css, /#results \.empty/, 'Discovery empty-state design missing');
 console.log('PASS: native-resolution logos, branded manifest, public assets and discovery recovery action');
