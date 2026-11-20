@@ -55,10 +55,15 @@ assert.match(app, /async function shareCreatorLook\(\)/, 'Avatar native sharing 
 assert.match(app, /canvas\.width=1800;canvas\.height=2340/, 'High-resolution PNG export dimensions missing');
 assert.match(css, /\.creator-tools button:focus-visible/, 'Avatar export controls need visible keyboard focus');
 const sw = fs.readFileSync('service-worker.js', 'utf8');
+assert.match(sw, /social-eyes-static-v2/, 'Offline cache version must advance when the app shell changes');
 assert.match(sw, /addEventListener\('install'/, 'Offline shell install handler missing');
 assert.match(sw, /addEventListener\('fetch'/, 'Offline fetch handler missing');
 assert.match(sw, /request\.method!==\x27GET\x27/, 'Service worker must not intercept writes');
 assert.match(app, /serviceWorker\.register\('\.\/service-worker\.js'/, 'Service worker registration missing');
 assert.match(app, /connection-status/, 'Offline status UI missing');
+assert.match(html, /id="install-app"/, 'Install action missing from header');
+assert.match(app, /beforeinstallprompt/, 'Native installation prompt handler missing');
+assert.match(app, /appinstalled/, 'Installed state handler missing');
+assert.match(css, /\.install-app\[hidden\]/, 'Install action hidden state missing');
 assert.match(css, /#results \.empty/, 'Discovery empty-state design missing');
 console.log('PASS: native-resolution logos, branded manifest, public assets and discovery recovery action');
