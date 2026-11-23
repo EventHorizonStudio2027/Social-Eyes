@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
   selected: { backgroundColor: theme.colors.violet, borderColor: '#A78BFA', borderWidth: 1.5 },
   chipText: { color: theme.colors.text, textTransform: 'capitalize', fontSize: 13, fontWeight: '700', letterSpacing: 0.12 },
   button: { paddingHorizontal: 20, paddingVertical: 15, minHeight: 54, justifyContent: 'center', backgroundColor: theme.colors.violet, borderRadius: 15, alignItems: 'center', shadowColor: '#090D1B', shadowOpacity: 0.22, shadowRadius: 8, shadowOffset: { width: 0, height: 3 }, elevation: 2 },
-  buttonText: { color: theme.colors.text, fontWeight: '800', fontSize: 14, letterSpacing: 0.25 },
+  buttonText: { color: '#FFFFFF', fontWeight: '800', fontSize: 14, letterSpacing: 0.35 },
   link: { color: theme.colors.cyan, fontWeight: '800', fontSize: 13, letterSpacing: 0.15, paddingVertical: 5 },
   error: { color: theme.colors.danger, fontSize: 13, lineHeight: 20, fontWeight: '600' },
 });
