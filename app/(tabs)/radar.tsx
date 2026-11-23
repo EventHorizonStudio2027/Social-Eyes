@@ -30,10 +30,10 @@ export default function RadarScreen() {
 const styles = StyleSheet.create({
   intro: { gap: 9, paddingTop: 15, paddingBottom: 8 },
   kicker: { color: theme.colors.cyan, fontSize: 10, fontWeight: '900', letterSpacing: 1.8 },
-  title: { color: theme.colors.text, fontSize: 34, lineHeight: 40, fontWeight: '900', letterSpacing: -1.4 },
+  title: { color: theme.colors.text, fontSize: 34, lineHeight: 40, fontWeight: '900', letterSpacing: -1.15 },
   subtitle: { color: theme.colors.muted, fontSize: 13, lineHeight: 20 },
   hero: { borderWidth: 1, borderColor: theme.colors.border, borderRadius: 24, backgroundColor: theme.colors.surface, padding: 22, minHeight: 240, justifyContent: 'center', alignItems: 'center', gap: 13 },
-  icon: { width: 66, height: 66, borderRadius: 22, backgroundColor: '#123344', alignItems: 'center', justifyContent: 'center' },
+  icon: { width: 66, height: 66, borderRadius: 22, backgroundColor: '#163D4B', alignItems: 'center', justifyContent: 'center' },
   heading: { color: theme.colors.text, fontSize: 20, fontWeight: '900', textAlign: 'center' },
   body: { color: theme.colors.muted, fontSize: 13, lineHeight: 20, textAlign: 'center' },
   status: { flexDirection: 'row', alignItems: 'center', gap: 7, paddingVertical: 8, paddingHorizontal: 13, borderRadius: 24, backgroundColor: '#122F38' },
