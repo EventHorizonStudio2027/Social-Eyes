@@ -21,6 +21,6 @@ const contracts = [
   ['settings writes refuse unmounted provider', 'if (!mounted.current || !settingsReady || !settingsStorageAvailable'],
   ['settings load completion requires mounted provider', 'if (mounted.current && sequence === settingsLoadSequence.current) setSettingsReady(true);'],
   ['settings save completion checks mounted provider', 'if (mounted.current && writeGeneration === mountGeneration.current) {'],
-  ['profile explicitly warns preferences are local', 'Your preferences are stored on this device.'],
+  ['profile explicitly warns preferences are local', 'Privacy preferences stay on this device.'],
 ];
 for (const [name, snippet] of contracts) test(name, () => assert.ok(provider.includes(snippet) || profile.includes(snippet)));
