@@ -6,7 +6,7 @@ export function validateProfileDraft(input: unknown): Omit<PublicProfile, 'id'> 
   if (typeof draft.display_name !== 'string' || typeof draft.bio !== 'string' || typeof draft.intent !== 'string' || !VALID_INTENTS.has(draft.intent)) throw new Error('Invalid profile fields');
   const display_name = draft.display_name.trim();
   const bio = draft.bio.trim();
-  if (display_name.length < 2 || display_name.length > 40 || bio.length > 280 || /[\x00-\x1f\x7f]/.test(display_name + bio)) throw new Error('Invalid profile length or characters');
+  if ([...display_name].length < 2 || [...display_name].length > 40 || [...bio].length > 280 || /[\x00-\x1f\x7f\u200b-\u200f\u202a-\u202e\u2066-\u2069]/i.test(display_name + bio)) throw new Error('Invalid profile length or characters');
   return { display_name, bio, intent: draft.intent as SocialIntent };
 }
 export function validateProfileRecord(input: unknown, expectedUserId: string): PublicProfile {
