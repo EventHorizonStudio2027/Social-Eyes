@@ -9,7 +9,7 @@ export function Screen({ children, scroll = true }: Props) {
   return (
     <SafeAreaView style={styles.safe} edges={['top', 'left', 'right']}>
       {scroll ? (
-        <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag" automaticallyAdjustKeyboardInsets>
+        <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag" automaticallyAdjustKeyboardInsets contentInsetAdjustmentBehavior="automatic">
           {children}
         </ScrollView>
       ) : (
@@ -21,5 +21,5 @@ export function Screen({ children, scroll = true }: Props) {
 
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: theme.colors.background },
-  content: { paddingHorizontal: 20, paddingTop: 14, paddingBottom: 36, gap: 18, width: '100%', maxWidth: 680, alignSelf: 'center' },
+  content: { paddingHorizontal: 18, paddingTop: 16, paddingBottom: 44, gap: 18, width: '100%', maxWidth: 680, alignSelf: 'center' },
 });
