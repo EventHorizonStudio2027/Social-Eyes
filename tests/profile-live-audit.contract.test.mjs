@@ -7,7 +7,7 @@ test('read-only SQL audit checks RLS, permissions, owner policies, and timestamp
   assert.match(sql, /has_table_privilege\('anon'/);
   assert.match(sql, /has_column_privilege\('authenticated'/);
   assert.match(sql, /foreach operation in array array\['SELECT','INSERT','UPDATE','DELETE'\]/);
-  assert.match(sql, /auth\\\.uid/);
+  assert.match(sql, /auth[.]uid/);
   assert.match(sql, /pg_trigger/);
   assert.doesNotMatch(sql, /\b(?:insert\s+into|update\s+public\.profiles|delete\s+from|drop\s+table|alter\s+table)\b/i);
 });
