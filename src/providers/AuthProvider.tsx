@@ -178,7 +178,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
       try {
         // Supabase uses the project's configured Site URL for the recovery link.
         // A native deep-link recovery flow is a separate, unverified milestone.
-        const { error: resetError } = await supabase.auth.resetPasswordForEmail(email, { redirectTo: RECOVERY_REDIRECT_URL });
+        const { error: resetError } = await supabase.auth.resetPasswordForEmail(input.email, { redirectTo: RECOVERY_REDIRECT_URL });
         if (resetError) { setError('Unable to request a reset email. Please try again later.'); return false; }
         return true;
       } catch { setError('Unable to request a reset email. Please try again later.'); return false; }
