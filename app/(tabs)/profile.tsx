@@ -36,7 +36,7 @@ export default function ProfileScreen() {
         <Text style={styles.copy}>{backendStatus === 'unconfigured' ? 'Backend not configured. Live features remain unavailable.' : backendStatus === 'checking' ? 'Checking backend reachability…' : backendStatus === 'reachable' ? 'Authentication endpoint reachable. Account sign-in, database permissions, and profile persistence still require live verification.' : backendStatus === 'paused' ? 'Connection status paused while the app is inactive. It will refresh when you return.' : 'Backend unreachable. Check your connection or project configuration.'}</Text>
         <Pressable accessibilityRole="button" accessibilityLabel="Check service connection again" disabled={backendStatus === 'checking' || backendStatus === 'paused'} accessibilityState={{ disabled: backendStatus === 'checking' || backendStatus === 'paused' }} onPress={() => void refreshBackend()} style={styles.button}><Text style={styles.buttonText}>Check connection again</Text></Pressable>
       </Panel>
-      <Panel><Text style={styles.title}>Your control matters</Text><Text style={styles.copy}>Your preferences are stored on this device. They do not publish your location or create a live check-in.</Text></Panel>
+      <Panel><Text style={styles.title}>Your privacy, your choice</Text><Text style={styles.copy}>Privacy preferences stay on this device. Changing them never checks you into a venue or shares your location.</Text></Panel>
     </Screen>
   );
 }
