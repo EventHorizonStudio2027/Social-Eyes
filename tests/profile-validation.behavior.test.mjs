@@ -10,7 +10,7 @@ const sourceText = fs.readFileSync(path.join(root, 'src/lib/profileValidation.ts
 const compiled = ts.transpileModule(sourceText, { compilerOptions: { module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 } });
 const context = await import(`data:text/javascript;base64,${Buffer.from(compiled.outputText).toString('base64')}`);
 const validate = context.validateProfileDraft;
-context.validateRecord = context.validateProfileRecord;
+const validateRecord = context.validateProfileRecord;
 test('profile validation trims and allowlists fields', () => {
   const result = validate({ id: 'forged', display_name: '  Alex  ', bio: '  Hello  ', intent: 'friends', admin: true });
   assert.equal(JSON.stringify(result), JSON.stringify({ display_name: 'Alex', bio: 'Hello', intent: 'friends' }));
@@ -31,10 +31,10 @@ test('profile writes verify current authenticated owner and use allowlisted payl
 
 test('database profile responses reject wrong owners and malformed fields', () => {
   const valid = { id: 'user-a', display_name: 'Alex', bio: 'Hi', intent: 'friends' };
-  assert.equal(context.validateRecord(valid, 'user-a').id, 'user-a');
-  assert.throws(() => context.validateRecord(valid, 'user-b'));
-  assert.throws(() => context.validateRecord({ ...valid, display_name: ' Alex ' }, 'user-a'));
-  assert.throws(() => context.validateRecord({ ...valid, intent: 'administrator' }, 'user-a'));
+  assert.equal(validateRecord(valid, 'user-a').id, 'user-a');
+  assert.throws(() => validateRecord(valid, 'user-b'));
+  assert.throws(() => validateRecord({ ...valid, display_name: ' Alex ' }, 'user-a'));
+  assert.throws(() => validateRecord({ ...valid, intent: 'administrator' }, 'user-a'));
 });
 test('profile reads authenticate owner and validate server response', () => {
   const source = fs.readFileSync(path.join(root, 'src/lib/profiles.ts'), 'utf8');
