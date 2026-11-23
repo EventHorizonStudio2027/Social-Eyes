@@ -14,8 +14,9 @@ async function requireOwner(userId: string, changedMessage: string): Promise<voi
 /** Reads are owner-scoped and never return data after a session switch. */
 export async function getMyProfile(userId: string): Promise<PublicProfile | null> {
   if (!supabase) throw new Error('Backend is not configured');
-  const identity = await supabase.auth.getUser();
-  if (identity.error || !identity.data.user || identity.data.user.id !== userId) throw new Error('Profile owner mismatch');
+  const current = await supabase.auth.getUser();
+  const identity = current.data;
+  if (current.error || !identity.user || identity.user.id !== userId) throw new Error('Profile owner mismatch');
   const { data, error } = await supabase.from('profiles').select('id,display_name,bio,intent').eq('id', userId).maybeSingle();
   if (error) throw error;
   await requireOwner(userId, 'Profile owner changed during request');
@@ -28,11 +29,12 @@ export async function saveMyProfile(profile: PublicProfile): Promise<PublicProfi
   if (savingProfiles.has(profile.id)) throw new Error('Profile save already in progress');
   savingProfiles.add(profile.id);
   try {
-    const identity = await supabase.auth.getUser();
-    if (identity.error || !identity.data.user || identity.data.user.id !== profile.id) throw new Error('Profile owner mismatch');
+    const current = await supabase.auth.getUser();
+    const identity = current.data;
+    if (current.error || !identity.user || identity.user.id !== profile.id) throw new Error('Profile owner mismatch');
     const validated = validateProfileDraft(profile);
     await requireOwner(profile.id, 'Profile owner changed before write');
-    const { error } = await supabase.from('profiles').upsert({ id: identity.data.user.id, ...validated }, { onConflict: 'id' });
+    const { error } = await supabase.from('profiles').upsert({ id: identity.user.id, ...validated }, { onConflict: 'id' });
     if (error) throw error;
     await requireOwner(profile.id, 'Profile owner changed during request');
     const { data, error: readError } = await supabase.from('profiles').select('id,display_name,bio,intent').eq('id', profile.id).maybeSingle();
