@@ -10,7 +10,7 @@ export async function getMyProfile(userId: string): Promise<PublicProfile | null
   if (current.error || !identity.user || identity.user.id !== userId) throw new Error('Profile authentication required');
   const { data, error } = await supabase.from('profiles').select('id,display_name,bio,intent').eq('id', current.data.user.id).maybeSingle();
   if (error) throw error;
-  return data ? validateProfileRecord(data, current.user.id) : null;
+  return data ? validateProfileRecord(data, current.data.user.id) : null;
 }
 export async function saveMyProfile(profile: PublicProfile): Promise<PublicProfile> {
   if (!supabase) throw new Error('Backend is not configured');
