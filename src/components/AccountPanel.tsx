@@ -201,9 +201,9 @@ const styles = StyleSheet.create({
   choices: { flexDirection: 'row', flexWrap: 'wrap', gap: 10, paddingVertical: 4 },
   chip: { borderWidth: 1, borderColor: '#38516B', paddingHorizontal: 14, paddingVertical: 11, minHeight: 44, justifyContent: 'center', borderRadius: 13 },
   selected: { backgroundColor: theme.colors.violet, borderColor: '#A78BFA', borderWidth: 1.5 },
-  chipText: { color: theme.colors.text, textTransform: 'capitalize', fontSize: 12, fontWeight: '700', letterSpacing: 0.15 },
+  chipText: { color: theme.colors.text, textTransform: 'capitalize', fontSize: 13, fontWeight: '700', letterSpacing: 0.12 },
   button: { paddingHorizontal: 18, paddingVertical: 14, minHeight: 52, justifyContent: 'center', backgroundColor: theme.colors.violet, borderRadius: 14, alignItems: 'center' },
-  buttonText: { color: theme.colors.text, fontWeight: '800' },
+  buttonText: { color: theme.colors.text, fontWeight: '800', fontSize: 14, letterSpacing: 0.25 },
   link: { color: theme.colors.cyan, fontWeight: '800', fontSize: 13, letterSpacing: 0.15, paddingVertical: 5 },
   error: { color: theme.colors.danger, fontSize: 13, lineHeight: 20, fontWeight: '600' },
 });
