@@ -419,3 +419,13 @@ Profile read-back now performs a second authenticated identity check after the n
 - Local process profile-write concurrency guard and two executable regression cases: verified offline.
 - Offline phase-1 verification: 234 foundation tests passed, static, syntax, and package checks passed.
 - Concurrent editing across devices, hosted TypeScript compilation, Expo Doctor, native devices and live two-user RLS: **not verified**.
+
+## 2026-11-23 — Completion gate and actionable blockers
+
+Phase 1 is **not signed off**. Latest observed GitHub Phase 1 checks were successful, but that workflow previously ran only source smoke tests; the workflow now additionally runs the complete offline foundation suite, static privacy audit and package audit. New results must be reviewed before claiming success.
+
+**Known missing repository prerequisites:** `package-lock.json`, `assets/images/social-eyes-icon.png`, and `assets/images/social-eyes-adaptive-foreground.png`. `app.json` references both images. The manual Expo preview workflow requires these assets and the lockfile; no fabricated replacement artwork has been committed.
+
+**External verification required:** real iOS and Android device/emulator launches, Expo Doctor and TypeScript after a locked dependency install, Supabase project configuration and migrations, two-account row-level-security probe, and real onboarding/settings persistence through app restart. Expo cloud builds additionally require a user-owned EAS project association and `EXPO_TOKEN` secret. Do not publish service-role credentials.
+
+**User action when ready:** provide the original icon artwork (or authorize creating replacements), connect/configure a Supabase development project with public URL and publishable key, and connect an Expo/EAS project for device builds. Until then, Phase 2 stays frozen and the public static website remains distinct from the unverified native application.
