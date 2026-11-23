@@ -5,6 +5,7 @@ export function parseRecoveryLink(value: string): { tokenHash: string; type: 're
     if (url.protocol !== 'socialeyes:' || url.hostname !== 'auth' || url.pathname !== '/recover' || url.hash || url.username || url.password || url.port) return null;
     const params = [...url.searchParams.entries()];
     if (params.length !== 2 || url.searchParams.getAll('token_hash').length !== 1 || url.searchParams.getAll('type').length !== 1 || url.searchParams.get('type') !== 'recovery') return null;
+    if (params.some(([name]) => name !== 'token_hash' && name !== 'type')) return null;
     const tokenHash = url.searchParams.get('token_hash');
     if (!tokenHash || !/^[a-fA-F0-9]{64}$/.test(tokenHash)) return null;
     return { tokenHash, type: 'recovery' };
