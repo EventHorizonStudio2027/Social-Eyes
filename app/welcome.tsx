@@ -42,7 +42,7 @@ export default function WelcomeScreen() {
 
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: theme.colors.background, justifyContent: 'flex-end', padding: 25 },
-  orb: { position: 'absolute', top: '13%', alignSelf: 'center', width: 220, height: 220, borderRadius: 110, borderWidth: 1, borderColor: '#23475B', alignItems: 'center', justifyContent: 'center', shadowColor: theme.colors.cyan, shadowOpacity: 0.22, shadowRadius: 55 },
+  orb: { position: 'absolute', top: '12%', alignSelf: 'center', width: 206, height: 206, borderRadius: 103, borderWidth: 1, borderColor: '#2D607A', backgroundColor: '#0B192B', alignItems: 'center', justifyContent: 'center', shadowColor: theme.colors.cyan, shadowOpacity: 0.18, shadowRadius: 42 },
   orbInner: { width: 155, height: 155, borderRadius: 78, borderWidth: 1, borderColor: '#3C6C85', backgroundColor: '#0E2134', alignItems: 'center', justifyContent: 'center' },
   orbCore: { width: 76, height: 76, borderRadius: 38, borderWidth: 1, borderColor: '#70476E', backgroundColor: '#10182A' },
   content: { gap: 13, paddingBottom: 20 },
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
   kicker: { color: theme.colors.cyan, fontSize: 10, fontWeight: '900', letterSpacing: 2.2, marginTop: 6 },
   title: { color: theme.colors.text, fontSize: 43, lineHeight: 46, letterSpacing: -2, fontWeight: '900' },
   copy: { color: theme.colors.muted, fontSize: 14, lineHeight: 22, marginBottom: 12 },
-  button: { backgroundColor: theme.colors.cyan, borderRadius: 16, paddingVertical: 17, alignItems: 'center' },
+  button: { backgroundColor: theme.colors.cyan, borderRadius: 16, paddingVertical: 17, minHeight: 52, alignItems: 'center', justifyContent: 'center' },
   disabled: { opacity: 0.7 },
   buttonText: { color: '#06111B', fontWeight: '900', fontSize: 14 },
   error: { color: '#FF9DAD', fontSize: 13, textAlign: 'center' },
