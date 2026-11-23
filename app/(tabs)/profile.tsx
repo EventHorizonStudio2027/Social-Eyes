@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
   avatar: { width: 96, height: 96, borderRadius: 30, borderWidth: 1.5, borderColor: '#5283A6', backgroundColor: '#152A42', alignItems: 'center', justifyContent: 'center' },
   name: { color: theme.colors.text, fontSize: 22, fontWeight: '900' },
   row: { flexDirection: 'row', alignItems: 'center', gap: 16, paddingVertical: 14, minHeight: 64 },
-  rowTitle: { color: theme.colors.text, fontSize: 14, fontWeight: '800', letterSpacing: 0.12 },
+  rowTitle: { color: theme.colors.text, fontSize: 14, fontWeight: '800', letterSpacing: 0.18 },
   copy: { color: theme.colors.muted, fontSize: 12, lineHeight: 20, textAlign: 'left' },
   rule: { height: 1, backgroundColor: '#36536F', opacity: 0.72, marginVertical: 2 },
   title: { color: theme.colors.text, fontSize: 15, fontWeight: '800', marginBottom: 8 },
