@@ -195,9 +195,9 @@ export function AccountPanel() {
 const styles = StyleSheet.create({
   title: { color: theme.colors.text, fontSize: 15, fontWeight: '800', marginBottom: 8 },
   copy: { color: theme.colors.muted, fontSize: 12, lineHeight: 19 },
-  stack: { gap: 12 },
+  stack: { gap: 14 },
   input: { color: theme.colors.text, backgroundColor: theme.colors.surfaceRaised, borderColor: '#38516B', borderWidth: 1, borderRadius: 12, paddingHorizontal: 14, paddingVertical: 13, minHeight: 48, fontSize: 14 },
-  bio: { minHeight: 75, textAlignVertical: 'top' },
+  bio: { minHeight: 100, textAlignVertical: 'top', lineHeight: 21 },
   choices: { flexDirection: 'row', flexWrap: 'wrap', gap: 10, paddingVertical: 4 },
   chip: { borderWidth: 1, borderColor: '#38516B', paddingHorizontal: 14, paddingVertical: 11, minHeight: 44, justifyContent: 'center', borderRadius: 13 },
   selected: { backgroundColor: theme.colors.violet, borderColor: '#A78BFA', borderWidth: 1.5 },
