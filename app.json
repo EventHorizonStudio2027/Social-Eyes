@@ -15,20 +15,14 @@
     },
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "com.socialeyes.app",
-      "icon": "./assets/images/social-eyes-icon.png"
+      "bundleIdentifier": "com.socialeyes.app"
     },
     "android": {
       "package": "com.socialeyes.app",
-      "edgeToEdgeEnabled": true,
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/images/social-eyes-adaptive-foreground.png",
-        "backgroundColor": "#0A1026"
-      }
+      "edgeToEdgeEnabled": true
     },
     "web": {
       "bundler": "metro"
-    },
-    "icon": "./assets/images/social-eyes-icon.png"
+    }
   }
 }
