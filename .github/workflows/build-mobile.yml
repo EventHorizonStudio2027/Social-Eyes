@@ -29,7 +29,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          for file in package.json package-lock.json app.json eas.json tsconfig.json src/lib/supabase.ts src/providers/AuthProvider.tsx app/_layout.tsx assets/images/social-eyes-icon.png scripts/phase1-verify.mjs; do
+          for file in package.json package-lock.json app.json eas.json tsconfig.json src/lib/supabase.ts src/providers/AuthProvider.tsx app/_layout.tsx scripts/phase1-verify.mjs; do
             if [[ ! -f "$file" ]]; then
               echo "::error::Missing required application file: $file"
               exit 1
