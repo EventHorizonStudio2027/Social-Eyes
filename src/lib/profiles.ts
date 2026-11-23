@@ -10,7 +10,9 @@ export async function getMyProfile(userId: string): Promise<PublicProfile | null
   if (current.error || !identity.user || identity.user.id !== userId) throw new Error('Profile authentication required');
   const { data, error } = await supabase.from('profiles').select('id,display_name,bio,intent').eq('id', current.data.user.id).maybeSingle();
   if (error) throw error;
-  return data ? validateProfileRecord(data, current.data.user.id) : null;
+  const latest = await supabase.auth.getUser();
+  if (latest.error || latest.data.user?.id !== userId) throw new Error('Account changed during profile read');
+  return data ? validateProfileRecord(data, userId) : null;
 }
 export async function saveMyProfile(profile: PublicProfile): Promise<PublicProfile> {
   if (!supabase) throw new Error('Backend is not configured');
@@ -20,5 +22,7 @@ export async function saveMyProfile(profile: PublicProfile): Promise<PublicProfi
   const validated = validateProfileDraft(profile);
   const { data, error } = await supabase.from('profiles').upsert({ id: identity.user.id, ...validated }, { onConflict: 'id' }).select('id,display_name,bio,intent').single();
   if (error) throw error;
-  return validateProfileRecord(data, identity.user.id);
+  const latest = await supabase.auth.getUser();
+  if (latest.error || latest.data.user?.id !== profile.id) throw new Error('Account changed during profile save');
+  return validateProfileRecord(data, profile.id);
 }
