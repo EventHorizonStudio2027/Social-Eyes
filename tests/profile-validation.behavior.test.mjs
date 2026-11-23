@@ -2,16 +2,15 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
-import vm from 'node:vm';
+import { createRequire } from 'node:module';
+const require = createRequire(import.meta.url);
+const ts = require('typescript');
 const root = path.resolve(import.meta.dirname, '..');
-let src = fs.readFileSync(path.join(root, 'src/lib/profileValidation.ts'), 'utf8');
-src = src.replace(/^import type .*\n/gm, '').replace(/^const VALID_INTENTS: ReadonlySet<string>/m, 'const VALID_INTENTS')
-  .replace('export function validateProfileDraft(input: unknown): Omit<PublicProfile, \'id\'>', 'function validateProfileDraft(input)')
-  .replaceAll('input as Record<string, unknown>', 'input').replace('draft.intent as SocialIntent', 'draft.intent')
-  .replace('export function validateProfileRecord(input: unknown, expectedUserId: string): PublicProfile', 'function validateProfileRecord(input, expectedUserId)');
-const context = {};
-vm.runInNewContext(`${src}\nthis.validate = validateProfileDraft; this.validateRecord = validateProfileRecord`, context);
-const validate = context.validate;
+const sourceText = fs.readFileSync(path.join(root, 'src/lib/profileValidation.ts'), 'utf8');
+const compiled = ts.transpileModule(sourceText, { compilerOptions: { module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 } });
+const context = await import(`data:text/javascript;base64,${Buffer.from(compiled.outputText).toString('base64')}`);
+const validate = context.validateProfileDraft;
+context.validateRecord = context.validateProfileRecord;
 test('profile validation trims and allowlists fields', () => {
   const result = validate({ id: 'forged', display_name: '  Alex  ', bio: '  Hello  ', intent: 'friends', admin: true });
   assert.equal(JSON.stringify(result), JSON.stringify({ display_name: 'Alex', bio: 'Hello', intent: 'friends' }));
@@ -40,5 +39,5 @@ test('database profile responses reject wrong owners and malformed fields', () =
 test('profile reads authenticate owner and validate server response', () => {
   const source = fs.readFileSync(path.join(root, 'src/lib/profiles.ts'), 'utf8');
   assert.match(source, /identity\.user\.id !== userId/);
-  assert.match(source, /validateProfileRecord\(data, current\.user\.id\)/);
+  assert.match(source, /validateProfileRecord\(data, userId\)/);
 });
