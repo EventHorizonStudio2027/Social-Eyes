@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useMemo, useRef, useState } from 
 import type { PropsWithChildren } from 'react';
 import { AppState, Linking } from 'react-native';
 import { parseRecoveryLink, RECOVERY_REDIRECT_URL } from '@/lib/recoveryLinks';
+import { validateAuthInput, validateRecoveryEmail } from '@/lib/authInput';
 import { shouldClearRecoveryForAuthEvent } from '@/lib/recoveryEvents';
 import type { Session } from '@supabase/supabase-js';
 import { supabase } from '@/lib/supabase';
@@ -137,33 +138,41 @@ export function AuthProvider({ children }: PropsWithChildren) {
       } catch { setRecoverySession(true); setError('Unable to complete recovery securely. Please retry sign-out.'); return false; }
     },
     signIn: async (email, password) => {
+      const input = validateAuthInput(email, password, 'sign-in');
+      if (!input.ok) { setError(input.message); return false; }
       if (!supabase) { setError('Connect Supabase to enable accounts.'); return false; }
       setError(null);
       try {
-        const { error: authError } = await supabase.auth.signInWithPassword({ email: email.trim(), password });
+        const { error: authError } = await supabase.auth.signInWithPassword({ email: input.email, password: input.password });
         if (authError) { setError(authError.message); return false; }
         return true;
       } catch { setError('Unable to reach authentication service.'); return false; }
     },
     signUp: async (email, password) => {
+      const input = validateAuthInput(email, password, 'sign-up');
+      if (!input.ok) { setError(input.message); return 'error'; }
       if (!supabase) { setError('Connect Supabase to enable accounts.'); return 'error'; }
       setError(null);
       try {
-        const { data, error: authError } = await supabase.auth.signUp({ email: email.trim(), password });
+        const { data, error: authError } = await supabase.auth.signUp({ email: input.email, password: input.password });
         if (authError) { setError(authError.message); return 'error'; }
         return data.session ? 'signed-in' : 'confirm-email';
       } catch { setError('Unable to reach authentication service.'); return 'error'; }
     },
     resendConfirmation: async (email) => {
+      const input = validateRecoveryEmail(email);
+      if (!input.ok) { setError(input.message); return false; }
       if (!supabase) { setError('Connect Supabase to enable accounts.'); return false; }
       setError(null);
       try {
-        const { error: resendError } = await supabase.auth.resend({ type: 'signup', email: email.trim() });
+        const { error: resendError } = await supabase.auth.resend({ type: 'signup', email: input.email });
         if (resendError) { setError('Unable to resend confirmation right now. Please try again later.'); return false; }
         return true;
       } catch { setError('Unable to resend confirmation right now. Please try again later.'); return false; }
     },
     requestPasswordReset: async (email) => {
+      const input = validateRecoveryEmail(email);
+      if (!input.ok) { setError(input.message); return false; }
       if (!supabase) { setError('Connect Supabase to enable accounts.'); return false; }
       setError(null);
       try {
