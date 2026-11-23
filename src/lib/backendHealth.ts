@@ -5,7 +5,7 @@ export type BackendStatus = 'unconfigured' | 'checking' | 'reachable' | 'unreach
 export async function checkBackendHealth(): Promise<BackendStatus> {
   const url = process.env.EXPO_PUBLIC_SUPABASE_URL;
   const key = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY;
-  if (!isBackendConfigured || !isSafePublicBackendConfig(url, key)) return 'unconfigured';
+  if (!isBackendConfigured || !isSafePublicBackendConfig(url, key) || typeof url !== 'string' || typeof key !== 'string') return 'unconfigured';
   let endpoint: URL;
   try {
     const parsed = new URL(url);
