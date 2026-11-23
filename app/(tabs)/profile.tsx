@@ -56,6 +56,6 @@ const styles = StyleSheet.create({
   title: { color: theme.colors.text, fontSize: 15, fontWeight: '800', marginBottom: 8 },
   error: { color: theme.colors.danger, fontSize: 12, marginTop: 10 },
   action: { color: theme.colors.cyan, fontSize: 13, fontWeight: '700', marginTop: 8, paddingVertical: 8 },
-  button: { alignSelf: 'flex-start', borderRadius: 12, backgroundColor: theme.colors.surfaceRaised, paddingHorizontal: 15, paddingVertical: 12, marginTop: 12 },
-  buttonText: { color: theme.colors.cyan, fontWeight: '700', fontSize: 12 },
+  button: { alignSelf: 'flex-start', borderRadius: 12, borderWidth: 1, borderColor: '#28556C', backgroundColor: theme.colors.surfaceRaised, paddingHorizontal: 17, paddingVertical: 13, minHeight: 46, justifyContent: 'center', marginTop: 12 },
+  buttonText: { color: theme.colors.cyan, fontWeight: '800', fontSize: 12, letterSpacing: 0.2 },
 });
