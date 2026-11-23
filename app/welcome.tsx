@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { ActivityIndicator, Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Pressable, StyleSheet, Text, View } from 'react-native';
 import { router } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { theme } from '@/constants/theme';
+import { Ionicons } from '@expo/vector-icons';
 import { markWelcomeComplete } from '@/lib/preferences';
 
 export default function WelcomeScreen() {
@@ -23,7 +24,7 @@ export default function WelcomeScreen() {
   };
   return (
     <SafeAreaView style={styles.safe}>
-      <View style={styles.orb}><Image source={require('../assets/images/social-eyes-mark.png')} style={styles.welcomeMark} accessibilityLabel="Social Eyes eye logo" /></View>
+      <View style={styles.orb} accessibilityLabel="Social Eyes eye emblem" accessibilityRole="image"><View style={styles.orbInner}><Ionicons name="eye-outline" size={88} color={theme.colors.cyan} /></View></View>
       <View style={styles.content}>
         <Text style={styles.brand}>Social <Text style={{ color: theme.colors.cyan }}>Eyes</Text></Text>
         <Text style={styles.kicker}>SEE BEFORE YOU GO</Text>
@@ -42,8 +43,7 @@ export default function WelcomeScreen() {
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: theme.colors.background, justifyContent: 'flex-end', padding: 25 },
   orb: { position: 'absolute', top: '13%', alignSelf: 'center', width: 220, height: 220, borderRadius: 110, borderWidth: 1, borderColor: '#23475B', alignItems: 'center', justifyContent: 'center', shadowColor: theme.colors.cyan, shadowOpacity: 0.22, shadowRadius: 55 },
-  welcomeMark: { width: 210, height: 210, borderRadius: 46 },
-  orbInner: { width: 155, height: 155, borderRadius: 78, borderWidth: 1, borderColor: '#3C3567', alignItems: 'center', justifyContent: 'center' },
+  orbInner: { width: 155, height: 155, borderRadius: 78, borderWidth: 1, borderColor: '#3C6C85', backgroundColor: '#0E2134', alignItems: 'center', justifyContent: 'center' },
   orbCore: { width: 76, height: 76, borderRadius: 38, borderWidth: 1, borderColor: '#70476E', backgroundColor: '#10182A' },
   content: { gap: 13, paddingBottom: 20 },
   brand: { color: theme.colors.text, fontSize: 43, fontWeight: '900', letterSpacing: -2.2 },
