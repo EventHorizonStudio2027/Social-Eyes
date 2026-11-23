@@ -15,17 +15,17 @@ export default function DiscoverScreen() {
         <Text style={styles.title}>Where's the{ '\n' }energy?</Text>
         <Text style={styles.subtitle}>Find participating places, discover who's around, and make your next night out more social.</Text>
       </View>
-      <View style={styles.status}><View style={styles.dot} /><Text style={styles.statusText}>{isBackendConfigured ? 'Backend credentials configured · live connection not yet verified' : 'Development preview · backend not connected'}</Text></View>
+      <View style={styles.status} accessibilityRole="text" accessibilityLabel={isBackendConfigured ? "Backend configured, live venue discovery not verified" : "Offline development preview, live venue discovery unavailable"}><View style={styles.dot} /><Text style={styles.statusText}>{isBackendConfigured ? 'Backend credentials configured · live connection not yet verified' : 'Development preview · backend not connected'}</Text></View>
       <Panel>
         <View style={styles.panelTop}>
           <View style={styles.iconCircle}><Ionicons name="map-outline" size={21} color={theme.colors.cyan} /></View>
           <View style={{ flex: 1, gap: 3 }}>
             <Text style={styles.panelTitle}>Your nearby scene</Text>
-            <Text style={styles.body}>Venue discovery is being connected.</Text>
+            <Text style={styles.body}>Live venue discovery is not available yet.</Text>
           </View>
           <Text style={styles.soon}>NEXT</Text>
         </View>
-        <Text style={styles.body}>Once venue data and live presence are verified, this area will show participating venues, useful details and real activity. No fabricated crowd counts.</Text>
+        <Text style={styles.body}>Venue lists, check-ins and crowd activity remain disabled until backend permissions and real data are verified. Your presence is not shared by this screen.</Text>
       </Panel>
       <Panel>
         <Text style={styles.panelTitle}>How Social Eyes works</Text>
@@ -46,9 +46,9 @@ const styles = StyleSheet.create({
   kicker: { color: theme.colors.cyan, fontSize: 10, fontWeight: '900', letterSpacing: 2 },
   title: { color: theme.colors.text, fontSize: 43, lineHeight: 46, letterSpacing: -2.2, fontWeight: '900' },
   subtitle: { color: theme.colors.muted, fontSize: 14, lineHeight: 21, maxWidth: 340 },
-  status: { flexDirection: 'row', alignItems: 'center', gap: 8, paddingVertical: 4 },
+  status: { flexDirection: 'row', alignItems: 'center', gap: 8, paddingVertical: 8, paddingHorizontal: 10, borderRadius: 12, backgroundColor: '#142235', borderWidth: 1, borderColor: '#25364A' },
   dot: { width: 7, height: 7, borderRadius: 4, backgroundColor: theme.colors.gold },
-  statusText: { color: theme.colors.muted, fontSize: 11, fontWeight: '700' },
+  statusText: { flexShrink: 1, color: theme.colors.muted, fontSize: 11, lineHeight: 16, fontWeight: '700' },
   panelTop: { flexDirection: 'row', alignItems: 'center', gap: 12 },
   iconCircle: { width: 42, height: 42, borderRadius: 14, backgroundColor: '#13283A', alignItems: 'center', justifyContent: 'center' },
   panelTitle: { color: theme.colors.text, fontSize: 16, fontWeight: '800' },
