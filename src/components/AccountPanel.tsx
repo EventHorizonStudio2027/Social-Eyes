@@ -193,7 +193,7 @@ export function AccountPanel() {
   </Panel>;
 }
 const styles = StyleSheet.create({
-  title: { color: theme.colors.text, fontSize: 15, fontWeight: '800', marginBottom: 8 },
+  title: { color: theme.colors.text, fontSize: 16, fontWeight: '800', letterSpacing: 0.2, marginBottom: 10 },
   copy: { color: theme.colors.muted, fontSize: 12, lineHeight: 20 },
   stack: { gap: 14 },
   input: { color: theme.colors.text, backgroundColor: theme.colors.surfaceRaised, borderColor: '#38516B', borderWidth: 1, borderRadius: 12, paddingHorizontal: 14, paddingVertical: 13, minHeight: 48, fontSize: 14 },
@@ -205,5 +205,5 @@ const styles = StyleSheet.create({
   button: { padding: 15, minHeight: 50, justifyContent: 'center', backgroundColor: theme.colors.violet, borderRadius: 13, alignItems: 'center' },
   buttonText: { color: theme.colors.text, fontWeight: '800' },
   link: { color: theme.colors.cyan, fontWeight: '800', fontSize: 13, letterSpacing: 0.15, paddingVertical: 5 },
-  error: { color: theme.colors.danger, fontSize: 13, lineHeight: 19 },
+  error: { color: theme.colors.danger, fontSize: 13, lineHeight: 20, fontWeight: '600' },
 });
