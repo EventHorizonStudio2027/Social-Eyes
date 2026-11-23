@@ -9,13 +9,13 @@ export function Panel({ children }: PropsWithChildren) {
 const styles = StyleSheet.create({
   panel: {
     backgroundColor: theme.colors.surface,
-    borderColor: theme.colors.border,
+    borderColor: '#294158',
     borderWidth: 1,
     borderRadius: theme.radius.lg,
     padding: 18,
     gap: 12,
     shadowColor: '#050C18',
-    shadowOpacity: 0.16,
+    shadowOpacity: 0.12,
     shadowRadius: 10,
     shadowOffset: { width: 0, height: 4 },
     elevation: 2,
