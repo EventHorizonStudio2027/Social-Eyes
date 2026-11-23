@@ -50,10 +50,10 @@ const styles = StyleSheet.create({
   dot: { width: 7, height: 7, borderRadius: 4, backgroundColor: theme.colors.gold },
   statusText: { flexShrink: 1, color: theme.colors.muted, fontSize: 11, lineHeight: 16, fontWeight: '700' },
   panelTop: { flexDirection: 'row', alignItems: 'center', gap: 12 },
-  iconCircle: { width: 42, height: 42, borderRadius: 14, backgroundColor: '#13283A', alignItems: 'center', justifyContent: 'center' },
+  iconCircle: { width: 42, height: 42, borderRadius: 14, backgroundColor: '#13283A', borderWidth: 1, borderColor: '#24485A', alignItems: 'center', justifyContent: 'center' },
   panelTitle: { color: theme.colors.text, fontSize: 16, fontWeight: '800' },
   body: { color: theme.colors.muted, fontSize: 12, lineHeight: 18 },
-  soon: { color: theme.colors.cyan, fontSize: 9, fontWeight: '900', letterSpacing: 1.4 },
-  feature: { flexDirection: 'row', gap: 12, alignItems: 'flex-start', paddingTop: 7 },
+  soon: { color: theme.colors.cyan, fontSize: 9, fontWeight: '900', letterSpacing: 1.4, overflow: 'hidden' },
+  feature: { flexDirection: 'row', gap: 12, alignItems: 'flex-start', paddingVertical: 8 },
   featureTitle: { color: theme.colors.text, fontSize: 13, fontWeight: '800' },
 });
