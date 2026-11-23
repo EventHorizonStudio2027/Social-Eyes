@@ -7,7 +7,7 @@ permissions:
 jobs:
   static-smoke:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -18,6 +18,12 @@ jobs:
           for file in assets/*.js tests/*.cjs; do node --check "$file"; done
       - name: Static integration smoke tests
         run: node tests/smoke.test.cjs
+      - name: Full offline Phase 1 regression suite
+        run: npm run test:foundation
+      - name: Static privacy and package audits
+        run: |
+          npm run audit:static
+          npm run audit:package
   browser:
     runs-on: ubuntu-latest
     timeout-minutes: 12
