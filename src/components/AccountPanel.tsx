@@ -204,6 +204,6 @@ const styles = StyleSheet.create({
   chipText: { color: theme.colors.text, textTransform: 'capitalize', fontSize: 12, fontWeight: '700', letterSpacing: 0.15 },
   button: { padding: 15, minHeight: 50, justifyContent: 'center', backgroundColor: theme.colors.violet, borderRadius: 13, alignItems: 'center' },
   buttonText: { color: theme.colors.text, fontWeight: '800' },
-  link: { color: theme.colors.cyan, fontWeight: '700', fontSize: 13 },
-  error: { color: theme.colors.danger, fontSize: 12 },
+  link: { color: theme.colors.cyan, fontWeight: '800', fontSize: 13, letterSpacing: 0.15, paddingVertical: 5 },
+  error: { color: theme.colors.danger, fontSize: 13, lineHeight: 19 },
 });
