@@ -325,3 +325,8 @@
 /* Mobile touch targets and final keyboard focus polish. */
 @media(max-width:520px){.creator-tools button{min-height:44px;flex:1 1 calc(50% - 9px);min-width:0;white-space:normal}.install-app{min-height:44px}}
 .install-app:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}.creator-tools button:active{transform:translateY(0);border-color:var(--cyan)}
+
+/* Compact mobile discovery: prevent long search text from widening the layout. */
+@media(max-width:520px){#discover-page .search{min-width:0;max-width:100%;box-sizing:border-box;font-size:16px}#results .empty{padding:26px 16px;gap:8px}}
+/* Final polish: legible secondary copy and tactile reset action. */
+#results .empty p{line-height:1.55;max-width:34ch;color:#b9c9df}#results .empty button:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
