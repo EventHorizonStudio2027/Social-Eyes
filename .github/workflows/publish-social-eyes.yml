@@ -5,13 +5,14 @@ on:
     paths:
       - .github/workflows/publish-social-eyes.yml
       - index.html
+      - apple-touch-icon.png
       - manifest.webmanifest
       - service-worker.js
       - assets/**
       - tests/public-brand.test.cjs
   workflow_dispatch:
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 concurrency:
@@ -27,7 +28,18 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: main
-          persist-credentials: false
+          persist-credentials: true
+      - name: Export approved Apple touch icon
+        run: |
+          python3 -m pip install --disable-pip-version-check Pillow
+          python3 - <<'PY'
+          import base64, io, json
+          from PIL import Image, ImageOps
+          manifest = json.load(open('manifest.webmanifest'))
+          src = next(i['src'] for i in manifest['icons'] if i['src'].startswith('data:image/webp;base64,'))
+          original = Image.open(io.BytesIO(base64.b64decode(src.split(',', 1)[1]))).convert('RGB')
+          ImageOps.fit(original, (180, 180), method=Image.Resampling.LANCZOS).save('apple-touch-icon.png', 'PNG')
+          PY
       - name: Validate public website branding
         shell: bash
         run: |
@@ -38,10 +50,20 @@ jobs:
           test -s assets/app.css
           node tests/public-brand.test.cjs
           for source in assets/*.js; do node --check "$source"; done
+      - name: Commit generated PNG if changed
+        run: |
+          git add apple-touch-icon.png
+          if ! git diff --cached --quiet; then
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git commit -m 'assets: export approved 180x180 Apple touch icon'
+            git push origin HEAD:main
+          fi
       - name: Stage public-only static preview
         run: |
           mkdir -p _web-preview
           cp index.html _web-preview/index.html
+          cp apple-touch-icon.png _web-preview/apple-touch-icon.png
           cp manifest.webmanifest _web-preview/manifest.webmanifest
           cp service-worker.js _web-preview/service-worker.js
           node --check service-worker.js
