@@ -6,7 +6,8 @@ const root = path.resolve(import.meta.dirname, '..');
 const provider = fs.readFileSync(path.join(root, 'src/providers/AuthProvider.tsx'), 'utf8');
 const panel = fs.readFileSync(path.join(root, 'src/components/AccountPanel.tsx'), 'utf8');
 test('confirmation resend uses Supabase signup resend, not a new signup', () => {
-  assert.match(provider, /auth\.resend\(\{ type: 'signup', email: email\.trim\(\) \}\)/);
+  assert.match(provider, /auth\.resend\(\{ type: 'signup', email: input\.email \}\)/);
+  assert.match(provider, /resendConfirmation: async \(email\) => \{\s*const input = validateRecoveryEmail\(email\);\s*if \(!input\.ok\)/);
   assert.match(provider, /resendConfirmation: \(email: string\) => Promise<boolean>/);
 });
 test('resend requires pending confirmation and is rate-limited locally', () => {
