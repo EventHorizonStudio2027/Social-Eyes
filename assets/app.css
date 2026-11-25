@@ -321,3 +321,7 @@
 .install-app:disabled{opacity:.55;cursor:wait}
 .install-app[hidden]{display:none}
 @media(max-width:520px){.install-app{padding:6px 9px;font-size:10px}}
+
+/* Mobile touch targets and final keyboard focus polish. */
+@media(max-width:520px){.creator-tools button{min-height:44px;flex:1 1 calc(50% - 9px);min-width:0;white-space:normal}.install-app{min-height:44px}}
+.install-app:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}.creator-tools button:active{transform:translateY(0);border-color:var(--cyan)}
