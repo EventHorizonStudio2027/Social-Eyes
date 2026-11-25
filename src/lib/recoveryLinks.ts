@@ -1,6 +1,7 @@
 export const RECOVERY_REDIRECT_URL = 'socialeyes://auth/recover';
 export function parseRecoveryLink(value: string): { tokenHash: string; type: 'recovery' } | null {
   try {
+    if (!value.startsWith(RECOVERY_REDIRECT_URL + '?') || /[\\\s]/.test(value)) return null;
     const url = new URL(value);
     if (url.protocol !== 'socialeyes:' || url.hostname !== 'auth' || url.pathname !== '/recover' || url.hash || url.username || url.password || url.port) return null;
     const params = [...url.searchParams.entries()];
