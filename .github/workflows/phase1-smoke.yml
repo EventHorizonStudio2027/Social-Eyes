@@ -13,6 +13,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Install isolated TypeScript parser for offline tests
+        run: |
+          npm install --prefix "$RUNNER_TEMP/social-eyes-test-tools" --no-package-lock --no-audit --no-fund typescript@5.9.3
+          echo "NODE_PATH=$RUNNER_TEMP/social-eyes-test-tools/node_modules" >> "$GITHUB_ENV"
       - name: JavaScript syntax
         run: |
           for file in assets/*.js tests/*.cjs; do node --check "$file"; done
