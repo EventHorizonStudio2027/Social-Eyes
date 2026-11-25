@@ -330,3 +330,9 @@
 @media(max-width:520px){#discover-page .search{min-width:0;max-width:100%;box-sizing:border-box;font-size:16px}#results .empty{padding:26px 16px;gap:8px}}
 /* Final polish: legible secondary copy and tactile reset action. */
 #results .empty p{line-height:1.55;max-width:34ch;color:#b9c9df}#results .empty button:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+
+/* Keep offline status readable without covering the entire mobile viewport. */
+.connection-status{box-sizing:border-box;line-height:1.4;overflow-wrap:anywhere}
+@media(max-width:520px){.connection-status{padding:9px 13px;border-radius:16px;font-size:12px}}
+/* Final polish: subtle edge contrast and clear focus on the discovery input. */
+#discover-page .search:focus-visible{outline-offset:2px;box-shadow:0 0 0 4px rgba(88,236,250,.12)}
