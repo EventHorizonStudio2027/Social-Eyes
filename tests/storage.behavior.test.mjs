@@ -3,31 +3,23 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import vm from 'node:vm';
+import { createRequire } from 'node:module';
+const require = createRequire(import.meta.url);
+const ts = require('typescript');
 
 const root = path.resolve(import.meta.dirname, '..');
 
-// Exercise the real storage functions without installing React Native dependencies.
-// Only erase the small, known TypeScript syntax used in these two files.
+// Compile the real TypeScript and mock only the native storage boundary.
 function loadStorageModule(file, storage) {
-  let source = fs.readFileSync(path.join(root, 'src/lib', file), 'utf8');
-  source = source.replace(/^import AsyncStorage from '@react-native-async-storage\/async-storage';\s*/m, '');
-  source = source.replace(/export type PrivacySettings = \{[\s\S]*?\};\s*/, '');
-  source = source.replace(/: PrivacySettings/g, '');
-  source = source.replace(/: Promise<[^>]+>/g, '');
-  source = source.replace(/: unknown/g, '');
-  source = source.replace(/: Partial<PrivacySettings>/g, '');
-  source = source.replace(/ as Partial<PrivacySettings>/g, '');
-  source = source.replace(/ as typeof fields\[number\]/g, '');
-  source = source.replace(/ as const/g, '');
-  source = source.replace(/ as boolean/g, '');
-  source = source.replace(/ as Record<string, unknown>/g, '');
-  source = source.replace(/export (const|async function|function)/g, '$1');
-  const names = file === 'settings.ts'
-    ? ['defaultSettings', 'loadSettings', 'saveSettings', 'validateSettings', 'validateSettingsPatch']
-    : ['hasCompletedWelcome', 'markWelcomeComplete', 'resetWelcomeForTesting'];
-  const context = { AsyncStorage: storage, JSON, Error };
-  vm.runInNewContext(`${source}\n;globalThis.__exports = { ${names.join(', ')} };`, context, { filename: file, timeout: 1000 });
-  return context.__exports;
+  const source = fs.readFileSync(path.join(root, 'src/lib', file), 'utf8');
+  const compiled = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022, esModuleInterop: true } }).outputText;
+  const exports = {};
+  const mockRequire = name => {
+    if (name !== '@react-native-async-storage/async-storage') throw new Error('Unexpected import: ' + name);
+    return storage;
+  };
+  vm.runInNewContext(compiled, { exports, require: mockRequire, JSON, Error }, { filename: file, timeout: 1000 });
+  return exports;
 }
 
 function memoryStorage() {
